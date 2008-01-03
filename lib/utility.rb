@@ -46,6 +46,12 @@ def super_chomp(s)
 	s.gsub(/\W*$/, '').gsub!(/^\W*(\w.*)$/, '\1') || ''
 end
 
+def filelike?(path)
+	p = Pathname.new(path)
+	return false unless p.exists? and p.readable?
+	return !(p.directory? or p.blockdev? or p.chardev?)
+end
+
 def dump_stacks
 	fork do
 		ObjectSpace.each_object(Thread) do |th|

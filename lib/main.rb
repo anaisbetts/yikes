@@ -29,6 +29,7 @@ require 'optparse'
 require 'optparse/time'
 require 'highline'
 require 'singleton'
+require 'yaml'
 
 # Yikes
 require 'platform'
@@ -49,7 +50,7 @@ class Yikes < Logger::Application
 
 	def parse(args)
 		# Set the defaults here
-		results = { :target => '.' }
+		results = { :target => 'iPod', :library => '.' }
 
 		opts = OptionParser.new do |opts|
 			opts.banner = _("Usage: Yikes [options]")
@@ -59,10 +60,10 @@ class Yikes < Logger::Application
 
 			opts.on('-l', _("--library /path/to/videos"),
 				_("Directory to recursively scan for videos")) do |x|
-				results[:dir] = x 
+				results[:library] = x 
 			end
 
-			opts.on('-t', "--target dir", _("Directory to put music in")) do |x|
+			opts.on('-t', "--target dir", _("Directory to put files in")) do |x|
 				results[:target] = x
 			end
 
@@ -127,11 +128,14 @@ class Yikes < Logger::Application
 			exit
 		end
 
+		# Hey here's the real code!
 		io = HighLine.new
 
-		#TODO: Here's the app!
-
 		log DEBUG, 'Exiting application'
+	end
+
+	def get_file_list(optparse)
+		Dir.glob(File.join(optparse[:library], '**', '*')).delete_if {|x| not filelike?(x)}
 	end
 
 	def run_gui
