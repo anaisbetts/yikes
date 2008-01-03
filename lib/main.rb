@@ -128,51 +128,8 @@ class Yikes < Logger::Application
 
 		io = HighLine.new
 
-		# Figure out a list of files to load
-		file_list = []
-		if results.has_key? :dir
-			file_list = filelist_from_root results[:dir]
-		end
+		#TODO: Here's the app!
 
-		if file_list.size == 0
-			file_list = ARGV
-		end
-		if file_list.size == 0
-			log DEBUG, 'No files, starting GUI...'
-			run_gui
-			exit
-		end
-
-		library = Library.new
-
-		load_settings(library)
-
-		# Process the library
-		library.load file_list do |progress|
-			puts _("%s%% complete") % (progress * 100.0)
-		end
-
-		library.find_soundtracks do |curname|
-			io.agree _("'%s' may be a soundtrack or compilation. Is it? (Y/n) ") % curname
-		end
-
-		list = library.create_action_list(results[:target], 
-						  results[:musicformat], 
-						  results[:sndtrkformat]) do |tag, invalid, *defparm|
-			io.say _("The tag '%s' has invalid characters; '%s' are not allowed") % [tag, invalid]
-			io.ask _("Please type a replacement or hit enter to replace with\n%s\n" % defparm)
-		end
-
-		# Execute the list
-		log INFO, _("Executing request...");
-		do_it_class = ExecuteList; do_it_class = ShellScriptList if results[:script] != ''
-		library.execute_action_list(list, 
-					    results[:action], 
-					    (results[:script].empty?) ? ExecuteList : ShellScriptList,
-					    results[:script])
-
-		# Save out the settings
-		save_settings(library)
 		log DEBUG, 'Exiting application'
 	end
 

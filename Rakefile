@@ -85,7 +85,7 @@ end
 
 # Default Action
 task :default => [
-	:taglib,
+#	:taglib,
 	:updatepo,
 	:makemo,
 	:expandify,
