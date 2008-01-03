@@ -1,0 +1,12 @@
+Usage: Yikes [options]
+
+Specific options:
+    -l, --library /path/to/videos    Directory to recursively scan for videos
+    -t, --target dir                 Directory to put music in
+    -g, --gui                        Run the GUI version of this application
+
+Common options:
+    -d, --debug                      Run in debug mode (Extra messages)
+    -v, --verbose                    Run verbosely
+    -h, --help                       Show this message
+        --version                    Show version

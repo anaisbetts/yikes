@@ -20,6 +20,8 @@
 
 $:.unshift File.join(File.dirname(__FILE__))
 
+require 'config'
+
 # Standard library
 require 'rubygems'
 require 'logger'
@@ -43,10 +45,7 @@ class << self
 		# FIXME: This is clearly wrong
 		return 'C:\temp' if os == :windows
 
-		homedir = (ENV["HOME"] ? ENV["HOME"] : ".")
-		ret = File.join(homedir, ".estelle")
-
-		FileUtils.mkdir_p(ret) unless Pathname.new(ret).exist?
+		ret = (ENV["HOME"] ? ENV["HOME"] : ".")
 		return ret
 	end
 
@@ -55,10 +54,6 @@ class << self
 		return "" if os == :windows
 
 		return `which #{program}`
-	end
-
-	def settings_file_path
-		return File.join(home_dir, "settings.yaml")
 	end
 
 	def binary_dir

@@ -13,15 +13,11 @@ class TestPlatform < Test::Unit::TestCase
 	end
 
 	def test_class_home_dir
-		assert_equal("#{ENV['HOME']}/.estelle", Platform.home_dir)
+		assert_equal("#{ENV['HOME']}", Platform.home_dir)
 	end
 
 	def test_class_os
 		assert_equal(:osx, Platform.os)
-	end
-
-	def test_class_settings_file_path
-		assert_equal("#{ENV['HOME']}/.estelle/settings.yaml", Platform.settings_file_path)
 	end
 
 	def test_class_which

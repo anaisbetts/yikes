@@ -6,7 +6,6 @@ require 'rake/contrib/rubyforgepublisher'
 require 'rake/clean'
 require 'rake/rdoctask'                                                                                                                        
 require 'rake/testtask'
-#require 'spec'
 
 # Load other build files
 Dir.glob("build/*.rake").each {|x| load x}

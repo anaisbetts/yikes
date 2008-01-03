@@ -28,8 +28,9 @@ require 'gettext'
 require 'optparse'
 require 'optparse/time'
 require 'highline'
+require 'singleton'
 
-# Estelle
+# Yikes
 require 'platform'
 require 'config'
 require 'utility'
@@ -51,7 +52,7 @@ class Yikes < Logger::Application
 		results = { :target => '.' }
 
 		opts = OptionParser.new do |opts|
-			opts.banner = _("Usage: Estelle [options]")
+			opts.banner = _("Usage: Yikes [options]")
 
 			opts.separator ""
 			opts.separator _("Specific options:")
@@ -72,7 +73,7 @@ class Yikes < Logger::Application
 			opts.separator ""
 			opts.separator _("Common options:")
 
-			opts.on_tail("-h", "--help", _("Show this message") ) do
+			opts.on_tail("-?", "--help", _("Show this message") ) do
 				puts opts
 				exit
 			end
@@ -147,5 +148,5 @@ end
 
 exit 0 unless __FILE__ == $0
 
-$the_app = Estelle.instance
+$the_app = Yikes.instance
 $the_app.run
