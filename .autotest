@@ -1,0 +1,25 @@
+# -*- ruby -*-
+
+require 'autotest/redgreen'
+require 'autotest/timestamp'
+#require 'autotest/autoupdate'
+#require 'autotest/emacs'
+#require 'autotest/fixtures'
+#require 'autotest/growl'
+require 'autotest/heckle'
+#require 'autotest/html_report'
+#require 'autotest/kdenotify'
+#require 'autotest/menu'
+#require 'autotest/migrate'
+#require 'autotest/notify'
+#require 'autotest/pretty'
+require 'autotest/screen'
+#require 'autotest/shame'
+#require 'autotest/snarl'
+
+#Autotest::AutoUpdate.sleep_time = 60
+#Autotest::AutoUpdate.update_cmd = 'git pull'
+#Autotest::Emacs.client_cmd = 'emacsclient -e'
+Autotest::Heckle.flags << '-t test/**/*.rb'
+#Autotest::Heckle.klasses << 'MyClass'
+#Autotest::Shame.chat_app = :adium

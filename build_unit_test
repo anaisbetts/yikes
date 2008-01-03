@@ -1,0 +1,9 @@
+#!/bin/sh
+
+targetfile=$(basename $1)
+if [ -e test/test_$targetfile ]; then
+	mkdir -p test/missing
+	zentest $1 test/test_$targetfile > test/missing/test_$targetfile
+else
+	zentest $1 > test/test_$targetfile
+fi
