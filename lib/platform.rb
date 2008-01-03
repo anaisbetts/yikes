@@ -20,8 +20,6 @@
 
 $:.unshift File.join(File.dirname(__FILE__))
 
-require 'config'
-
 # Standard library
 require 'rubygems'
 require 'logger'

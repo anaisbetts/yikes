@@ -8,16 +8,9 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'test/unit' unless defined? $ZENTEST and $ZENTEST
 require 'utility' 
 
-
 class TestUtility < Test::Unit::TestCase
 	def test_escaped_path
 		assert_equal('/test/Path\ Containing\ Spaces', escaped_path("/test/Path Containing Spaces"))
-	end
-
-	def test_filelist_from_root
-		# TODO: This isn't a very thorough test
-		file_dir = File.join(File.dirname(__FILE__), 'files')
-		assert_equal(3633, filelist_from_root(file_dir).size)
 	end
 
 	def test_super_chomp

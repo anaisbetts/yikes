@@ -26,10 +26,10 @@ CLOBBER = FileList['ext/**/Makefile', 'ext/**/CMakeCache.txt']
 ## Tasks
 ########################
 
-desc "Process .in files"
+desc "Process .erb files"
 task :expandify do |f|
-	Dir.glob("{lib,bin}/**/*.in").each() do |ex|
-		expand_file(ex, ex.gsub(/\.in$/, ''))
+	Dir.glob("{lib,bin}/**/*.erb").each() do |ex|
+		expand_erb(ex, ex.gsub(/\.erb$/, ''))
 	end
 end
 

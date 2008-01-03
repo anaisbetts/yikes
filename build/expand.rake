@@ -1,4 +1,6 @@
-def expand_file(input_path, output_path)
+require 'erb'
+
+def expand_include(input_path, output_path)
 	input = File.open(input_path, 'r')
 	output = File.open(output_path, 'w')
 
@@ -16,4 +18,9 @@ def expand_file(input_path, output_path)
 	end
 
 	[input,output].each {|x| x.close}
+end
+
+def expand_erb(input_path, output_path)
+	erb = ERB.new(File.read(input_path))
+	File.open(output_path, 'w') {|x| x.puts erb.result}
 end
