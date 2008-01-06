@@ -50,14 +50,16 @@ class Engine
 	# /some/root/Folder/file.avi => /target/Folder/file.mp4
 	def convert_file_and_save(source_root, file_path, target_root)
 		dest_file = Pathname.new(build_target_path(extract_subpath(source_root, file_path), target_root))
-		FileUtils.mkdir_p(dest_file.dirname)
+		#FileUtils.mkdir_p(dest_file.dirname)
+		puts "create dir #{dest_file.dirname}"
 		transcode_if_exists(file_path, dest_file)
 	end
 
 	TranscodeScript = File.join(AppConfig::RootDir, 'bin', 'ffmpeg_run.sh')
 	def transcode_if_exists(input, output)
 		true if Pathname.new(output).exist?
-		system(TranscodeScript, input, output)
+		puts "#{input} => #{output}"
+		#system(TranscodeScript, input, output)
 	end
 
 class << self

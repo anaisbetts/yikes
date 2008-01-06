@@ -130,6 +130,8 @@ class Yikes < Logger::Application
 
 		# Hey here's the real code!
 		io = HighLine.new
+		engine = Engine.new
+		get_file_list(results).each {|x| engine.convert_file_and_save(results[:library], x, results[:target])}
 
 		log DEBUG, 'Exiting application'
 	end
