@@ -16,6 +16,16 @@ unless defined? $CONFIG_INCLUDED and $CONFIG_INCLUDED
 	def path_add(path)
 		real_path = Pathname.new(path).realpath
 		$:.unshift real_path.to_s unless $:.include? real_path
+		path_filter
+	end
+
+	def path_filter
+		tmp = $:.collect do |x| 
+			begin Pathname.new(x).realpath.to_s rescue '' end
+		end
+		$:.clear 
+		tmp.sort.uniq.each {|x| $:.unshift(x) unless x == ''}
+		p $:
 	end
 
 	path_add('.')
