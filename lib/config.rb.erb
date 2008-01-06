@@ -1,12 +1,14 @@
 # Caution! This file is auto-generated
 
+require 'pathname'
+
 unless defined? $CONFIG_INCLUDED and $CONFIG_INCLUDED
 	$CONFIG_INCLUDED = true
 
 	module AppConfig
 		Package = "<%= PKG_NAME %>"
 		Version = "<%= PKG_VERSION %>"
-		RootDir = File.join(File.dirname(__FILE__), "..")
+		RootDir = Pathname.new(File.join(File.dirname(__FILE__), "..")).realpath.to_s
 		LibDir = File.dirname(__FILE__)
 	end
 
