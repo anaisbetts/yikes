@@ -18,7 +18,7 @@
 #   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             #
 ###########################################################################
 
-require 'config'
+require File.join(File.dirname(__FILE__), 'config')
 path_add File.join(File.dirname(__FILE__))
 
 # Standard library
@@ -35,6 +35,7 @@ require 'yaml'
 require 'platform'
 require 'config'
 require 'utility'
+require 'engine'
 
 include GetText
 

@@ -49,9 +49,9 @@ class Engine
 	# Main function for converting a video file and writing it to a folder
 	# /some/root/Folder/file.avi => /target/Folder/file.mp4
 	def convert_file_and_save(source_root, file_path, target_root)
-		dest_file = Pathname.new(build_target_path(extract_subpath(source_root, file_path), target_root))
-		#FileUtils.mkdir_p(dest_file.dirname)
-		puts "create dir #{dest_file.dirname}"
+		dest_file = Pathname.new(Engine.build_target_path(Engine.extract_subpath(source_root, file_path), target_root))
+		FileUtils.mkdir_p(dest_file.dirname)
+		#puts "create dir #{dest_file.dirname}"
 		transcode_if_exists(file_path, dest_file)
 	end
 
@@ -59,7 +59,7 @@ class Engine
 	def transcode_if_exists(input, output)
 		true if Pathname.new(output).exist?
 		puts "#{input} => #{output}"
-		#system(TranscodeScript, input, output)
+		`#{TranscodeScript} "#{input}" "#{output}"`
 	end
 
 class << self
