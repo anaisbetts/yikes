@@ -1,8 +1,22 @@
 # Caution! This file is auto-generated
 
-module AppConfig
-	Package = "<%= PKG_NAME %>"
-	Version = "<%= PKG_VERSION %>"
-	RootDir = File.join(File.dirname(__FILE__), "..")
-	LibDir = File.dirname(__FILE__)
+unless defined? $CONFIG_INCLUDED and $CONFIG_INCLUDED
+	$CONFIG_INCLUDED = true
+
+	module AppConfig
+		Package = "<%= PKG_NAME %>"
+		Version = "<%= PKG_VERSION %>"
+		RootDir = File.join(File.dirname(__FILE__), "..")
+		LibDir = File.dirname(__FILE__)
+	end
+
+	# We need this function because finding our dirs relative to the test folder
+	# will sometimes cause us to end up with duplicates (i.e. 'test/../lib' and 
+	# 'lib'), and this confuses 'require' and gives us weird errors
+	def path_add(path)
+		real_path = Pathname.new(path).realpath
+		$:.unshift real_path.to_s unless $:.include? real_path
+	end
+
+	path_add('.')
 end

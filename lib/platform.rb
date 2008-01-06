@@ -18,9 +18,8 @@
 #   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             #
 ###########################################################################
 
-$:.unshift File.join(File.dirname(__FILE__))
-
 require 'config'
+path_add File.join(File.dirname(__FILE__))
 
 # Standard library
 require 'rubygems'

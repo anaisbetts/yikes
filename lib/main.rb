@@ -18,10 +18,10 @@
 #   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             #
 ###########################################################################
 
-$:.unshift File.join(File.dirname(__FILE__))
+require 'config'
+path_add File.join(File.dirname(__FILE__))
 
 # Standard library
-require 'config'
 require 'rubygems'
 require 'logger'
 require 'gettext'
@@ -150,7 +150,7 @@ class Yikes < Logger::Application
 	end
 end
 
-exit 0 unless __FILE__ == $0
+return unless __FILE__ == $0
 
 $the_app = Yikes.instance
 $the_app.run

@@ -2,10 +2,10 @@
 #                 classname: asrt / meth =  ratio%
 #                  Platform:    0 /    5 =   0.00%
 
-$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+$:.unshift File.dirname(__FILE__)
 
-require 'test/unit' unless defined? $ZENTEST and $ZENTEST
-require 'platform' 
+require 'helper'
+require 'platform'
 
 class TestPlatform < Test::Unit::TestCase
 	def test_class_binary_dir

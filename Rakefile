@@ -61,7 +61,7 @@ task :heckle do |t|
 	Dir.glob('lib/**/*.rb').each do |path| 
 		File.open(path) do |f| 
 			class_list += f.readlines.grep(/^class /) {|x| x.gsub(/class ([a-zA-Z]*).*$/, '\1') }
-			class_list.delete_if {|x| x == ''}
+			class_list.delete_if {|x| x =~ /^\W*$/}
 		end
 	end
 

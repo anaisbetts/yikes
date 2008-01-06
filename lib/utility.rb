@@ -18,7 +18,9 @@
 #   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             #
 ###########################################################################
 
-$:.unshift File.join(File.dirname(__FILE__))
+
+require 'config'
+path_add File.join(File.dirname(__FILE__))
 
 require 'rubygems'
 require 'logger'
@@ -48,7 +50,7 @@ end
 
 def filelike?(path)
 	p = Pathname.new(path)
-	return false unless p.exists? and p.readable?
+	return false unless p.exist? and p.readable?
 	return !(p.directory? or p.blockdev? or p.chardev?)
 end
 
