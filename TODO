@@ -1,0 +1,21 @@
+0.1:
+	* Get one-shot "just do it" functionality
+	* Use external ffmpeg
+	* Linux package
+
+0.2:
+	* Daemon mode (frontend/backend separation)
+	* Qt4 GUI
+	* OSX disk image
+	* Use Taglib to write tag information
+	* FFmpeg/libfaac/whatever from source, statically compiled
+
+0.5:
+	* Rails daemon running video podcasts to local machine, advertise using Zeroconf
+
+0.8:
+	* Works in Win32
+	* Completely platform-appropriate behavior (follows Windows conventions on Win32, etc)
+	* Windows installer
+
+Future:
