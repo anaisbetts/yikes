@@ -1,6 +1,8 @@
-0.1:
-	* Get one-shot "just do it" functionality
+Done:
+	* Get one-shot "just do it" functionality 
 	* Use external ffmpeg
+
+0.1:
 	* Linux package
 
 0.2:
