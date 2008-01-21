@@ -6,6 +6,7 @@ require 'rake/contrib/rubyforgepublisher'
 require 'rake/clean'
 require 'rake/rdoctask'                                                                                                                        
 require 'rake/testtask'
+require 'pallet'
 #require 'spec'
 
 # Load other build files
@@ -25,16 +26,10 @@ RootDir = File.dirname(__FILE__)
 
 InstallPrefix = get_install_prefix()
 
-########################
-## Tasks
-########################
 
-desc "Process .erb files"
-task :expandify do |f|
-	Dir.glob("{lib,bin}/**/*.erb").each() do |ex|
-		expand_erb(ex, ex.gsub(/\.erb$/, ''))
-	end
-end
+########################
+## Native library tasks
+########################
 
 # libgpac
 GPacConfigureFlags = [ "--disable-ipv6", "--disable-wx", "--disable-ssl", "--disable-opengl" ]
@@ -50,13 +45,13 @@ X264ConfigureFlags = [
 	"--extra-ldflags=\"-L#{File.join(RootDir, 'obj', 'lib')}\""
 ]
 desc "Build the libx264 library"
-task :x264 do |t|
+task :x264 => [:gpac] do |t|
 	build_native_lib("x264", X264ConfigureFlags)
 end
 
 # libfaac
 desc "Build the faac library"
-task :faac do |t|
+task :faac => [:x264] do |t|
 	build_native_lib("faac")
 end
 
@@ -72,7 +67,7 @@ FFMpegConfigureFlags = [
 	"--extra-ldflags=\"-L#{File.join(RootDir, 'obj', 'lib')} -lpthread\""
 ]
 desc "Build the ffmpeg library"
-task :ffmpeg do |t|
+task :ffmpeg => [:x264, :faac] do |t|
 	build_native_lib("ffmpeg", FFMpegConfigureFlags)
 end
 
@@ -84,6 +79,18 @@ task :taglib do |t|
 	sh "mkdir -p bin"
 	Dir.glob("ext/**/*.{dll,so,dylib}").each {|x| sh "cp #{x} bin/"}
 end
+
+desc "Process .erb files"
+task :expandify do |f|
+	Dir.glob("{lib,bin}/**/*.erb").each() do |ex|
+		expand_erb(ex, ex.gsub(/\.erb$/, ''))
+	end
+end
+
+
+########################
+## Regular Tasks
+########################
 
 desc "Update missing tests"
 task :buildtests do |t|
@@ -126,19 +133,47 @@ task :flog do |t|
 	sh "flog " + Dir.glob("lib/**/*.rb").join(' ') + " | grep '^\\w'"
 end 
 
-# Default Action
-task :default => [
-#	:taglib,
-	:updatepo,
-	:makemo,
-	:expandify,
-]
+desc "Build Documentation"
+task :doc do |t|
+end
 
 task :alltest => [
 	:test,
 	:coverage,
 	:heckle
 ]
+
+
+#######################
+## Package building
+#######################
+
+Pallet.new('yikes', "0.1") do |p|
+	p.author  = 'Paul Betts'
+	p.email   = 'paul.betts@gmail.com'
+	p.summary = 'An automatic way to put your TV shows on your iPod'
+
+	p.packages << Pallet::Gem.new(p) do |gem|
+		gem.depends = ['rake']
+		gem.requirements = ['fakeroot', 'dpkg-dev']
+		gem.files.include FileList['share/**/*']
+	end
+
+	p.packages << Pallet::Deb.new(p => :doc) do |deb|
+		deb.depends    = %w{build-essential rake}
+		deb.recommends = %w{fakeroot}
+		deb.copyright  = 'COPYRIGHT'
+		deb.section    = 'utils'
+		deb.files      = [ 
+			Installer.new('lib',   '/usr/lib/ruby/1.8'),
+			Installer.new('share', '/usr/share/pallet'), ]
+
+		deb.docs = [ 
+			Installer.new('doc',       'html'),
+			Installer.new('Rakefile',  'examples'),
+			Installer.new { Dir['[A-Z][A-Z]*'] }, ]
+	end
+end
 
 
 #######################
@@ -158,3 +193,12 @@ task :updatepo do
 			       Dir.glob("{app,lib}/**/*.{rb,rhtml}"),
 			       "#{PKG_NAME} #{PKG_VERSION}")
 end
+
+
+# Default Action
+task :default => [
+#	:taglib,
+	:updatepo,
+	:makemo,
+	:expandify,
+]
