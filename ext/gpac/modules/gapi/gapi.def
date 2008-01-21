@@ -1,0 +1,6 @@
+LIBRARY     gm_gapi.dll
+
+EXPORTS
+	QueryInterface
+	LoadInterface
+	ShutdownInterface

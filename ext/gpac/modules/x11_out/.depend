@@ -1,0 +1,18 @@
+x11_out.o: x11_out.c x11_out.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/video_out.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/events.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/math.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/color.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/thread.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /usr/X11R6/include/X11/Xlib.h /usr/X11R6/include/X11/X.h \
+  /usr/X11R6/include/X11/Xfuncproto.h /usr/X11R6/include/X11/Xosdefs.h \
+  /usr/X11R6/include/X11/Xutil.h /usr/X11R6/include/X11/keysym.h \
+  /usr/X11R6/include/X11/keysymdef.h /usr/X11R6/include/GL/glx.h \
+  /usr/X11R6/include/GL/gl.h /usr/X11R6/include/GL/glext.h \
+  /usr/X11R6/include/GL/glxext.h /usr/X11R6/include/X11/extensions/XShm.h

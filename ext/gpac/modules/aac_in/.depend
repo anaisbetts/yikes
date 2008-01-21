@@ -1,0 +1,14 @@
+aac_in.o: aac_in.c \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/codec.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/avparse.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h

@@ -1,0 +1,9 @@
+#include "nsISupports.idl"
+
+[scriptable, uuid(d2d536a0-b6fc-11d5-9d10-0060b0fbd8bn)]
+interface nsIOsmozilla : nsISupports {
+  void Pause();
+  void Play();
+  void Stop();
+  void Update(in string type, in string commands);
+};

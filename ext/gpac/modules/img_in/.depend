@@ -1,0 +1,70 @@
+img_dec.o: img_dec.c img_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/codec.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h
+img_in.o: img_in.c img_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/codec.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/avparse.h
+bmp_dec.o: bmp_dec.c img_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/codec.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h
+png_dec.o: png_dec.c img_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/codec.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /opt/local/include/png.h /opt/local/include/zlib.h \
+  /opt/local/include/zconf.h /opt/local/include/pngconf.h
+jpeg_dec.o: jpeg_dec.c img_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/codec.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /opt/local/include/jpeglib.h /opt/local/include/jconfig.h \
+  /opt/local/include/jmorecfg.h

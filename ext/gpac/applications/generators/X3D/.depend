@@ -1,0 +1,13 @@
+main.o: main.c /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h
+list.o: ../../../src/utils/list.c \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h
+error.o: ../../../src/utils/error.c \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h
+os_divers.o: ../../../src/utils/os_divers.c \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h

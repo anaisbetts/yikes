@@ -1,0 +1,61 @@
+load.o: load.c isom_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/media_tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/isomedia.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/avparse.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h
+read.o: read.c isom_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/media_tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/isomedia.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/avparse.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/ismacryp.h
+read_ch.o: read_ch.c isom_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/media_tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/isomedia.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/avparse.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h
+cache.o: cache.c isom_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/media_tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/isomedia.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/avparse.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h

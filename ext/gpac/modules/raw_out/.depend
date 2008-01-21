@@ -1,0 +1,11 @@
+raw_video.o: raw_video.c \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/video_out.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/events.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/math.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/color.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h

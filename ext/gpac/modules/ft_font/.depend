@@ -1,0 +1,26 @@
+ft_font.o: ft_font.c \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/font.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/path2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/math.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/utf.h \
+  /opt/local/include/ft2build.h \
+  /opt/local/include/freetype2/freetype/config/ftheader.h \
+  /opt/local/include/freetype2/freetype/freetype.h \
+  /opt/local/include/freetype2/freetype/config/ftconfig.h \
+  /opt/local/include/freetype2/freetype/config/ftoption.h \
+  /opt/local/include/freetype2/freetype/config/ftstdlib.h \
+  /opt/local/include/freetype2/freetype/fterrors.h \
+  /opt/local/include/freetype2/freetype/ftmoderr.h \
+  /opt/local/include/freetype2/freetype/fterrdef.h \
+  /opt/local/include/freetype2/freetype/fttypes.h \
+  /opt/local/include/freetype2/freetype/ftsystem.h \
+  /opt/local/include/freetype2/freetype/ftimage.h \
+  /opt/local/include/freetype2/freetype/ftglyph.h \
+  /opt/local/include/freetype2/freetype/ftoutln.h \
+  /opt/local/include/freetype2/freetype/tttables.h

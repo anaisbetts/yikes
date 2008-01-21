@@ -1,0 +1,96 @@
+rtp_in.o: rtp_in.c rtp_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/thread.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/base_coding.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/ietf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/network.h
+rtp_session.o: rtp_session.c rtp_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/thread.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/base_coding.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/ietf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/network.h
+rtp_signaling.o: rtp_signaling.c rtp_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/thread.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/base_coding.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/ietf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/network.h
+rtp_stream.o: rtp_stream.c rtp_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/thread.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/base_coding.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/ietf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/network.h
+sdp_fetch.o: sdp_fetch.c rtp_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/thread.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/base_coding.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/ietf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/network.h
+sdp_load.o: sdp_load.c rtp_in.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/thread.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/base_coding.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/service.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/download.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/ietf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/network.h

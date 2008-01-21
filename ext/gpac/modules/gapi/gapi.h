@@ -1,0 +1,93 @@
+/*
+ *			GPAC - Multimedia Framework C SDK
+ *
+ *			Copyright (c) Jean Le Feuvre 2000-2005
+ *					All rights reserved
+ *
+ *  This file is part of GPAC / DirectX audio and video render module
+ *
+ *  GPAC is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation; either version 2, or (at your option)
+ *  any later version.
+ *   
+ *  GPAC is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *   
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; see the file COPYING.  If not, write to
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *		
+ */
+
+
+#ifndef _GAPI_H
+#define _GAPI_H
+
+#include <gpac/list.h>
+#include <gpac/thread.h>
+/*driver interface*/
+#include <gpac/modules/video_out.h>
+
+#ifdef GPAC_USE_OGL_ES
+#include "GLES/egl.h"
+#endif
+
+/*driver interface*/
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef struct
+{
+	HWND hWnd;
+	DWORD orig_wnd_proc;
+	GF_Mutex *mx;
+
+	GXKeyList keys;
+
+	u32 screen_w, screen_h;
+	u32 fs_w, fs_h;
+	/*store w and h for fullscreen*/
+	u32 backup_w, backup_h;
+	s32 x_pitch, y_pitch;
+	Bool fullscreen;
+	Bool force_gx;
+	Bool gx_mode;
+
+	/*main surface info*/
+	char *backbuffer;
+	u32 bb_size, bb_width, bb_height, bb_pitch;
+	u32 pixel_format;
+	u32 BPP, bits_per_pixel;
+
+	GF_Window dst_blt;
+	DWORD ThreadID;
+	HANDLE hThread;
+	Bool owns_hwnd;
+
+	Bool erase_dest;
+	u32 off_x, off_y;
+
+	HBITMAP bitmap;
+    DWORD * bits;
+#ifdef GPAC_USE_OGL_ES
+	Bool is_3D;
+	GF_GLConfig gl_cfg;
+    EGLDisplay egldpy;
+    EGLSurface surface;
+    EGLConfig eglconfig;
+    EGLContext eglctx;
+#endif
+
+} GAPIPriv;
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif 

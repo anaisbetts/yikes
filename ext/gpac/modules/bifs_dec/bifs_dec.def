@@ -1,0 +1,6 @@
+LIBRARY     gm_bifs_dec.dll
+
+EXPORTS
+	QueryInterface
+	LoadInterface
+	ShutdownInterface

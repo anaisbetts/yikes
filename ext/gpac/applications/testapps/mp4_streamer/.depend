@@ -1,0 +1,12 @@
+main.o: main.c \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/isomedia.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/mpeg4_odf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/bitstream.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/sync_layer.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/ietf.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/network.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/base_coding.h

@@ -1,0 +1,6 @@
+LIBRARY     gm_svg_loader.dll
+
+EXPORTS
+	QueryInterface
+	LoadInterface
+	ShutdownInterface

@@ -1,0 +1,6 @@
+LIBRARY     gm_render2d.dll
+
+EXPORTS
+	QueryInterface
+	LoadInterface
+	ShutdownInterface

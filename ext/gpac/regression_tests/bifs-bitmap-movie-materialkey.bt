@@ -1,0 +1,92 @@
+InitialObjectDescriptor {
+ objectDescriptorID 1
+ audioProfileLevelIndication 255
+ visualProfileLevelIndication 1
+ sceneProfileLevelIndication 254
+ graphicsProfileLevelIndication 254
+ ODProfileLevelIndication 1
+ esDescr [
+  ES_Descriptor {
+   ES_ID 1
+   decConfigDescr DecoderConfigDescriptor {
+    streamType 3
+    decSpecificInfo BIFSConfig {
+     isCommandStream true
+     pixelMetric true
+     pixelWidth 320
+     pixelHeight 240
+    }
+   }
+  }
+  ES_Descriptor {
+   ES_ID 2
+   decConfigDescr DecoderConfigDescriptor {
+    streamType 1
+   }
+  }
+ ]
+}
+
+OrderedGroup {
+ children [
+  Background2D {
+   backColor 0 0 1
+  }
+  WorldInfo {
+   info [
+    "This test shows how to do Color Keying on Video."
+    "The MaterialKey node allows defining a key color or color range and to make that color transparent in the texture. The degree of transparency can be specified using the transparency property." 
+     
+    "" 
+    "GPAC Regression Tests" 
+    "(C) 2002-2004 GPAC Team"
+   ]
+   title "Color Keying on Video using the MaterialKey node"
+  }
+  Transform2D {
+   scale 2 2
+   children [
+    DEF TR Transform2D {
+     children [
+      Shape {
+       appearance Appearance {
+        texture MovieTexture {
+         url [od:10]
+         loop FALSE
+        }
+        material MaterialKey {
+         isKeyed TRUE
+         lowThreshold 0
+         highThreshold 1
+         keyColor 0 0 0
+         transparency 1
+        }
+       }
+       geometry Bitmap {
+        scale 1 1
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
+
+AT 0 {
+  UPDATE OD [
+   ObjectDescriptor {
+    objectDescriptorID 10
+    esDescr [
+     ES_Descriptor {
+      ES_ID 20
+      OCR_ES_ID 20
+      muxInfo MuxInfo {
+       fileName "auxiliary_files/count_video.cmp"
+      }
+     }
+    ]
+   }
+  ]
+}
+

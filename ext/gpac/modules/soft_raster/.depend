@@ -1,0 +1,70 @@
+ftgrays.o: ftgrays.c rast_soft.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/raster2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/path2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/math.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/color.h
+raster_load.o: raster_load.c rast_soft.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/raster2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/path2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/math.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/color.h
+raster_565.o: raster_565.c rast_soft.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/raster2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/path2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/math.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/color.h
+raster_argb.o: raster_argb.c rast_soft.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/raster2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/path2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/math.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/color.h
+raster_rgb.o: raster_rgb.c rast_soft.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/raster2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/path2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/math.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/color.h
+stencil.o: stencil.c rast_soft.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/raster2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/path2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/math.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/color.h
+surface.o: surface.c rast_soft.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/modules/raster2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/path2d.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/math.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/constants.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/module.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/config.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/color.h

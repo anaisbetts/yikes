@@ -1,0 +1,169 @@
+html.o: html.c svggen.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /opt/local/include/libxml2/libxml/tree.h \
+  /opt/local/include/libxml2/libxml/xmlversion.h \
+  /opt/local/include/libxml2/libxml/xmlexports.h \
+  /opt/local/include/libxml2/libxml/xmlstring.h \
+  /opt/local/include/libxml2/libxml/xmlregexp.h \
+  /opt/local/include/libxml2/libxml/dict.h \
+  /opt/local/include/libxml2/libxml/xmlmemory.h \
+  /opt/local/include/libxml2/libxml/threads.h \
+  /opt/local/include/libxml2/libxml/globals.h \
+  /opt/local/include/libxml2/libxml/parser.h \
+  /opt/local/include/libxml2/libxml/hash.h \
+  /opt/local/include/libxml2/libxml/valid.h \
+  /opt/local/include/libxml2/libxml/xmlerror.h \
+  /opt/local/include/libxml2/libxml/list.h \
+  /opt/local/include/libxml2/libxml/xmlautomata.h \
+  /opt/local/include/libxml2/libxml/entities.h \
+  /opt/local/include/libxml2/libxml/encoding.h /opt/local/include/iconv.h \
+  /opt/local/include/libxml2/libxml/xmlIO.h \
+  /opt/local/include/libxml2/libxml/SAX.h \
+  /opt/local/include/libxml2/libxml/xlink.h \
+  /opt/local/include/libxml2/libxml/SAX2.h \
+  /opt/local/include/libxml2/libxml/xpath.h \
+  /opt/local/include/libxml2/libxml/xpathInternals.h
+laser.o: laser.c svggen.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /opt/local/include/libxml2/libxml/tree.h \
+  /opt/local/include/libxml2/libxml/xmlversion.h \
+  /opt/local/include/libxml2/libxml/xmlexports.h \
+  /opt/local/include/libxml2/libxml/xmlstring.h \
+  /opt/local/include/libxml2/libxml/xmlregexp.h \
+  /opt/local/include/libxml2/libxml/dict.h \
+  /opt/local/include/libxml2/libxml/xmlmemory.h \
+  /opt/local/include/libxml2/libxml/threads.h \
+  /opt/local/include/libxml2/libxml/globals.h \
+  /opt/local/include/libxml2/libxml/parser.h \
+  /opt/local/include/libxml2/libxml/hash.h \
+  /opt/local/include/libxml2/libxml/valid.h \
+  /opt/local/include/libxml2/libxml/xmlerror.h \
+  /opt/local/include/libxml2/libxml/list.h \
+  /opt/local/include/libxml2/libxml/xmlautomata.h \
+  /opt/local/include/libxml2/libxml/entities.h \
+  /opt/local/include/libxml2/libxml/encoding.h /opt/local/include/iconv.h \
+  /opt/local/include/libxml2/libxml/xmlIO.h \
+  /opt/local/include/libxml2/libxml/SAX.h \
+  /opt/local/include/libxml2/libxml/xlink.h \
+  /opt/local/include/libxml2/libxml/SAX2.h \
+  /opt/local/include/libxml2/libxml/xpath.h \
+  /opt/local/include/libxml2/libxml/xpathInternals.h
+main.o: main.c svggen.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /opt/local/include/libxml2/libxml/tree.h \
+  /opt/local/include/libxml2/libxml/xmlversion.h \
+  /opt/local/include/libxml2/libxml/xmlexports.h \
+  /opt/local/include/libxml2/libxml/xmlstring.h \
+  /opt/local/include/libxml2/libxml/xmlregexp.h \
+  /opt/local/include/libxml2/libxml/dict.h \
+  /opt/local/include/libxml2/libxml/xmlmemory.h \
+  /opt/local/include/libxml2/libxml/threads.h \
+  /opt/local/include/libxml2/libxml/globals.h \
+  /opt/local/include/libxml2/libxml/parser.h \
+  /opt/local/include/libxml2/libxml/hash.h \
+  /opt/local/include/libxml2/libxml/valid.h \
+  /opt/local/include/libxml2/libxml/xmlerror.h \
+  /opt/local/include/libxml2/libxml/list.h \
+  /opt/local/include/libxml2/libxml/xmlautomata.h \
+  /opt/local/include/libxml2/libxml/entities.h \
+  /opt/local/include/libxml2/libxml/encoding.h /opt/local/include/iconv.h \
+  /opt/local/include/libxml2/libxml/xmlIO.h \
+  /opt/local/include/libxml2/libxml/SAX.h \
+  /opt/local/include/libxml2/libxml/xlink.h \
+  /opt/local/include/libxml2/libxml/SAX2.h \
+  /opt/local/include/libxml2/libxml/xpath.h \
+  /opt/local/include/libxml2/libxml/xpathInternals.h
+v1.o: v1.c svggen.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /opt/local/include/libxml2/libxml/tree.h \
+  /opt/local/include/libxml2/libxml/xmlversion.h \
+  /opt/local/include/libxml2/libxml/xmlexports.h \
+  /opt/local/include/libxml2/libxml/xmlstring.h \
+  /opt/local/include/libxml2/libxml/xmlregexp.h \
+  /opt/local/include/libxml2/libxml/dict.h \
+  /opt/local/include/libxml2/libxml/xmlmemory.h \
+  /opt/local/include/libxml2/libxml/threads.h \
+  /opt/local/include/libxml2/libxml/globals.h \
+  /opt/local/include/libxml2/libxml/parser.h \
+  /opt/local/include/libxml2/libxml/hash.h \
+  /opt/local/include/libxml2/libxml/valid.h \
+  /opt/local/include/libxml2/libxml/xmlerror.h \
+  /opt/local/include/libxml2/libxml/list.h \
+  /opt/local/include/libxml2/libxml/xmlautomata.h \
+  /opt/local/include/libxml2/libxml/entities.h \
+  /opt/local/include/libxml2/libxml/encoding.h /opt/local/include/iconv.h \
+  /opt/local/include/libxml2/libxml/xmlIO.h \
+  /opt/local/include/libxml2/libxml/SAX.h \
+  /opt/local/include/libxml2/libxml/xlink.h \
+  /opt/local/include/libxml2/libxml/SAX2.h \
+  /opt/local/include/libxml2/libxml/xpath.h \
+  /opt/local/include/libxml2/libxml/xpathInternals.h
+v2.o: v2.c svggen.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /opt/local/include/libxml2/libxml/tree.h \
+  /opt/local/include/libxml2/libxml/xmlversion.h \
+  /opt/local/include/libxml2/libxml/xmlexports.h \
+  /opt/local/include/libxml2/libxml/xmlstring.h \
+  /opt/local/include/libxml2/libxml/xmlregexp.h \
+  /opt/local/include/libxml2/libxml/dict.h \
+  /opt/local/include/libxml2/libxml/xmlmemory.h \
+  /opt/local/include/libxml2/libxml/threads.h \
+  /opt/local/include/libxml2/libxml/globals.h \
+  /opt/local/include/libxml2/libxml/parser.h \
+  /opt/local/include/libxml2/libxml/hash.h \
+  /opt/local/include/libxml2/libxml/valid.h \
+  /opt/local/include/libxml2/libxml/xmlerror.h \
+  /opt/local/include/libxml2/libxml/list.h \
+  /opt/local/include/libxml2/libxml/xmlautomata.h \
+  /opt/local/include/libxml2/libxml/entities.h \
+  /opt/local/include/libxml2/libxml/encoding.h /opt/local/include/iconv.h \
+  /opt/local/include/libxml2/libxml/xmlIO.h \
+  /opt/local/include/libxml2/libxml/SAX.h \
+  /opt/local/include/libxml2/libxml/xlink.h \
+  /opt/local/include/libxml2/libxml/SAX2.h \
+  /opt/local/include/libxml2/libxml/xpath.h \
+  /opt/local/include/libxml2/libxml/xpathInternals.h
+v3.o: v3.c svggen.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h \
+  /opt/local/include/libxml2/libxml/tree.h \
+  /opt/local/include/libxml2/libxml/xmlversion.h \
+  /opt/local/include/libxml2/libxml/xmlexports.h \
+  /opt/local/include/libxml2/libxml/xmlstring.h \
+  /opt/local/include/libxml2/libxml/xmlregexp.h \
+  /opt/local/include/libxml2/libxml/dict.h \
+  /opt/local/include/libxml2/libxml/xmlmemory.h \
+  /opt/local/include/libxml2/libxml/threads.h \
+  /opt/local/include/libxml2/libxml/globals.h \
+  /opt/local/include/libxml2/libxml/parser.h \
+  /opt/local/include/libxml2/libxml/hash.h \
+  /opt/local/include/libxml2/libxml/valid.h \
+  /opt/local/include/libxml2/libxml/xmlerror.h \
+  /opt/local/include/libxml2/libxml/list.h \
+  /opt/local/include/libxml2/libxml/xmlautomata.h \
+  /opt/local/include/libxml2/libxml/entities.h \
+  /opt/local/include/libxml2/libxml/encoding.h /opt/local/include/iconv.h \
+  /opt/local/include/libxml2/libxml/xmlIO.h \
+  /opt/local/include/libxml2/libxml/SAX.h \
+  /opt/local/include/libxml2/libxml/xlink.h \
+  /opt/local/include/libxml2/libxml/SAX2.h \
+  /opt/local/include/libxml2/libxml/xpath.h \
+  /opt/local/include/libxml2/libxml/xpathInternals.h
+list.o: ../../../src/utils/list.c \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/list.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h
+error.o: ../../../src/utils/error.c \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/tools.h \
+  /Users/paul/Desktop/Yikes-svn/ext/gpac/include/gpac/setup.h
