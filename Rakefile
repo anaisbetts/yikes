@@ -18,8 +18,10 @@ PKG_VERSION   = "0.1"
 PKG_FILE_NAME = "#{PKG_NAME}-#{PKG_VERSION}"
 
 # Fixed up clean section to pick up extensions
-CLEAN = FileList["**/*~", "**/*.bak", "**/core", 'ext/taglib/**/*.o', 'ext/**/*.dll', 'ext/**/*.so', 'ext/**/*.dylib', 'bin/*']
-CLOBBER = FileList['ext/**/Makefile', 'ext/**/CMakeCache.txt']
+CLEAN = FileList["**/*~", "**/*.bak", "**/core", 'ext/taglib/**/*.o', 'ext/**/*.dll', 'ext/**/*.so', 'ext/**/*.dylib', 'bin/*', 'obj/*']
+CLOBBER = FileList['ext/**/CMakeCache.txt']
+
+RootDir = File.dirname(__FILE__)
 
 
 ########################
@@ -31,6 +33,46 @@ task :expandify do |f|
 	Dir.glob("{lib,bin}/**/*.erb").each() do |ex|
 		expand_erb(ex, ex.gsub(/\.erb$/, ''))
 	end
+end
+
+# libgpac
+GPacConfigureFlags = [ "--disable-ipv6", "--disable-wx", "--disable-ssl", "--disable-opengl" ]
+desc "Build the libgpac library"
+task :gpac do |t|
+	build_native_lib("gpac", GPacConfigureFlags, ["make lib", "make install-lib"])
+end
+
+# libx264
+X264ConfigureFlags = [
+	'--enable-mp4-output', "--enable-pic",  #'--enable-pthread',
+	"--extra-cflags=\"-I#{File.join(RootDir, 'obj', 'include')}\"",
+	"--extra-ldflags=\"-L#{File.join(RootDir, 'obj', 'lib')}\""
+]
+desc "Build the libx264 library"
+task :x264 do |t|
+	build_native_lib("x264", X264ConfigureFlags)
+end
+
+# libfaac
+desc "Build the faac library"
+task :faac do |t|
+	build_native_lib("faac")
+end
+
+# ffmpeg
+FFMpegConfigureFlags = [
+	"--prefix=#{RootDir}/obj",
+	'--enable-gpl', '--enable-pp', '--enable-swscaler',
+	'--enable-libx264', '--enable-libfaac', #'--enable-pthreads',
+
+	# FIXME: I get weird compile errors on OS X unless I disable MMX
+	'--disable-ffserver', '--disable-ffplay', '--disable-strip', "--disable-mmx",
+	"--extra-cflags=\"-I#{File.join(RootDir, 'obj', 'include')}\"",
+	"--extra-ldflags=\"-L#{File.join(RootDir, 'obj', 'lib')} -lpthread\""
+]
+desc "Build the ffmpeg library"
+task :ffmpeg do |t|
+	build_native_lib("ffmpeg", FFMpegConfigureFlags)
 end
 
 # Taglib
@@ -49,7 +91,7 @@ end
 
 desc "Run unit tests"
 Rake::TestTask.new("test") do |t|
-	t.pattern = 'test/**/*.rb'
+	t.pattern = 'test/*.rb'
 	t.verbose = true
 	t.warning = true
 end

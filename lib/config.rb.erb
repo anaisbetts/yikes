@@ -27,7 +27,6 @@ unless defined? $CONFIG_INCLUDED and $CONFIG_INCLUDED
 		end
 		$:.clear 
 		tmp.sort.uniq.each {|x| $:.unshift(x) unless x == ''}
-		p $:
 	end
 
 	path_add('.')

@@ -1,0 +1,5 @@
+To build:
+	rake && rake test    # If it works, you're good
+
+To run:
+	ruby lib/main.rb --help
