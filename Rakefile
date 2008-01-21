@@ -19,7 +19,7 @@ PKG_VERSION   = "0.1"
 PKG_FILE_NAME = "#{PKG_NAME}-#{PKG_VERSION}"
 
 # Fixed up clean section to pick up extensions
-CLEAN = FileList["**/*~", "**/*.bak", "**/core", 'ext/taglib/**/*.o', 'ext/**/*.dll', 'ext/**/*.so', 'ext/**/*.dylib', 'bin/*', 'obj/*']
+CLEAN = FileList["**/*~", "**/*.bak", "**/core", 'ext/taglib/**/*.o', 'ext/**/*.dll', 'ext/**/*.so', 'ext/**/*.dylib', 'bin/*', 'libexec/*']
 CLOBBER = FileList['ext/**/CMakeCache.txt']
 
 RootDir = File.dirname(__FILE__)
@@ -41,8 +41,8 @@ end
 # libx264
 X264ConfigureFlags = [ 
 	'--enable-mp4-output', "--enable-pic",  #'--enable-pthread',
-	"--extra-cflags=\"-I#{File.join(RootDir, 'obj', 'include')}\"",
-	"--extra-ldflags=\"-L#{File.join(RootDir, 'obj', 'lib')}\""
+	"--extra-cflags=\"-I#{File.join(RootDir, 'libexec', 'include')}\"",
+	"--extra-ldflags=\"-L#{File.join(RootDir, 'libexec', 'lib')}\""
 ]
 desc "Build the libx264 library"
 task :x264 => [:gpac] do |t|
@@ -57,14 +57,14 @@ end
 
 # ffmpeg
 FFMpegConfigureFlags = [
-	"--prefix=#{RootDir}/obj",
+	"--prefix=#{RootDir}/libexec",
 	'--enable-gpl', '--enable-pp', '--enable-swscaler',
 	'--enable-libx264', '--enable-libfaac', #'--enable-pthreads', 
 
 	# FIXME: I get weird compile errors on OS X unless I disable MMX
 	'--disable-ffserver', '--disable-ffplay', '--disable-strip', "--disable-mmx", 
-	"--extra-cflags=\"-I#{File.join(RootDir, 'obj', 'include')}\"",
-	"--extra-ldflags=\"-L#{File.join(RootDir, 'obj', 'lib')} -lpthread\""
+	"--extra-cflags=\"-I#{File.join(RootDir, 'libexec', 'include')}\"",
+	"--extra-ldflags=\"-L#{File.join(RootDir, 'libexec', 'lib')} -lpthread\""
 ]
 desc "Build the ffmpeg library"
 task :ffmpeg => [:x264, :faac] do |t|
@@ -82,14 +82,14 @@ end
 
 desc "Process .erb files"
 task :expandify do |f|
-	Dir.glob("{lib,bin}/**/*.erb").each() do |ex|
+	Dir.glob("{lib,bin,build}/**/*.erb").each() do |ex|
 		expand_erb(ex, ex.gsub(/\.erb$/, ''))
 	end
 end
 
 
 ########################
-## Regular Tasks
+## Test Tasks
 ########################
 
 desc "Update missing tests"
@@ -133,15 +133,15 @@ task :flog do |t|
 	sh "flog " + Dir.glob("lib/**/*.rb").join(' ') + " | grep '^\\w'"
 end 
 
-desc "Build Documentation"
-task :doc do |t|
-end
-
 task :alltest => [
 	:test,
 	:coverage,
 	:heckle
 ]
+
+desc "Build Documentation"
+task :doc do |t|
+end
 
 
 #######################
@@ -152,26 +152,35 @@ Pallet.new('yikes', "0.1") do |p|
 	p.author  = 'Paul Betts'
 	p.email   = 'paul.betts@gmail.com'
 	p.summary = 'An automatic way to put your TV shows on your iPod'
+	p.description = <<-DESC.margin
+	  |This is a description!
+	DESC
 
 	p.packages << Pallet::Gem.new(p) do |gem|
 		gem.depends = ['rake']
 		gem.requirements = ['fakeroot', 'dpkg-dev']
+		gem.files.include FileList['bin/*']
 		gem.files.include FileList['share/**/*']
+		gem.files.include FileList['lib/**/*']
 	end
 
-	p.packages << Pallet::Deb.new(p => :doc) do |deb|
+	p.packages << Pallet::Deb.new(p) do |deb|
 		deb.depends    = %w{build-essential rake}
 		deb.recommends = %w{fakeroot}
-		deb.copyright  = 'COPYRIGHT'
+		deb.copyright  = 'COPYING'
+		
 		deb.section    = 'utils'
 		deb.files      = [ 
-			Installer.new('lib',   '/usr/lib/ruby/1.8'),
-			Installer.new('share', '/usr/share/pallet'), ]
+			Installer.new('bin', '/usr/bin'),
+			Installer.new('lib', '/usr/lib/yikes'),
+			Installer.new('libexec', '/usr/lib/yikes/libexec'),
+		]
 
-		deb.docs = [ 
-			Installer.new('doc',       'html'),
-			Installer.new('Rakefile',  'examples'),
-			Installer.new { Dir['[A-Z][A-Z]*'] }, ]
+#                 deb.docs = [ 
+#                         Installer.new('doc',       'html'),
+#                         Installer.new('Rakefile',  'examples'),
+#                         Installer.new { Dir['[A-Z][A-Z]*'] }, 
+#                 ]
 	end
 end
 
@@ -195,10 +204,20 @@ task :updatepo do
 end
 
 
+#######################
+## Final tasks
+#######################
+
+desc "Miscellaneous post-build tasks"
+task :postbuild => [:expandify] do 
+	sh "cp #{RootDir}/build/ffmpeg_run.sh #{RootDir}/lib" 
+	sh "cp #{RootDir}/build/config.rb #{RootDir}/lib" 
+end
+
 # Default Action
 task :default => [
-#	:taglib,
 	:updatepo,
 	:makemo,
 	:expandify,
+	:postbuild,
 ]
