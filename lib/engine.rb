@@ -55,7 +55,7 @@ class Engine
 		transcode_if_exists(file_path, dest_file)
 	end
 
-	TranscodeScript = File.join(AppConfig::RootDir, 'bin', 'ffmpeg_run.sh')
+	TranscodeScript = File.join(AppConfig::RootDir, 'lib', 'ffmpeg_run.sh')
 	def transcode_if_exists(input, output)
 		true if Pathname.new(output).exist?
 		puts "#{input} => #{output}"
