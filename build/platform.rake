@@ -32,3 +32,9 @@ def get_install_prefix
 	return ret if ret and ret.length > 0
 	return "/usr/local"
 end
+
+def libname(file)
+	return "#{file}.dll" if os() == :win32
+	return "#{file}.so" if os() == :linux
+	return "#{file}.dylib" if os() == :osx
+end

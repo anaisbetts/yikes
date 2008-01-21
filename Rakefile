@@ -20,7 +20,6 @@ PKG_FILE_NAME = "#{PKG_NAME}-#{PKG_VERSION}"
 
 # Fixed up clean section to pick up extensions
 CLEAN = FileList["**/*~", "**/*.bak", "**/core", 'ext/taglib/**/*.o', 'ext/**/*.dll', 'ext/**/*.so', 'ext/**/*.dylib', 'bin/*', 'libexec/*']
-CLOBBER = FileList['ext/**/CMakeCache.txt']
 
 RootDir = File.dirname(__FILE__)
 
@@ -34,6 +33,7 @@ InstallPrefix = get_install_prefix()
 # libgpac
 GPacConfigureFlags = [ "--disable-ipv6", "--disable-wx", "--disable-ssl", "--disable-opengl" ]
 desc "Build the libgpac library"
+#file "libexec/lib/#{libname('libgpac')}" => Dir.glob("ext/gpac/**/*.{c,h,cpp}") do |t|
 task :gpac do |t|
 	build_native_lib("gpac", GPacConfigureFlags, ["make lib", "make install-lib"])
 end
@@ -69,15 +69,6 @@ FFMpegConfigureFlags = [
 desc "Build the ffmpeg library"
 task :ffmpeg => [:x264, :faac] do |t|
 	build_native_lib("ffmpeg", FFMpegConfigureFlags)
-end
-
-# Taglib
-desc "Build the Taglib library"
-task :taglib do |t|
-	sh "cd ext/taglib && cmake ."
-	sh "cd ext/taglib && make"
-	sh "mkdir -p bin"
-	Dir.glob("ext/**/*.{dll,so,dylib}").each {|x| sh "cp #{x} bin/"}
 end
 
 desc "Process .erb files"

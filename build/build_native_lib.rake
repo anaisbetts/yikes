@@ -6,7 +6,7 @@ def build_native_lib(name, config_flags = [], build_commands = ["make", "make in
 		sh "cd #{library_dir} && ./bootstrap"
 	end
 
-	prefix_flag = "--prefix=#{File.join(RootDir, 'obj')}"
+	prefix_flag = "--prefix=#{File.join(RootDir, 'libexec')}"
 	sh "cd #{library_dir} && ./configure #{prefix_flag} #{config_flags.join(' ')}"
 	build_commands.each {|x| sh "cd #{library_dir} && #{x}"}
 
