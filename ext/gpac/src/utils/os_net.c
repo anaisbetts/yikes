@@ -92,11 +92,6 @@ static int wsa_init = 0;
 typedef s32 SOCKET;
 #define closesocket(v) close(v)
 
-// XXX: Added by bettsp, not actually correct!
-#ifdef __DARWIN__
-#define u_long unsigned long
-#endif
-
 #endif
 
 #ifdef __SYMBIAN32__
@@ -110,6 +105,11 @@ typedef s32 SOCKET;
 
 #ifdef GPAC_IPV6
 static u32 ipv6_check_state = 0;
+#endif
+
+// XXX: Added by bettsp, not actually correct!
+#ifndef u_long
+#define u_long unsigned long
 #endif
 
 /*internal flags*/

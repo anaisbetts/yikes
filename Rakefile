@@ -23,6 +23,7 @@ CLOBBER = FileList['ext/**/CMakeCache.txt']
 
 RootDir = File.dirname(__FILE__)
 
+InstallPrefix = get_install_prefix()
 
 ########################
 ## Tasks
@@ -43,7 +44,7 @@ task :gpac do |t|
 end
 
 # libx264
-X264ConfigureFlags = [
+X264ConfigureFlags = [ 
 	'--enable-mp4-output', "--enable-pic",  #'--enable-pthread',
 	"--extra-cflags=\"-I#{File.join(RootDir, 'obj', 'include')}\"",
 	"--extra-ldflags=\"-L#{File.join(RootDir, 'obj', 'lib')}\""
@@ -63,10 +64,10 @@ end
 FFMpegConfigureFlags = [
 	"--prefix=#{RootDir}/obj",
 	'--enable-gpl', '--enable-pp', '--enable-swscaler',
-	'--enable-libx264', '--enable-libfaac', #'--enable-pthreads',
+	'--enable-libx264', '--enable-libfaac', #'--enable-pthreads', 
 
 	# FIXME: I get weird compile errors on OS X unless I disable MMX
-	'--disable-ffserver', '--disable-ffplay', '--disable-strip', "--disable-mmx",
+	'--disable-ffserver', '--disable-ffplay', '--disable-strip', "--disable-mmx", 
 	"--extra-cflags=\"-I#{File.join(RootDir, 'obj', 'include')}\"",
 	"--extra-ldflags=\"-L#{File.join(RootDir, 'obj', 'lib')} -lpthread\""
 ]

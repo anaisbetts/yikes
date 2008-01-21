@@ -10,5 +10,5 @@ def build_native_lib(name, config_flags = [], build_commands = ["make", "make in
 	sh "cd #{library_dir} && ./configure #{prefix_flag} #{config_flags.join(' ')}"
 	build_commands.each {|x| sh "cd #{library_dir} && #{x}"}
 
-	Dir.glob(File.join(RootDir, "{obj,ext}", "**", "*.{dll,so,dylib}")).each {|x| sh "cp #{x} #{File.join(RootDir, 'bin')}" }
+	#Dir.glob(File.join(RootDir, "{obj,ext}", "**", "*.{dll,so,dylib}")).each {|x| sh "cp #{x} #{File.join(RootDir, 'bin')}" }
 end
