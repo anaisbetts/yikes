@@ -37,16 +37,10 @@ X264ConfigureFlags = [
 	"--extra-cflags=\"-I#{File.join(RootDir, 'libexec', 'include')}\"",
 	"--extra-ldflags=\"-L#{File.join(RootDir, 'libexec', 'lib')}\""
 ]
-autoconf_task("x264", [], X264ConfigureFlags)
+autoconf_task("x264", ["gpac"], X264ConfigureFlags)
 
 # libmp4v2
 autoconf_task("mp4v2")
-
-# libmp4v2
-desc "Build the mp4v2 library"
-task :mp4v2 do |t|
-	build_native_lib("mp4v2")
-end
 
 # libfaac
 FaacConfigureFlags = [ '--with-mp4v2' ]
