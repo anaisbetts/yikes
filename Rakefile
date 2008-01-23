@@ -32,11 +32,8 @@ InstallPrefix = get_install_prefix()
 
 # libgpac
 GPacConfigureFlags = [ "--disable-ipv6", "--disable-wx", "--disable-ssl", "--disable-opengl" ]
-desc "Build the libgpac library"
 #file "libexec/lib/#{libname('libgpac')}" => Dir.glob("ext/gpac/**/*.{c,h,cpp}") do |t|
-task :gpac do |t|
-	build_native_lib("gpac", GPacConfigureFlags, ["make lib", "make install-lib"])
-end
+autoconf_task("gpac", [], GPacConfigureFlags, ["make lib", "make install-lib"], ["make clean"])
 
 # libx264
 X264ConfigureFlags = [ 
@@ -44,17 +41,14 @@ X264ConfigureFlags = [
 	"--extra-cflags=\"-I#{File.join(RootDir, 'libexec', 'include')}\"",
 	"--extra-ldflags=\"-L#{File.join(RootDir, 'libexec', 'lib')}\""
 ]
-desc "Build the libx264 library"
-task :x264 => [:gpac] do |t|
-	build_native_lib("x264", X264ConfigureFlags)
-end
+autoconf_task("x264", [], X264ConfigureFlags)
+
+# libmp4v2
+autoconf_task("mp4v2")
 
 # libfaac
 FaacConfigureFlags = [ '--with-mp4v2' ]
-desc "Build the faac library"
-task :faac => [:x264] do |t|
-	build_native_lib("faac", FaacConfigureFlags)
-end
+autoconf_task("faac", ["mp4v2"], FaacConfigureFlags)
 
 # ffmpeg
 FFMpegConfigureFlags = [
@@ -67,10 +61,7 @@ FFMpegConfigureFlags = [
 	"--extra-cflags=\"-I#{File.join(RootDir, 'libexec', 'include')}\"",
 	"--extra-ldflags=\"-L#{File.join(RootDir, 'libexec', 'lib')} -lpthread\""
 ]
-desc "Build the ffmpeg library"
-task :ffmpeg => [:x264, :faac] do |t|
-	build_native_lib("ffmpeg", FFMpegConfigureFlags)
-end
+autoconf_task("ffmpeg", ["x264", "faac"], FFMpegConfigureFlags)
 
 desc "Process .erb files"
 task :expandify do |f|

@@ -1,14 +1,20 @@
 require 'pathname'
 
-def build_native_lib(name, config_flags = [], build_commands = ["make", "make install"])
+def autoconf_task(name, deps = [], config_flags = [], build_commands = ["make", "make install"], clean_commands = ["make distclean"])
 	library_dir = File.join(RootDir, 'ext', name)
-	if Pathname.new(File.join(library_dir, 'bootstrap')).exist?
-		sh "cd #{library_dir} && ./bootstrap"
+
+	desc "Build the #{name} library"
+	task name.to_sym => deps do |t|
+		if Pathname.new(File.join(library_dir, 'bootstrap')).exist?
+			sh "cd #{library_dir} && ./bootstrap"
+		end
+
+		prefix_flag = "--prefix=#{File.join(RootDir, 'libexec')}"
+		sh "cd #{library_dir} && ./configure #{prefix_flag} #{config_flags.join(' ')}"
+		build_commands.each {|x| sh "cd #{library_dir} && #{x}"}
 	end
 
-	prefix_flag = "--prefix=#{File.join(RootDir, 'libexec')}"
-	sh "cd #{library_dir} && ./configure #{prefix_flag} #{config_flags.join(' ')}"
-	build_commands.each {|x| sh "cd #{library_dir} && #{x}"}
-
-	#Dir.glob(File.join(RootDir, "{obj,ext}", "**", "*.{dll,so,dylib}")).each {|x| sh "cp #{x} #{File.join(RootDir, 'bin')}" }
+	task :clean do |t|
+		clean_commands.each {|x| sh "cd #{library_dir} && #{x}"}
+	end
 end
