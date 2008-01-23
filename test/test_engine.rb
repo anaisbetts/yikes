@@ -21,7 +21,7 @@ class TestEngine < Test::Unit::TestCase
 	end
 
 	def test_build_target_path
-		assert_equal "/target/dir/path/test.mp4", Engine.build_target_path("path/test.avi", "/target/dir")
+		assert_equal "/target/dir/path/test.mov", Engine.build_target_path("path/test.avi", "/target/dir")
 	end
 
 	def test_transcode_if_exists
