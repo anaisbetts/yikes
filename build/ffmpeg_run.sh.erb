@@ -9,11 +9,11 @@ if [ "x$FFMPEG" == "x" ]; then
 fi
 
 # One-pass known-working with QT 
-#$FFMPEG -y -i "$1" -f mov -vcodec libx264 -s 432x320 -r 30000/1001 -bufsize 8192 -qscale 5 -acodec libfaac -ab 96 -ac 2 -async 1 -threads auto "$2"
+$FFMPEG -y -i "$1" -f mov -vcodec libx264 -s 432x320 -r 30000/1001 -bufsize 8192 -qscale 5 -acodec libfaac -ab 96 -ac 2 -async 1 -threads auto "$2"
 
-$FFMPEG -y -threads auto -i "$1" -f mov -vcodec libx264 -s 432x320 -r 30000/1001 -bufsize 8192 -qscale 5 -refs 1 -loop 1 -deblockalpha 0 -deblockbeta 0 -parti4x4 1 -partp8x8 1 -me full -subq 1 -me_range 21 -chroma 1 -slice 2 -bf 0 -level 30 -g 300 -keyint_min 30 -sc_threshold 40 -rc_eq 'blurCplx^(1-qComp)' -qcomp 0.7 -qmax 51 -qdiff 4 -i_qfactor 0.71428572 -maxrate 768000 -cmp 1 -s 480x320 -f mov -pass 1 /dev/null
+#$FFMPEG -y -threads auto -i "$1" -f mov -vcodec libx264 -s 432x320 -r 30000/1001 -bufsize 8192 -qscale 5 -refs 1 -loop 1 -deblockalpha 0 -deblockbeta 0 -parti4x4 1 -partp8x8 1 -me full -subq 1 -me_range 21 -chroma 1 -slice 2 -bf 0 -level 30 -g 300 -keyint_min 30 -sc_threshold 40 -rc_eq 'blurCplx^(1-qComp)' -qcomp 0.7 -qmax 51 -qdiff 4 -i_qfactor 0.71428572 -maxrate 768000 -cmp 1 -s 480x320 -f mov -pass 1 /dev/null
 
-$FFMPEG -y -i "$1" -v 1 -threads auto -vcodec libx264 -r 30000/1001 -bufsize 8192 -qscale 5 -refs 1 -loop 1 -deblockalpha 0 -deblockbeta 0 -parti4x4 1 -partp8x8 1 -me full -subq 6 -me_range 21 -chroma 1 -slice 2 -bf 0 -level 30 -g 300 -keyint_min 30 -sc_threshold 40 -rc_eq 'blurCplx^(1-qComp)' -qcomp 0.7 -qmax 51 -qdiff 4 -i_qfactor 0.71428572 -maxrate 768000 -cmp 1 -s 480x320 -acodec libfaac -ab 96 -ar 48000 -ac 2 -f mov -pass 2 "$2"
+#$FFMPEG -y -i "$1" -v 1 -threads auto -vcodec libx264 -r 30000/1001 -bufsize 8192 -qscale 5 -refs 1 -loop 1 -deblockalpha 0 -deblockbeta 0 -parti4x4 1 -partp8x8 1 -me full -subq 6 -me_range 21 -chroma 1 -slice 2 -bf 0 -level 30 -g 300 -keyint_min 30 -sc_threshold 40 -rc_eq 'blurCplx^(1-qComp)' -qcomp 0.7 -qmax 51 -qdiff 4 -i_qfactor 0.71428572 -maxrate 768000 -cmp 1 -s 480x320 -acodec libfaac -ab 96 -ar 48000 -ac 2 -f mov -pass 2 "$2"
 
 # Original 2-pass code
 #

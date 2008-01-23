@@ -67,7 +67,7 @@ class << self
 		file.gsub(File.join(source_root, ''), '')
 	end
 
-	def build_target_path(subpath, target_root, target_ext = "mp4")
+	def build_target_path(subpath, target_root, target_ext = "mov")
 		File.join(target_root, subpath.gsub(/\.[^\.\/\\]*$/, ".#{target_ext}"))
 	end
 end

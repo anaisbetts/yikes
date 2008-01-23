@@ -18,11 +18,7 @@ PKG_NAME = "yikes"
 PKG_VERSION   = "0.1"
 PKG_FILE_NAME = "#{PKG_NAME}-#{PKG_VERSION}"
 
-# Fixed up clean section to pick up extensions
-CLEAN = FileList["**/*~", "**/*.bak", "**/core", 'ext/taglib/**/*.o', 'ext/**/*.dll', 'ext/**/*.so', 'ext/**/*.dylib', 'bin/*', 'libexec/*']
-
 RootDir = File.dirname(__FILE__)
-
 InstallPrefix = get_install_prefix()
 
 
@@ -49,10 +45,16 @@ task :x264 => [:gpac] do |t|
 	build_native_lib("x264", X264ConfigureFlags)
 end
 
+# libmp4v2
+desc "Build the mp4v2 library"
+task :mp4v2 do |t|
+	build_native_lib("mp4v2")
+end
+
 # libfaac
 FaacConfigureFlags = [ '--with-mp4v2' ]
 desc "Build the faac library"
-task :faac => [:x264] do |t|
+task :faac => [:mp4v2] do |t|
 	build_native_lib("faac", FaacConfigureFlags)
 end
 
