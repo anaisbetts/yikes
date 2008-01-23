@@ -156,23 +156,25 @@ Pallet.new('yikes', "0.1") do |p|
 		gem.files.include FileList['lib/**/*']
 	end
 
-	p.packages << Pallet::Deb.new(p) do |deb|
-		deb.depends    = %w{build-essential rake}
-		deb.recommends = %w{fakeroot}
-		deb.copyright  = 'COPYING'
-		
-		deb.section    = 'utils'
-		deb.files      = [ 
-			Installer.new('bin', '/usr/bin'),
-			Installer.new('lib', '/usr/lib/yikes'),
-			Installer.new('libexec', '/usr/lib/yikes/libexec'),
-		]
+	if os() == :linux
+		p.packages << Pallet::Deb.new(p) do |deb|
+			deb.depends    = %w{build-essential rake}
+			deb.recommends = %w{fakeroot}
+			deb.copyright  = 'COPYING'
+			
+			deb.section    = 'utils'
+			deb.files      = [ 
+				Installer.new('bin', '/usr/bin'),
+				Installer.new('lib', '/usr/lib/yikes'),
+				Installer.new('libexec', '/usr/lib/yikes/libexec'),
+			]
 
-#                 deb.docs = [ 
-#                         Installer.new('doc',       'html'),
-#                         Installer.new('Rakefile',  'examples'),
-#                         Installer.new { Dir['[A-Z][A-Z]*'] }, 
-#                 ]
+			deb.docs = [ 
+				Installer.new('doc',       'html'),
+				Installer.new('Rakefile',  'examples'),
+				Installer.new { Dir['[A-Z][A-Z]*'] }, 
+			]
+		end
 	end
 end
 
@@ -199,6 +201,10 @@ end
 #######################
 ## Final tasks
 #######################
+
+task :clean do
+	puts "I'm a clean hook!"
+end
 
 desc "Miscellaneous post-build tasks"
 task :postbuild => [:expandify] do 
