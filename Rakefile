@@ -40,7 +40,7 @@ end
 
 # libx264
 X264ConfigureFlags = [ 
-	'--enable-mp4-output', "--enable-pic",  #'--enable-pthread',
+	'--enable-mp4-output', '--enable-pthread',
 	"--extra-cflags=\"-I#{File.join(RootDir, 'libexec', 'include')}\"",
 	"--extra-ldflags=\"-L#{File.join(RootDir, 'libexec', 'lib')}\""
 ]
@@ -50,16 +50,17 @@ task :x264 => [:gpac] do |t|
 end
 
 # libfaac
+FaacConfigureFlags = [ '--with-mp4v2' ]
 desc "Build the faac library"
 task :faac => [:x264] do |t|
-	build_native_lib("faac")
+	build_native_lib("faac", FaacConfigureFlags)
 end
 
 # ffmpeg
 FFMpegConfigureFlags = [
 	"--prefix=#{RootDir}/libexec",
 	'--enable-gpl', '--enable-pp', '--enable-swscaler',
-	'--enable-libx264', '--enable-libfaac', #'--enable-pthreads', 
+	'--enable-libx264', '--enable-libfaac', '--enable-pthreads', 
 
 	# FIXME: I get weird compile errors on OS X unless I disable MMX
 	'--disable-ffserver', '--disable-ffplay', '--disable-strip', "--disable-mmx", 
