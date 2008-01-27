@@ -6,6 +6,7 @@
 
 if [ "x$FFMPEG" == "x" ]; then
 	export FFMPEG="$(dirname $0)/../libexec/bin/ffmpeg"
+	export LD_LIBRARY_PATH="$(dirname $0)/../libexec/lib"
 fi
 
 # One-pass known-working with QT 
@@ -20,3 +21,7 @@ $FFMPEG -y -i "$1" -f mov -vcodec libx264 -s 480x320 -r 30000/1001 -bufsize 8192
 #$FFMPEG -y -i "$1" -an -v 1 -threads auto -vcodec libx264 -b 500000 -bt 175000 -refs 1 -loop 1 -deblockalpha 0 -deblockbeta 0 -parti4x4 1 -partp8x8 1 -me full -subq 1 -me_range 21 -chroma 1 -slice 2 -bf 0 -level 30 -g 300 -keyint_min 30 -sc_threshold 40 -rc_eq 'blurCplx^(1-qComp)' -qcomp 0.7 -qmax 51 -qdiff 4 -i_qfactor 0.71428572 -maxrate 768000 -bufsize 2M -cmp 1 -s 480x320 -f mp4 -pass 1 /dev/null
 
 #$FFMPEG -y -i "$1" -v 1 -threads auto -vcodec libx264 -b 500000 -bt 175000 -refs 1 -loop 1 -deblockalpha 0 -deblockbeta 0 -parti4x4 1 -partp8x8 1 -me full -subq 6 -me_range 21 -chroma 1 -slice 2 -bf 0 -level 30 -g 300 -keyint_min 30 -sc_threshold 40 -rc_eq 'blurCplx^(1-qComp)' -qcomp 0.7 -qmax 51 -qdiff 4 -i_qfactor 0.71428572 -maxrate 768000 -bufsize 2M -cmp 1 -s 480x320 -acodec libfaac -ab 96 -ar 48000 -ac 2 -f mp4 -pass 2 "$2"
+
+# One-pass that seems to work and still generate good quality
+# -r 30000/1001 is important!
+$FFMPEG -y -i "$1" -threads auto -vcodec libx264 -r 30000/1001 -b 1536000 -level 30 -mbd 2 -cmp 2 -subcmp 2 -g 300 -qmin 20 -qmax 31 -flags +loop -chroma 1 -partitions partp8x8+partb8x8 -flags2 +mixed_refs -me_method 8 -subq 7 -trellis 2 -refs 1 -coder 0 -me_range 16 -bf 0 -sc_threshold 40 -keyint_min 25 -maxrate 3584000 -bufsize 1536000 -s 488x328 -croptop 4 -cropbottom 4 -cropleft 4 -cropright 4 -aspect 4:3 -acodec libfaac -ac 2 -ar 44100 -ab 0 -aq 120 -alang ENG -async 1 "$2"
