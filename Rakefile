@@ -43,7 +43,7 @@ autoconf_task("x264", ["gpac"], X264ConfigureFlags)
 autoconf_task("mp4v2")
 
 # libfaac
-FaacConfigureFlags = [ '--with-mp4v2' ]
+FaacConfigureFlags = [ '--with-mp4v2=yes' ]
 autoconf_task("faac", ["mp4v2"], FaacConfigureFlags)
 
 # ffmpeg
@@ -156,11 +156,11 @@ Pallet.new('yikes', "0.1") do |p|
 				Installer.new('libexec', '/usr/lib/yikes/libexec'),
 			]
 
-			deb.docs = [ 
-				Installer.new('doc',       'html'),
-				Installer.new('Rakefile',  'examples'),
-				Installer.new { Dir['[A-Z][A-Z]*'] }, 
-			]
+#                         deb.docs = [ 
+#                                 Installer.new('doc',       'html'),
+#                                 Installer.new('Rakefile',  'examples'),
+#                                 Installer.new { Dir['[A-Z][A-Z]*'] }, 
+#                         ]
 		end
 	end
 end
@@ -188,10 +188,6 @@ end
 #######################
 ## Final tasks
 #######################
-
-task :clean do
-	puts "I'm a clean hook!"
-end
 
 desc "Miscellaneous post-build tasks"
 task :postbuild => [:expandify] do 
