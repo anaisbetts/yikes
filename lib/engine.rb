@@ -72,7 +72,9 @@ end
 
 module ExternalTranscoder
 	def transcode(input, output)
-		stdin, stdout, stderr = Open3.popen3 get_command(input, output)
+		cmd = get_command(input, output)
+		puts "Running #{cmd}"
+		stdin, stdout, stderr = Open3.popen3 cmd
 
 #		if Platform.os == :windows
 #			# TODO: Implement me
@@ -149,7 +151,7 @@ class FFMpegTranscoder
 
 	FFMpegPath = File.join(AppConfig::RootDir, 'libexec', 'bin', 'ffmpeg')
 	def get_command(input, output)
-		ret = ["#{FFMpegPath} -i #{input}"] + MiscParams + VideoParams + AudioParams + [output]
+		ret = ["#{FFMpegPath} -i \"#{input}\""] + MiscParams + VideoParams + AudioParams + ["\"#{output}\""]
 		ret.join ' '
 	end
 
