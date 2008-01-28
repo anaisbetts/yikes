@@ -74,7 +74,11 @@ module ExternalTranscoder
 	def transcode(input, output)
 		cmd = get_command(input, output)
 		puts "Running #{cmd}"
-		stdin, stdout, stderr = Open3.popen3 cmd
+		IO.popen cmd do |i,o,e|
+			o.readlines.each do |line|
+				p line
+			end
+		end
 
 #		if Platform.os == :windows
 #			# TODO: Implement me
@@ -88,12 +92,6 @@ module ExternalTranscoder
 #			after_transcode() if self.respond_to? :before_transcode
 #		end
 
-		File.open("debug.out", 'w') do |f|
-			f.puts "out:"
-			f.puts stdout
-			f.puts "err:"
-			f.puts stderr
-		end
 	end
 end
 
@@ -151,7 +149,7 @@ class FFMpegTranscoder
 
 	FFMpegPath = File.join(AppConfig::RootDir, 'libexec', 'bin', 'ffmpeg')
 	def get_command(input, output)
-		ret = ["#{FFMpegPath} -i \"#{input}\""] + MiscParams + VideoParams + AudioParams + ["\"#{output}\""]
+		ret = ["#{FFMpegPath} -i \"#{input}\""] + MiscParams + VideoParams + AudioParams + ["\"#{output}\" 2>&1"]
 		ret.join ' '
 	end
 
