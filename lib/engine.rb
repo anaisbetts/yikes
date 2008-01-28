@@ -38,9 +38,10 @@ include GetText
 $logging_level ||= Logger::ERROR
 
 class Engine 
-	def initialize
+	def initialize(transcoder = FFMpegTranscoder)
 		#super(self.class.to_s)
 		#self.level = $logging_level
+		@transcoder = transcoder.new
 	end
 
 	# Main function for converting a video file and writing it to a folder
@@ -52,10 +53,9 @@ class Engine
 		transcode_if_exists(file_path, dest_file)
 	end
 
-	TranscodeScript = File.join(AppConfig::RootDir, 'lib', 'ffmpeg_run.sh')
 	def transcode_if_exists(input, output)
 		return true if Pathname.new(output).exist?
-		`#{TranscodeScript} "#{input}" "#{output}"`
+		@transcoder.transcode(input, output)
 	end
 
 class << self
@@ -72,17 +72,20 @@ end
 
 module ExternalTranscoder
 	def transcode(input, output)
-		if Platform.os == :windows
-			# TODO: Implement me
-			return
-		end
+		Open3.popen3 get_command(input, output)
 
-		# Platform is Posix so we have fork
-		Kernel.fork do
-			before_transcode() if self.respond_to? :before_transcode
-			Kernel.exec get_command(input, output)
-			after_transcode() if self.respond_to? :before_transcode
-		end
+#		if Platform.os == :windows
+#			# TODO: Implement me
+#			return
+#		end
+#
+#		# Platform is Posix so we have fork
+#		Kernel.fork do
+#			before_transcode() if self.respond_to? :before_transcode
+#			Kernel.exec 
+#			after_transcode() if self.respond_to? :before_transcode
+#		end
+
 	end
 end
 
