@@ -72,17 +72,20 @@ end
 
 module ExternalTranscoder
 	def transcode(input, output)
-		if Platform.os == :windows
-			# TODO: Implement me
-			return
-		end
+		Open3.popen3 get_command(input, output)
 
-		# Platform is Posix so we have fork
-		Kernel.fork do
-			before_transcode() if self.respond_to? :before_transcode
-			Kernel.exec get_command(input, output)
-			after_transcode() if self.respond_to? :before_transcode
-		end
+#		if Platform.os == :windows
+#			# TODO: Implement me
+#			return
+#		end
+#
+#		# Platform is Posix so we have fork
+#		Kernel.fork do
+#			before_transcode() if self.respond_to? :before_transcode
+#			Kernel.exec 
+#			after_transcode() if self.respond_to? :before_transcode
+#		end
+
 	end
 end
 
