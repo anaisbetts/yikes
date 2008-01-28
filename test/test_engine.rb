@@ -21,10 +21,28 @@ class TestEngine < Test::Unit::TestCase
 	end
 
 	def test_build_target_path
-		assert_equal "/target/dir/path/test.mov", Engine.build_target_path("path/test.avi", "/target/dir")
+		assert_equal "/target/dir/path/test.mp4", Engine.build_target_path("path/test.avi", "/target/dir")
 	end
 
 	def test_transcode_if_exists
 		#raise NotImplementedError, 'Need to write test_transcode_if_exists'
+	end
+end
+
+class TestFFMpegTranscoder < Test::Unit::TestCase
+	def setup
+		require 'engine'
+		@fft = FFMpegTranscoder.new
+	end
+
+	def test_get_command
+		input = "foo"
+		output = 'bar'
+		ret = @fft.get_command(input, output)
+
+		# FIXME: This test sucks
+		assert ret.include?(input)
+		assert ret.include?(output)
+		assert ret.include?("ffmpeg")
 	end
 end
