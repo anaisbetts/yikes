@@ -72,7 +72,7 @@ end
 
 module ExternalTranscoder
 	def transcode(input, output)
-		Open3.popen3 get_command(input, output)
+		stdin, stdout, stderr = Open3.popen3 get_command(input, output)
 
 #		if Platform.os == :windows
 #			# TODO: Implement me
@@ -86,6 +86,12 @@ module ExternalTranscoder
 #			after_transcode() if self.respond_to? :before_transcode
 #		end
 
+		File.open("debug.out", 'w') do |f|
+			f.puts "out:"
+			f.puts stdout
+			f.puts "err:"
+			f.puts stderr
+		end
 	end
 end
 
