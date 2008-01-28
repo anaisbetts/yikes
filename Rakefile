@@ -191,7 +191,6 @@ end
 
 desc "Miscellaneous post-build tasks"
 task :postbuild => [:expandify] do 
-	sh "cp #{RootDir}/build/ffmpeg_run.sh #{RootDir}/lib" 
 	sh "cp #{RootDir}/build/config.rb #{RootDir}/lib" 
 end
 

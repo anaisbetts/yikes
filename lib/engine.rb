@@ -37,8 +37,6 @@ include GetText
 
 $logging_level ||= Logger::ERROR
 
-#puts Engine.instance_methods if defined? Engine
-
 class Engine 
 	def initialize
 		#super(self.class.to_s)
