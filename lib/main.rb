@@ -59,7 +59,7 @@ class Yikes < Logger::Application
 			opts.separator ""
 			opts.separator _("Specific options:")
 
-			opts.on('-l', _("--library /path/to/videos"),
+			opts.on('-l', _("--dslibrary /path/to/videos"),
 				_("Directory to recursively scan for videos")) do |x|
 				results[:library] = x 
 			end

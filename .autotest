@@ -23,3 +23,12 @@ require 'autotest/screen'
 Autotest::Heckle.flags << '-t test/**/*.rb'
 #Autotest::Heckle.klasses << 'MyClass'
 #Autotest::Shame.chat_app = :adium
+
+require 'yaml'
+
+Autotest.add_hook :initialize do |at|
+	at.add_mapping(/^lib\/.*\.rb$/) {
+		at.files_matching(/^stories.*_story.rb$/)
+	}
+	%w{libexec ext .git}.each { |x| at.add_exception(x) }
+end
