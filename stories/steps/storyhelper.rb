@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'spec/story'
 
-StoryDir = File.dirname(__FILE__)
+StoryDir = File.join(File.dirname(__FILE__), '..')
 
 require File.join(StoryDir, '..', 'lib', 'config') unless defined? $CONFIG_INCLUDED and $CONFIG_INCLUDED
 
@@ -11,6 +11,6 @@ require File.join(StoryDir, '..', 'lib', 'config') unless defined? $CONFIG_INCLU
 path_add StoryDir
 path_add File.join(StoryDir, '..', 'lib')
 
-Dir[File.join(File.dirname(__FILE__), "steps/*.rb")].each do |file|
+Dir[File.join(File.dirname(__FILE__), "*.rb")].each do |file|
   require file
 end

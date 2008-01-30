@@ -78,7 +78,7 @@ end
 
 desc "Run unit tests"
 Rake::TestTask.new("test") do |t|
-	t.pattern = 'test/*.rb'
+	t.pattern = '{test,stories}/*.rb'
 	t.verbose = true
 	t.warning = true
 end
