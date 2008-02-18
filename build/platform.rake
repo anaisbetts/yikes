@@ -38,3 +38,7 @@ def libname(file)
 	return "#{file}.so" if os() == :linux
 	return "#{file}.dylib" if os() == :osx
 end
+
+def require_os(file)
+	require "#{file}_#{os.to_s}"
+end
