@@ -40,5 +40,26 @@ def libname(file)
 end
 
 def require_os(file)
-	require "#{file}_#{os.to_s}"
+	begin
+		require "#{file}_#{os.to_s}"
+	rescue
+		puts "Foo"
+	end
+end
+
+def load_os(file)
+	begin
+		load "#{file}_#{os.to_s}"
+	rescue
+		puts "Foo"
+	end
+end
+
+def ruby_path
+	return ENV["RUBY_BIN"] if ENV["RUBY_BIN"]
+
+	# FIXME: We need to include Ruby on Win32
+	return nil if os() == :win32
+	ret = `where ruby`
+	return ($? != 0 ? ret : nil)
 end
