@@ -4,8 +4,10 @@ Done:
 
 0.1:
 	* Linux package
+		- Fix exec script
 
 0.2:
+	* Investigate what other encoders (Handbrake et al.) are doing
 	* Daemon mode (frontend/backend separation)
 	* Qt4 GUI
 	* OSX disk image
