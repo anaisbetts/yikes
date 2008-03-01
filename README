@@ -1,5 +1,23 @@
+What is Yikes?
+---------------
+
+Yikes is a program that takes a source library and recreates the same library in
+iPod Video format (iPod Video / iPod Touch / iPhone). It skips videos that are
+already there, so you can set it up to run on a periodic basis.
+
+Future versions will run in the background, and automatically convert files when
+the computer is idle, as well as publish an RSS feed that you can subscribe to
+in iTunes.
+
+So when this is all finished, you'll set Yikes to run on startup, point it at
+your videos, and add computername.local:8080 as a podcast. If you have set up a
+"Season Pass"-type automatic Bittorrent download of shows, this means that every
+day your videos automatically get sync'ed to your iPod!
+
+
 To build:
-	rake && rake test    # If it works, you're good
+	rake && rake ffmpeg 	# Takes forever, only works on Mac/Linux
+	rake test    # If it works, you're good
 
 To run:
 	ruby lib/main.rb --help
