@@ -143,7 +143,7 @@ Pallet.new('yikes', "0.1") do |p|
 		gem.files.include FileList['lib/**/*']
 	end
 
-	load_os("pallet_deb")
+#	load_os("pallet_deb")
 end
 
 
