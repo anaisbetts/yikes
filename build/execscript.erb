@@ -1,0 +1,3 @@
+#!/bin/sh
+
+<%=ruby_exec_path || throw("Can't find Ruby!") %>  <%= File.join(InstallPrefix, "bin", "main.rb") %> $@

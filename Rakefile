@@ -146,6 +146,11 @@ Pallet.new('yikes', "0.1") do |p|
 #	load_os("pallet_deb")
 end
 
+desc "Create a bundle folder that has all dependencies included"
+task :bundle do
+	ENV["REQUIRE2LIB_LIBDIR"] = "#{RootDir}/bundle"
+	sh "#{RootDir}/findlibs/main.rb #{RootDir}/lib/main.rb"
+end
 
 #######################
 ## Gettext section
@@ -172,7 +177,10 @@ end
 
 desc "Miscellaneous post-build tasks"
 task :postbuild => [:expandify] do 
+	# FIXME: There's a Rake'y way to do this...
 	sh "cp #{RootDir}/build/config.rb #{RootDir}/lib" 
+	sh "mkdir -p #{RootDir}/bin && mv #{RootDir}/build/execscript #{RootDir}/bin/yikes"
+	sh "chmod +x #{RootDir}/bin/yikes"
 end
 
 # Default Actions

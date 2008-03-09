@@ -55,11 +55,15 @@ def load_os(file)
 	end
 end
 
-def ruby_path
+def ruby_exec_path
 	return ENV["RUBY_BIN"] if ENV["RUBY_BIN"]
 
 	# FIXME: We need to include Ruby on Win32
 	return nil if os() == :win32
-	ret = `where ruby`
-	return ($? != 0 ? ret : nil)
+	ret = `which ruby`
+	return nil unless ret 	# FIXME: How can I use $? here?
+
+	# Filter out the newline at the end
+	m = /^(.*?)\s*$/.match(ret)
+	return m[1]
 end

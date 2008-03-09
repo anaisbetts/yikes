@@ -35,6 +35,17 @@ class TestFFMpegTranscoder < Test::Unit::TestCase
 		@fft = FFMpegTranscoder.new
 	end
 
+	def test_basic_transcode
+		input = File.join(TestDir, 'test_files', 'MH_egyptian_pan_L2R.avi')
+		output = File.join(TestDir, 'tmp.avi')
+		@fft.transcode(input, output)
+
+		# Let's see if the file exists
+		opn = Pathname.new(output)
+		assert opn.exist?
+		opn.delete
+	end
+
 	def test_get_command
 		input = "foo"
 		output = 'bar'

@@ -153,7 +153,7 @@ class Yikes < Logger::Application
 	end
 end
 
-return unless __FILE__ == $0
-
-$the_app = Yikes.instance
-$the_app.run
+if __FILE__ == $0
+	$the_app = Yikes.instance
+	$the_app.run
+end

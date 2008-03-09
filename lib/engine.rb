@@ -74,7 +74,13 @@ module ExternalTranscoder
 	def transcode(input, output)
 		cmd = get_command(input, output)
 		puts "Running #{cmd}"
+		
+		# FIXME: Dumb hack code!
+		system(cmd)
+		return
+
 		IO.popen cmd do |i,o,e|
+			break
 			o.readlines.each do |line|
 				p line
 			end

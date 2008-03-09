@@ -1,7 +1,7 @@
 Usage: Yikes [options]
 
 Specific options:
-    -l, --library /path/to/videos    Directory to recursively scan for videos
+    -l, --dslibrary /path/to/videos  Directory to recursively scan for videos
     -t, --target dir                 Directory to put files in
     -g, --gui                        Run the GUI version of this application
 
