@@ -12,6 +12,7 @@ require 'pallet'
 # Load other build files
 Dir.glob("build/*.rake").each {|x| load x}
 
+
 ### Constants
 
 PKG_NAME = "yikes"
@@ -151,6 +152,7 @@ task :bundle do
 	ENV["REQUIRE2LIB_LIBDIR"] = "#{RootDir}/bundle"
 	sh "#{RootDir}/findlibs/main.rb #{RootDir}/lib/main.rb"
 end
+
 
 #######################
 ## Gettext section
