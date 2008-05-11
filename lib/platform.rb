@@ -80,4 +80,4 @@ end # Class << self
 end
 
 # Pull in OS-specific version of open3
-require (Platform.os != :windows ? 'open3' : 'win32/open3')
+require( (Platform.os != :windows) ? 'open3' : 'win32/open3')
