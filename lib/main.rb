@@ -36,6 +36,7 @@ require 'platform'
 require 'config'
 require 'utility'
 require 'engine'
+require 'daemonize'
 
 include GetText
 
@@ -49,6 +50,11 @@ class Yikes < Logger::Application
 		self.level = $logging_level
 	end
 
+
+	#
+	# Main Methods
+	#
+
 	def parse(args)
 		# Set the defaults here
 		results = { :target => 'iPod', :library => '.' }
@@ -59,17 +65,22 @@ class Yikes < Logger::Application
 			opts.separator ""
 			opts.separator _("Specific options:")
 
-			opts.on('-l', _("--dslibrary /path/to/videos"),
+			opts.on('-l', _("--library /path/to/videos"),
 				_("Directory to recursively scan for videos")) do |x|
-				results[:library] = x 
+				results[:library] = Pathname.new(x).realpath.to_s
 			end
 
 			opts.on('-t', "--target dir", _("Directory to put files in")) do |x|
-				results[:target] = x
+				results[:target] = Pathname.new(x).realpath.to_s
 			end
 
-			opts.on('-g', '--gui', _("Run the GUI version of this application")) do |x|
-				results[:rungui] = true
+			opts.on('-b', '--background', _("Run this program in the background")) do
+				results[:background] = true
+			end
+
+			opts.on('-r', '--rate seconds', _("How long to wait between runs; implies -b")) do |x|
+				results[:background] = true
+				results[:rate] = x.to_s.to_f
 			end
 
 			opts.separator ""
@@ -94,7 +105,8 @@ class Yikes < Logger::Application
 			end
 		end
 
-		opts.parse!(args);	results
+		opts.parse!(args)
+		results
 	end
 
 	def run
@@ -102,12 +114,6 @@ class Yikes < Logger::Application
     		bindtextdomain(AppConfig::Package, nil, nil, "UTF-8")
 		self.level = Logger::DEBUG
 		
-		# If we're called with no arguments, run the GUI version
-		if ARGV.size == 0
-			run_gui
-			exit
-		end
-
 		# Parse arguments
 		begin
 			results = parse(ARGV)
@@ -122,34 +128,51 @@ class Yikes < Logger::Application
 		# Reset our logging level because option parsing changed it
 		self.level = $logging_level
 
-		# Run the GUI if requested
-		log DEBUG, 'Starting application'
-		if results[:rungui]
-			run_gui
-			exit
-		end
+		# Actually do stuff
+		unless results[:background]
 
-		# Hey here's the real code!
-		io = HighLine.new
-		engine = Engine.new
-		get_file_list(results).each {|x| engine.convert_file_and_save(results[:library], x, results[:target])}
+			# Just a single run
+			do_encode(results[:library], results[:target])
+		else
+			puts _("Yikes started in the background. Go to http://#{Platform.hostname}.local:4000 !")
+			return unless daemonize
+
+			begin 
+				poll_directory_and_encode(results[:library], results[:target], results[:rate])
+			rescue Exception => e
+				log FATAL, e.message
+				log FATAL, e.backtrace.join("\n")
+			end
+		end
 
 		log DEBUG, 'Exiting application'
 	end
 
-	def get_file_list(optparse)
-		Dir.glob(File.join(optparse[:library], '**', '*')).delete_if {|x| not filelike?(x)}
+	def do_encode(library, target)
+		engine = Engine.new
+		log INFO, "Starting encoding run.."
+		get_file_list(library).each {|x| engine.convert_file_and_save(library, x, target)}
+		log INFO, "Finished"
 	end
 
-	def run_gui
-		#$:.unshift File.join(File.dirname(__FILE__), 'gtk-ui')
+	def poll_directory_and_encode(library, target, rate)
+		log DEBUG, "We're daemonized!"
 
-		log DEBUG, 'Starting GUI...'
-		throw "Implement the GUI!"
-		#Gtk.init
-		#Gnome::Program.new(Config::Package, Config::Version)
-		#main_window = MainWindow.new
-		#Gtk.main
+		@log = Logger.new('/tmp/yikes.log')
+
+		until $do_quit
+			do_encode(library,target)
+			Kernel.sleep(rate || 60*30)
+		end
+	end
+
+
+	#
+	# Auxillary methods
+	#
+
+	def get_file_list(library)
+		Dir.glob(File.join(library, '**', '*')).delete_if {|x| not filelike?(x)}
 	end
 end
 
