@@ -3,13 +3,13 @@ Done:
 	* Use external ffmpeg
 	* Fix exec script
 	* FFmpeg/libfaac/whatever from source, statically compiled
+	* Daemon mode (frontend/backend separation)
 
 0.1:
 	* Linux package
 
 0.2:
 	* Investigate what other encoders (Handbrake et al.) are doing
-	* Daemon mode (frontend/backend separation)
 	* Rails daemon running video podcasts to local machine, advertise using Zeroconf
 	* OSX disk image
 	* Use Taglib to write tag information
