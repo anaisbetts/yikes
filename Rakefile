@@ -138,7 +138,6 @@ Pallet.new('yikes', "0.1") do |p|
 
 	p.packages << Pallet::Gem.new(p) do |gem|
 		gem.depends = ['rake']
-		gem.requirements = ['fakeroot', 'dpkg-dev']
 		gem.files.include FileList['bin/*']
 		gem.files.include FileList['share/**/*']
 		gem.files.include FileList['lib/**/*']
