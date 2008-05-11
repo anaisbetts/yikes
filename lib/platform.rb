@@ -59,6 +59,23 @@ class << self
 		return File.join(AppConfig::RootDir, 'bin')
 	end
 
+ 	def logging_dir
+ 		# FIXME: Do I even need to say anything?
+ 		return "DONTKNOW" if os == :windows
+ 		return "/var/log"
+ 	end
+ 
+ 	def pidfile_dir
+ 		return "DONTKNOW" if os == :windows
+ 		return '/var/run'
+ 	end
+ 
+ 	def hostname
+ 		return "DONTKNOW" if os == :windows
+ 		return `hostname -s`
+ 	end
+ 
+
 end # Class << self
 end
 
