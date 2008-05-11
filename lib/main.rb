@@ -135,7 +135,7 @@ class Yikes < Logger::Application
 			do_encode(results[:library], results[:target])
 		else
 			puts _("Yikes started in the background. Go to http://#{Platform.hostname}.local:4000 !")
-			return unless daemonize
+			return unless daemonize and should_daemonize?
 
 			begin 
 				poll_directory_and_encode(results[:library], results[:target], results[:rate])
@@ -155,10 +155,14 @@ class Yikes < Logger::Application
 		log INFO, "Finished"
 	end
 
+	def should_daemonize?
+		(not $logging_level == DEBUG)
+	end
+
 	def poll_directory_and_encode(library, target, rate)
 		log DEBUG, "We're daemonized!"
 
-		@log = Logger.new('/tmp/yikes.log')
+		@log = Logger.new('/tmp/yikes.log') if should_daemonize?
 
 		until $do_quit
 			do_encode(library,target)
