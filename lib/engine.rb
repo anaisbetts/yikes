@@ -73,7 +73,7 @@ end
 module ExternalTranscoder
 	def transcode(input, output)
 		cmd = get_command(input, output)
-		puts "Running #{cmd}"
+		#puts "Running #{cmd}"
 		
 		# FIXME: Dumb hack code!
 		pid = fork do
