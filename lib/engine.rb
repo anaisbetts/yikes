@@ -76,15 +76,20 @@ module ExternalTranscoder
 		puts "Running #{cmd}"
 		
 		# FIXME: Dumb hack code!
-		system(cmd)
+		pid = fork do
+			STDOUT.reopen '/dev/null'
+			STDERR.reopen '/dev/null'
+			system(cmd)
+		end
+		Process.wait pid
 		return
 
-		IO.popen cmd do |i,o,e|
-			break
-			o.readlines.each do |line|
-				p line
-			end
-		end
+#                 IO.popen cmd do |i,o,e|
+#                         break
+#                         o.readlines.each do |line|
+#                                 p line
+#                         end
+#                 end
 
 #		if Platform.os == :windows
 #			# TODO: Implement me
@@ -155,7 +160,7 @@ class FFMpegTranscoder
 
 	FFMpegPath = File.join(AppConfig::RootDir, 'libexec', 'bin', 'ffmpeg')
 	def get_command(input, output)
-		ret = ["#{FFMpegPath} -i \"#{input}\""] + MiscParams + VideoParams + AudioParams + ["\"#{output}\" 2>&1"]
+		ret = ["#{FFMpegPath} -i \"#{input}\""] + MiscParams + VideoParams + AudioParams + ["\"#{output}\""]
 		ret.join ' '
 	end
 
