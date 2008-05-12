@@ -130,7 +130,6 @@ class Yikes < Logger::Application
 
 		# Actually do stuff
 		unless results[:background]
-
 			# Just a single run
 			do_encode(results[:library], results[:target])
 		else
@@ -140,23 +139,23 @@ class Yikes < Logger::Application
 			begin 
 				poll_directory_and_encode(results[:library], results[:target], results[:rate])
 			rescue Exception => e
-				log FATAL, e.message
-				log FATAL, e.backtrace.join("\n")
+				logger.fatal e.message
+				logger.fatal e.backtrace.join("\n")
 			end
 		end
 
-		log DEBUG, 'Exiting application'
+		logger.debug 'Exiting application'
 	end
 
 	def do_encode(library, target)
 		engine = Engine.new
-		log INFO, "Starting encoding run.."
+		logger.info "Starting encoding run.."
 		get_file_list(library).each {|x| engine.convert_file_and_save(library, x, target)}
-		log INFO, "Finished"
+		logger.info "Finished"
 	end
 
 	def poll_directory_and_encode(library, target, rate)
-		log DEBUG, "We're daemonized!"
+		logger.info "We're daemonized!"
 
 		@log = Logger.new('/tmp/yikes.log')
 
@@ -174,6 +173,14 @@ class Yikes < Logger::Application
 	def get_file_list(library)
 		Dir.glob(File.join(library, '**', '*')).delete_if {|x| not filelike?(x)}
 	end
+
+	def get_logger
+		@log
+	end
+end
+
+def logger
+	Yikes.instance.get_logger
 end
 
 if __FILE__ == $0

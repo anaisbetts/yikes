@@ -54,7 +54,12 @@ class Engine
 	end
 
 	def transcode_if_exists(input, output)
-		return true if Pathname.new(output).exist?
+		p = Pathname.new(output)
+		if p.exist?
+			logger.info "#{p.basename.to_s} already exists, skipping"
+			return true
+		end
+		logger.info "#{p.basename.to_s} doesn't exist, starting transcode..."
 		@transcoder.transcode(input, output)
 	end
 
@@ -79,9 +84,12 @@ module ExternalTranscoder
 		pid = fork do
 			STDOUT.reopen '/dev/null'
 			STDERR.reopen '/dev/null'
+			logger.debug "Executing: #{cmd}"
 			system(cmd)
 		end
 		Process.wait pid
+		exitcode = ($?) ? ($?.exitstatus) : -1
+		logger.info "Failed during encode, process returned #{exitcode}" unless exitcode == 0
 		return
 
 #                 IO.popen cmd do |i,o,e|
