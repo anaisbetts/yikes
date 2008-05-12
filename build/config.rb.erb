@@ -29,5 +29,10 @@ unless defined? $CONFIG_INCLUDED and $CONFIG_INCLUDED
 		tmp.sort.uniq.each {|x| $:.unshift(x) unless x == ''}
 	end
 
+	# This is a stub so that our tests don't blow up, it gets redefined in main.rb
+	def logger
+		Logger.new("/dev/null")
+	end
+
 	path_add('.')
 end

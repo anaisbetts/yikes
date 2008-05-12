@@ -5,6 +5,9 @@ Done:
 	* FFmpeg/libfaac/whatever from source, statically compiled
 	* Daemon mode (frontend/backend separation)
 
+Pre 0.1:
+	(All done!)
+
 0.1:
 	* Linux package
 
@@ -28,4 +31,3 @@ Future:
 	* Daemon control interface, script to kick off encoder run
 	* Dir change notifications on Linux, OSX
 	* Running daemon instant on-demand
-
