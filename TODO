@@ -5,6 +5,9 @@ Done:
 	* FFmpeg/libfaac/whatever from source, statically compiled
 	* Daemon mode (frontend/backend separation)
 
+Pre 0.1:
+	(All done!)
+
 0.1:
 	* Linux package
 
