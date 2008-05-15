@@ -1,5 +1,5 @@
 module Merb
-	module PodcastHelper
+	module WelcomeHelper
 
 	end
 end

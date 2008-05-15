@@ -136,7 +136,9 @@ class Yikes < Logger::Application
 		else
 			#run_merb_server
 			puts _("Yikes started in the background. Go to http://#{Platform.hostname}.local:4000 !")
-			return unless daemonize and should_daemonize?
+			if should_daemonize?
+				return unless daemonize 
+			end
 
 			Thread.new do
 				run_merb_server
