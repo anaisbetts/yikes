@@ -27,7 +27,6 @@ require 'logger'
 require 'gettext'
 require 'optparse'
 require 'optparse/time'
-require 'highline'
 require 'singleton'
 require 'yaml'
 
