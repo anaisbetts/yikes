@@ -5,6 +5,7 @@ Gem.path.unshift(Merb.root / "gems")
 # Make the app's "lib" directory a place where ruby files get "require"d from
 $LOAD_PATH.unshift(Merb.root / "lib")
 
+#Merb.logger = logger
 
 Merb::Config.use do |c|
   

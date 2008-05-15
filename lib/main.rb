@@ -30,6 +30,7 @@ require 'optparse/time'
 require 'highline'
 require 'singleton'
 require 'yaml'
+require 'merb-core'
 
 # Yikes
 require 'platform'
@@ -133,8 +134,13 @@ class Yikes < Logger::Application
 			# Just a single run
 			do_encode(results[:library], results[:target])
 		else
+			#run_merb_server
 			puts _("Yikes started in the background. Go to http://#{Platform.hostname}.local:4000 !")
 			return unless daemonize and should_daemonize?
+
+			Thread.new do
+				run_merb_server
+			end
 
 			begin 
 				poll_directory_and_encode(results[:library], results[:target], results[:rate])
@@ -167,6 +173,10 @@ class Yikes < Logger::Application
 			do_encode(library,target)
 			Kernel.sleep(rate || 60*30)
 		end
+	end
+
+	def run_merb_server
+		Merb.start(%w[-a mongrel -m] + [AppConfig::RootDir])
 	end
 
 
