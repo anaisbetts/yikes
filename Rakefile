@@ -175,7 +175,7 @@ end
 desc "Update pot/po files to match new version." 
 task :updatepo do
 	GetText.update_pofiles(PKG_NAME,
-			       Dir.glob("{app,lib}/**/*.{rb,rhtml}"),
+			       Dir.glob("{app,lib}/**/*.{rb,html.erb}"),
 			       "#{PKG_NAME} #{PKG_VERSION}")
 end
 
@@ -298,6 +298,12 @@ task :postbuild => [:expandify] do
 	sh "cp #{RootDir}/build/config.rb #{RootDir}/lib" 
 	sh "mkdir -p #{RootDir}/bin && mv #{RootDir}/build/execscript #{RootDir}/bin/yikes"
 	sh "chmod +x #{RootDir}/bin/yikes"
+end
+
+desc "Run Yikes from the source directory"
+task :run do
+	sh "mkdir -p #{RootDir}/output"
+	sh "ruby #{RootDir}/lib/main.rb --debug -r 10 -l #{RootDir}/test -t #{RootDir}/output"
 end
 
 # Default Actions

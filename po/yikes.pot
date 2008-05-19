@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: yikes 0.1\n"
-"POT-Creation-Date: 2008-03-03 12:35-0800\n"
-"PO-Revision-Date: 2008-01-20 20:45-0800\n"
+"POT-Creation-Date: 2008-05-18 18:09-0700\n"
+"PO-Revision-Date: 2008-05-18 18:09-0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,54 +16,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: lib/main.rb:57
+#: lib/main.rb:64
 msgid "Usage: Yikes [options]"
 msgstr ""
 
-#: lib/main.rb:60
+#: lib/main.rb:67
 msgid "Specific options:"
 msgstr ""
 
-#: lib/main.rb:62
-msgid "--dslibrary /path/to/videos"
+#: lib/main.rb:69
+msgid "--library /path/to/videos"
 msgstr ""
 
-#: lib/main.rb:63
+#: lib/main.rb:70
 msgid "Directory to recursively scan for videos"
 msgstr ""
 
-#: lib/main.rb:67
+#: lib/main.rb:74
 msgid "Directory to put files in"
 msgstr ""
 
-#: lib/main.rb:71
-msgid "Run the GUI version of this application"
+#: lib/main.rb:78
+msgid "Run this program in the background"
 msgstr ""
 
-#: lib/main.rb:76
+#: lib/main.rb:82
+msgid "How long to wait between runs; implies -b"
+msgstr ""
+
+#: lib/main.rb:88
 msgid "Common options:"
 msgstr ""
 
-#: lib/main.rb:78
+#: lib/main.rb:90
 msgid "Show this message"
 msgstr ""
 
-#: lib/main.rb:83
+#: lib/main.rb:95
 msgid "Run in debug mode (Extra messages)"
 msgstr ""
 
-#: lib/main.rb:87
+#: lib/main.rb:99
 msgid "Run verbosely"
 msgstr ""
 
-#: lib/main.rb:91
+#: lib/main.rb:103
 msgid "Show version"
 msgstr ""
 
-#: lib/main.rb:115
+#: lib/main.rb:122
 msgid "Missing parameter; see --help for more info"
 msgstr ""
 
-#: lib/main.rb:118
+#: lib/main.rb:125
 msgid "Invalid option; see --help for more info"
 msgstr ""
