@@ -27,64 +27,33 @@ require 'logger'
 require 'gettext'
 require 'pathname'
 require 'fileutils'
+require 'thread'
 
 include GetText
 
-module Platform
-class << self 
-	def os
-		return :linux if RUBY_PLATFORM =~ /linux/
-		return :osx if RUBY_PLATFORM =~ /darwin/
-		return :solaris if RUBY_PLATFORM =~ /solaris/
-		return :bsd if RUBY_PLATFORM =~ /bsd/
-		return :windows if RUBY_PLATFORM =~ /win/
+# This module contains the thread-safe state that we share with the web service thread
+module ApplicationState
+	attr_accessor :state
+
+	def load_state(path)
+		begin 
+			@state = YAML::load(File.read(path))
+		rescue
+			@state = State.new
+		end
 	end
 
-	def home_dir
-		# FIXME: This is clearly wrong
-		return 'C:\temp' if os == :windows
-
-		ret = (ENV["HOME"] ? ENV["HOME"] : ".")
-		return ret
+	def save_state(path)
+		File.open(path, 'w') {|f| f.write(YAML::dump(@state)) }
 	end
 
-	def which(program)
-		# FIXME: This is also clearly wrong
-		return "" if os == :windows
+	class State
+		attr_accessor :encoded_queue
 
-		return `which #{program}`
+		def initialize
+			@encoded_queue = []
+		end
 	end
-
-	def binary_dir
-		return File.join(AppConfig::RootDir, 'bin')
-	end
-
- 	def logging_dir
- 		# FIXME: Do I even need to say anything?
- 		return "DONTKNOW" if os == :windows
- 		return "/var/log"
- 	end
- 
- 	def pidfile_dir
- 		return "DONTKNOW" if os == :windows
- 		return '/var/run'
- 	end
-
-	def settings_dir
-		return "DONTKNOW" if os == :windows
-		p = File.join(home_dir, ".yikes")
-		`mkdir -p #{p}`
-		return p
-	end
- 
- 	def hostname
- 		return "DONTKNOW" if os == :windows
- 		return super_chomp(`hostname -s`)
- 	end
- 
-
-end # Class << self
 end
 
-# Pull in OS-specific version of open3
-require( (Platform.os != :windows) ? 'open3' : 'win32/open3')
+

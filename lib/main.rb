@@ -38,6 +38,7 @@ require 'config'
 require 'utility'
 require 'engine'
 require 'daemonize'
+require 'state'
 
 include GetText
 
@@ -45,6 +46,7 @@ $logging_level = ($DEBUG ? Logger::DEBUG : Logger::ERROR)
 
 class Yikes < Logger::Application
 	include Singleton
+	include ApplicationState
 
 	def initialize
 		super(self.class.to_s) 
@@ -129,6 +131,8 @@ class Yikes < Logger::Application
 		# Reset our logging level because option parsing changed it
 		self.level = $logging_level
 
+		load_state(File.join(Platform.settings_dir, 'state.yaml'))
+
 		# Actually do stuff
 		unless results[:background]
 			# Just a single run
@@ -151,6 +155,8 @@ class Yikes < Logger::Application
 				logger.fatal e.backtrace.join("\n")
 			end
 		end
+
+		save_state(File.join(Platform.settings_dir, 'state.yaml'))
 
 		logger.debug 'Exiting application'
 	end
