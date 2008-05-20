@@ -49,11 +49,10 @@ class Engine
 	def convert_file_and_save(source_root, file_path, target_root)
 		dest_file = Pathname.new(Engine.build_target_path(Engine.extract_subpath(source_root, file_path), target_root))
 		FileUtils.mkdir_p(dest_file.dirname)
-		#puts "create dir #{dest_file.dirname}"
-		transcode_if_exists(file_path, dest_file)
+		transcode(file_path, dest_file)
 	end
 
-	def transcode_if_exists(input, output)
+	def transcode(input, output)
 		p = Pathname.new(output)
 		if p.exist?
 			logger.info "#{p.basename.to_s} already exists, skipping"
@@ -67,7 +66,6 @@ class << self
 	def extract_subpath(source_root, file)
 		file.gsub(File.join(source_root, ''), '')
 	end
-
 	def build_target_path(subpath, target_root, target_ext = "mp4")
 		File.join(target_root, subpath.gsub(/\.[^\.\/\\]*$/, ".#{target_ext}"))
 	end
@@ -87,10 +85,10 @@ module ExternalTranscoder
 			logger.debug "Executing: #{cmd}"
 			system(cmd)
 		end
-		Process.wait pid
+		e = Process.wait pid
 		exitcode = ($?) ? ($?.exitstatus) : -1
-		logger.info "Failed during encode, process returned #{exitcode}" unless exitcode == 0
-		return
+		logger.info "Process returned #{exitcode}"
+		return exitcode == 0
 
 #                 IO.popen cmd do |i,o,e|
 #                         break

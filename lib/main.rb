@@ -161,15 +161,30 @@ class Yikes < Logger::Application
 		logger.debug 'Exiting application'
 	end
 
-	def do_encode(library, target)
-		engine = Engine.new
-		logger.info "Starting encoding run.."
-		get_file_list(library).each {|x| engine.convert_file_and_save(library, x, target)}
-		logger.info "Finished"
+	def enqueue_files_to_encode(library)
+		state.add_to_queue get_file_list(library).collect {|x| EncodingItem.new(x)}
 	end
 
-	def should_daemonize?
-		(not $logging_level == DEBUG)
+	def do_encode(library, target)
+		engine = Engine.new
+
+		logger.info "Collecting files.."
+		enqueue_files_to_encode(library)
+
+		logger.info "Starting encoding run.."
+	 	state.dequeue_items(state.items_count).each do |item|
+			logger.debug "Trying '#{item.path}'"
+			 
+			if engine.convert_file_and_save(library, item.path, target)
+				logger.debug "Convert succeeded"
+				state.encode_succeeded!(item)
+			else
+				logger.debug "Convert failed"
+				state.encode_failed!(item)
+			end
+		end
+
+		logger.info "Finished"
 	end
 
 	def poll_directory_and_encode(library, target, rate)
@@ -183,10 +198,6 @@ class Yikes < Logger::Application
 		end
 	end
 
-	def run_merb_server
-		Merb.start(%w[-a mongrel -m] + [AppConfig::RootDir])
-	end
-
 
 	#
 	# Auxillary methods
@@ -196,8 +207,22 @@ class Yikes < Logger::Application
 		Dir.glob(File.join(library, '**', '*')).delete_if {|x| not filelike?(x)}
 	end
 
+	def should_encode?(output)
+		p = Pathname.new(output)
+		return true unless p.exist?
+		return p.filesize > 256
+	end
+
 	def get_logger
 		@log
+	end
+
+	def should_daemonize?
+		(not $logging_level == DEBUG)
+	end
+
+	def run_merb_server
+		Merb.start(%w[-a mongrel -m] + [AppConfig::RootDir])
 	end
 end
 

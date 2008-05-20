@@ -49,11 +49,69 @@ module ApplicationState
 
 	class State
 		attr_accessor :encoded_queue
+		attr_accessor :to_encode_queue
 
 		def initialize
 			@encoded_queue = []
+			@to_encode_queue = []
+			@encoded_queue_lock = Mutex.new
+			@to_encode_queue_lock = Mutex.new
+		end
+
+		def add_to_queue(items, prepend = false)
+			@to_encode_queue_lock.synchronize {
+				items.each {|x| (prepend ? @to_encode_queue.unshift(x) : @to_encode_queue << x) }
+			}
+		end
+
+		def dequeue_items(count = 1)
+			ret = []
+			@to_encode_queue_lock.synchronize {
+				count.times do |x|
+					break if @to_encode_queue.empty?
+					ret << @to_encode_queue.shift
+				end
+			}
+			return ret
+		end
+
+		def items_count
+			ret = 0
+			@to_encode_queue_lock.synchronize {
+				ret = @to_encode_queue.length
+			}
+			ret
+		end
+
+		def encode_succeeded!(item)
+			item.succeeded = true
+			add_to_finished_list item
+		end
+
+
+		def encode_failed!(item)
+			item.succeeded = false
+			add_to_finished_list item
+		end
+		
+		def add_to_finished_list(item)
+			item.finished_at = Time.now
+			@encoded_queue_lock.synchronize {
+				@encoded_queue << item
+			}
 		end
 	end
 end
 
+class EncodingItem
+	attr_accessor :path, :succeeded, :created_at, :finished_at
 
+	# This is only so we can Yaml'ify!
+	def initialize
+	end
+
+	def initialize(path)
+		(@path, @succeeded) = [path, false]
+		@created_at = Time.now
+	end
+end
