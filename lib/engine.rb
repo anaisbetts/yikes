@@ -66,8 +66,13 @@ class << self
 	def extract_subpath(source_root, file)
 		file.gsub(File.join(source_root, ''), '')
 	end
+
 	def build_target_path(subpath, target_root, target_ext = "mp4")
 		File.join(target_root, subpath.gsub(/\.[^\.\/\\]*$/, ".#{target_ext}"))
+	end
+
+	def source_path_to_target_path(source_root, file, target_root)
+		build_target_path(Engine.extract_subpath(source_root, file), target_root)
 	end
 end
 

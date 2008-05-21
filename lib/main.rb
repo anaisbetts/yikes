@@ -173,6 +173,10 @@ class Yikes < Logger::Application
 
 		logger.info "Starting encoding run.."
 	 	state.dequeue_items(state.items_count).each do |item|
+			unless should_encode?(library, item.path, target)
+				logger.debug "Already exists: #{item.path}"
+				next
+			end
 			logger.debug "Trying '#{item.path}'"
 			 
 			if engine.convert_file_and_save(library, item.path, target)
@@ -207,10 +211,10 @@ class Yikes < Logger::Application
 		Dir.glob(File.join(library, '**', '*')).delete_if {|x| not filelike?(x)}
 	end
 
-	def should_encode?(output)
-		p = Pathname.new(output)
+	def should_encode?(library, path, target)
+		p = Pathname.new(Engine.source_path_to_target_path(library, path, target))
 		return true unless p.exist?
-		return p.filesize > 256
+		return p.size <= 256
 	end
 
 	def get_logger
