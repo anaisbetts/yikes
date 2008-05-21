@@ -177,15 +177,9 @@ class Yikes < Logger::Application
 				logger.debug "Already exists: #{item.path}"
 				next
 			end
+
 			logger.debug "Trying '#{item.path}'"
-			 
-			if engine.convert_file_and_save(library, item.path, target)
-				logger.debug "Convert succeeded"
-				state.encode_succeeded!(item)
-			else
-				logger.debug "Convert failed"
-				state.encode_failed!(item)
-			end
+			engine.convert_file(library, item.path, target, state)
 		end
 
 		logger.info "Finished"
@@ -207,18 +201,10 @@ class Yikes < Logger::Application
 	# Auxillary methods
 	#
 
-	def get_file_list(library)
-		Dir.glob(File.join(library, '**', '*')).delete_if {|x| not filelike?(x)}
-	end
-
 	def should_encode?(library, path, target)
 		p = Pathname.new(Engine.source_path_to_target_path(library, path, target))
 		return true unless p.exist?
 		return p.size <= 256
-	end
-
-	def get_logger
-		@log
 	end
 
 	def should_daemonize?
@@ -228,6 +214,8 @@ class Yikes < Logger::Application
 	def run_merb_server
 		Merb.start(%w[-a mongrel -m] + [AppConfig::RootDir])
 	end
+
+	def get_logger; @log; end
 end
 
 def logger

@@ -11,8 +11,8 @@ class TestEngine < Test::Unit::TestCase
 		@eng = Engine.new
 	end
 
-	def test_convert_file_and_save
-		#raise NotImplementedError, 'Need to write test_convert_file_and_save'
+	def test_create_path_and_convert
+		#raise NotImplementedError, 'Need to write test_create_path_and_convert'
 	end
 
 	def test_extract_subpath
@@ -24,8 +24,8 @@ class TestEngine < Test::Unit::TestCase
 		assert_equal "/target/dir/path/test.mp4", Engine.build_target_path("path/test.avi", "/target/dir")
 	end
 
-	def test_transcode_if_exists
-		#raise NotImplementedError, 'Need to write test_transcode_if_exists'
+	def test_transcode
+		#raise NotImplementedError, 'Need to write test_transcode'
 	end
 end
 

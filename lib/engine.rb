@@ -45,8 +45,17 @@ class Engine
 	end
 
 	# Main function for converting a video file and writing it to a folder
-	# /some/root/Folder/file.avi => /target/Folder/file.mp4
-	def convert_file_and_save(source_root, file_path, target_root)
+	def convert_file(source_root, path, target_root, state)
+		if engine.convert_file_and_save(library, item.path, target)
+			logger.debug "Convert succeeded"
+			state.encode_succeeded!(item)
+		else
+			logger.debug "Convert failed"
+			state.encode_failed!(item)
+		end
+	end
+
+	def create_path_and_convert(source_root, file_path, target_root)
 		dest_file = Pathname.new(Engine.build_target_path(Engine.extract_subpath(source_root, file_path), target_root))
 		FileUtils.mkdir_p(dest_file.dirname)
 		transcode(file_path, dest_file)
