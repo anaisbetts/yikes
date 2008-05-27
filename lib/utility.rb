@@ -54,6 +54,10 @@ def filelike?(path)
 	return !(p.directory? or p.blockdev? or p.chardev?)
 end
 
+def get_file_list(path)
+	Dir.glob(File.join(path, '**', '*')).delete_if {|x| not filelike?(x)}
+end
+
 def dump_stacks
 	fork do
 		ObjectSpace.each_object(Thread) do |th|

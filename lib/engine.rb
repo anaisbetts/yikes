@@ -45,8 +45,8 @@ class Engine
 	end
 
 	# Main function for converting a video file and writing it to a folder
-	def convert_file(source_root, path, target_root, state)
-		if engine.convert_file_and_save(library, item.path, target)
+	def convert_file(source_root, item, target_root, state)
+		if create_path_and_convert(source_root, item.path, target_root)
 			logger.debug "Convert succeeded"
 			state.encode_succeeded!(item)
 		else
