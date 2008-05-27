@@ -131,7 +131,7 @@ class Yikes < Logger::Application
 		# Reset our logging level because option parsing changed it
 		self.level = $logging_level
 
-		load_state(File.join(Platform.settings_dir, 'state.yaml'))
+		load_state(File.join(Platform.settings_dir, 'state.yaml'), results[:library])
 
 		# Actually do stuff
 		unless results[:background]

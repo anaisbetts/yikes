@@ -31,31 +31,41 @@ require 'thread'
 
 include GetText
 
+# TODO: We may make this customizable later
+ItemsInFinishedList = 30
+
 # This module contains the thread-safe state that we share with the web service thread
+# TODO: The name 'state' is completely retarded
 module ApplicationState
 	attr_accessor :state
 
-	def load_state(path)
+	def load_state(path, library)
+		real_lib = Pathname.new(library).realpath.to_s
 		begin 
-			@state = YAML::load(File.read(path))
+			# We hold a different State class for every library path
+			@full_state = YAML::load(File.read(path))
+			@state = @full_state[real_lib] || (@full_state[real_lib] = State.new(library))
 		rescue
-			@state = State.new
+			@full_state = { real_lib => State.new(library) }
+			@state = @full_state[real_lib]
 		end
 	end
 
 	def save_state(path)
-		File.open(path, 'w') {|f| f.write(YAML::dump(@state)) }
+		File.open(path, 'w') {|f| f.write(YAML::dump(@full_state)) }
 	end
 
 	class State
 		attr_accessor :encoded_queue
 		attr_accessor :to_encode_queue
+		attr_accessor :library
 
-		def initialize
+		def initialize(library)
 			@encoded_queue = []
 			@to_encode_queue = []
 			@encoded_queue_lock = Mutex.new
 			@to_encode_queue_lock = Mutex.new
+			@library = library
 		end
 
 		def add_to_queue(items, prepend = false)
@@ -98,7 +108,20 @@ module ApplicationState
 			item.finished_at = Time.now
 			@encoded_queue_lock.synchronize {
 				@encoded_queue << item
+				break if @encoded_queue.length <= ItemsInFinishedList
+				
+				@encoded_queue = @encoded_queue.last(ItemsInFinishedList)
 			}
+		end
+
+		def get_finished_items
+			# Make a shallow copy so we don't have to hold the lock for so long
+			ret = nil
+			@encoded_queue_lock.synchronize {
+				ret = Array.new(@encoded_queue)
+			}
+
+			ret
 		end
 	end
 end
