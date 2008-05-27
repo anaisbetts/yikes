@@ -88,6 +88,11 @@ Rake::TestTask.new("test") do |t|
 	t.warning = true
 end
 
+desc "Run specifications"
+Spec::Rake::SpecTask.new("spec") do |t|
+	t.spec_files = FileList['spec/**/*.rb']
+end
+
 desc "Run Heckle on tests"
 task :heckle do |t|
 	# Collect a list of defined classes 
