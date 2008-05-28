@@ -81,13 +81,6 @@ task :buildtests do |t|
 	Dir.glob("{lib}/**/*.rb").each {|x| sh "./build_unit_test #{x}"}
 end
 
-desc "Run unit tests"
-Rake::TestTask.new("test") do |t|
-	t.pattern = '{spec}/*.rb'
-	t.verbose = true
-	t.warning = true
-end
-
 desc "Run specifications"
 Spec::Rake::SpecTask.new("spec") do |t|
 	t.spec_files = FileList['spec/**/*.rb']

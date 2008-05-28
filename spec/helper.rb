@@ -1,6 +1,6 @@
 require 'pathname'
 
-TestDir = File.dirname(__FILE__)
+TestDir = Pathname.new(File.dirname(__FILE__)).realpath.to_s
 
 require File.join(TestDir, '..', 'lib', 'config') unless defined? $CONFIG_INCLUDED and $CONFIG_INCLUDED
 

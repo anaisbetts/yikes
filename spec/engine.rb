@@ -9,8 +9,8 @@ describe Engine do
 	end
 
 	it "should be able to extract subpaths" do
-		Engine.extract_subpath("/source/path", "/source/path/to/target.avi").should == "to/target.avi"
-		Engine.extract_subpath("", "/source/path/to/target.avi").should == "/source/path/to/target.avi"
+		Engine.extract_subpath("/source/path", "/source/path/to/target_1.avi").should == "to/target_1.avi"
+		Engine.extract_subpath("", "/source/path/to/target_2.avi").should == "/source/path/to/target_2.avi"
 	end
 
 	it "should be able to build paths" do
@@ -30,8 +30,8 @@ describe FFMpegTranscoder do
 
 		# Let's see if the file exists
 		opn = Pathname.new(output)
-		opn.exist?.should == true
-		opn.delete
+		opn.exist?().should == true
+		#opn.delete
 	end
 
 	it "should build an FFMpeg command line" do
