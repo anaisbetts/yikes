@@ -134,7 +134,7 @@ class EncodingItem
 	end
 
 	def initialize(library, source_path, target)
-		(@library, @subpath, @target, @succeeded) = [library, extract_subpath(library, source_path), target, false]
+		(@library, @subpath, @target, @succeeded) = [library, EncodingItem.extract_subpath(library, source_path), target, false]
 		@created_at = Time.now
 	end
 
@@ -143,7 +143,7 @@ class EncodingItem
 	end
 
 	def target_path
-		build_target_path(@target, @subpath)
+		EncodingItem.build_target_path(@target, @subpath)
 	end
 
 class << self

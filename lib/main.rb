@@ -173,12 +173,12 @@ class Yikes < Logger::Application
 
 		logger.info "Starting encoding run.."
 	 	state.dequeue_items(state.items_count).each do |item|
-			unless should_encode?(library, item, target)
-				logger.debug "Already exists: #{item.path}"
+			unless should_encode?(item)
+				logger.debug "Already exists: #{item.source_path}"
 				next
 			end
 
-			logger.debug "Trying '#{item.path}'"
+			logger.debug "Trying '#{item.source_path}'"
 			engine.convert_file(item, state)
 		end
 
@@ -201,8 +201,8 @@ class Yikes < Logger::Application
 	# Auxillary methods
 	#
 
-	def should_encode?(library, item, target)
-		p = Pathname.new(Engine.source_path_to_target_path(library, item.path, target))
+	def should_encode?(item)
+		p = Pathname.new(item.target_path)
 		return true unless p.exist?
 		return p.size <= 256
 	end

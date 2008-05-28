@@ -184,7 +184,7 @@ end
 desc "Run Yikes from the source directory"
 task :run do
 	sh "mkdir -p #{RootDir}/output"
-	sh "ruby #{RootDir}/lib/main.rb --debug -r 10 -l #{RootDir}/test -t #{RootDir}/output"
+	sh "ruby #{RootDir}/lib/main.rb --debug -r 10 -l #{RootDir}/spec -t #{RootDir}/output"
 end
 
 # Default Actions
