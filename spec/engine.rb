@@ -4,18 +4,7 @@ require 'helper'
 require 'lib/engine'
 
 describe Engine do
-	before do
-		@eng = Engine.new
-	end
-
-	it "should be able to extract subpaths" do
-		Engine.extract_subpath("/source/path", "/source/path/to/target_1.avi").should == "to/target_1.avi"
-		Engine.extract_subpath("", "/source/path/to/target_2.avi").should == "/source/path/to/target_2.avi"
-	end
-
-	it "should be able to build paths" do
-		Engine.build_target_path("path/test.avi", "/target/dir").should == "/target/dir/path/test.mp4"
-	end
+	# TODO: Hint, we should probably test this
 end
 
 describe FFMpegTranscoder do

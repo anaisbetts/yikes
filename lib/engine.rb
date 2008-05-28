@@ -39,14 +39,12 @@ $logging_level ||= Logger::ERROR
 
 class Engine 
 	def initialize(transcoder = FFMpegTranscoder)
-		#super(self.class.to_s)
-		#self.level = $logging_level
 		@transcoder = transcoder.new
 	end
 
 	# Main function for converting a video file and writing it to a folder
-	def convert_file(source_root, item, target_root, state)
-		if create_path_and_convert(source_root, item.path, target_root)
+	def convert_file(item, state)
+		if create_path_and_convert(item)
 			logger.debug "Convert succeeded"
 			state.encode_succeeded!(item)
 		else
@@ -55,10 +53,10 @@ class Engine
 		end
 	end
 
-	def create_path_and_convert(source_root, file_path, target_root)
-		dest_file = Pathname.new(Engine.build_target_path(Engine.extract_subpath(source_root, file_path), target_root))
+	def create_path_and_convert(item)
+		dest_file = Pathname.new(item.target_path)
 		FileUtils.mkdir_p(dest_file.dirname)
-		transcode(file_path, dest_file)
+		transcode(item.source_path, dest_file)
 	end
 
 	def transcode(input, output)
@@ -70,21 +68,6 @@ class Engine
 		logger.info "#{p.basename.to_s} doesn't exist, starting transcode..."
 		@transcoder.transcode(input, output)
 	end
-
-class << self
-	def extract_subpath(source_root, file)
-		file.gsub(File.join(source_root, ''), '')
-	end
-
-	def build_target_path(subpath, target_root, target_ext = "mp4")
-		File.join(target_root, subpath.gsub(/\.[^\.\/\\]*$/, ".#{target_ext}"))
-	end
-
-	def source_path_to_target_path(source_root, file, target_root)
-		build_target_path(Engine.extract_subpath(source_root, file), target_root)
-	end
-end
-
 end
 
 module ExternalTranscoder

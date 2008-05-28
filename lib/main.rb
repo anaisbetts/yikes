@@ -161,15 +161,15 @@ class Yikes < Logger::Application
 		logger.debug 'Exiting application'
 	end
 
-	def enqueue_files_to_encode(library)
-		state.add_to_queue get_file_list(library).collect {|x| EncodingItem.new(x)}
+	def enqueue_files_to_encode(library, target)
+		state.add_to_queue get_file_list(library).collect {|x| EncodingItem.new(library, x, target)}
 	end
 
 	def do_encode(library, target)
 		engine = Engine.new
 
 		logger.info "Collecting files.."
-		enqueue_files_to_encode(library)
+		enqueue_files_to_encode(library, target)
 
 		logger.info "Starting encoding run.."
 	 	state.dequeue_items(state.items_count).each do |item|
@@ -179,7 +179,7 @@ class Yikes < Logger::Application
 			end
 
 			logger.debug "Trying '#{item.path}'"
-			engine.convert_file(library, item, target, state)
+			engine.convert_file(item, state)
 		end
 
 		logger.info "Finished"

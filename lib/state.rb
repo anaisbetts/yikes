@@ -127,14 +127,32 @@ module ApplicationState
 end
 
 class EncodingItem
-	attr_accessor :path, :succeeded, :created_at, :finished_at
+	attr_accessor :subpath, :succeeded, :created_at, :finished_at, :library, :target
 
 	# This is only so we can Yaml'ify!
 	def initialize
 	end
 
-	def initialize(path)
-		(@path, @succeeded) = [path, false]
+	def initialize(library, source_path, target)
+		(@library, @subpath, @target, @succeeded) = [library, extract_subpath(library, source_path), target, false]
 		@created_at = Time.now
 	end
+
+	def source_path
+		File.join(@library, @subpath)
+	end
+
+	def target_path
+		build_target_path(@target, @subpath)
+	end
+
+class << self
+	def extract_subpath(source_root, file)
+		file.gsub(File.join(source_root, ''), '')
+	end
+
+	def build_target_path(target_root, subpath, target_ext = "mp4")
+		File.join(target_root, subpath.gsub(/\.[^\.\/\\]*$/, ".#{target_ext}"))
+	end
+end
 end

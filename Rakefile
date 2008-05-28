@@ -76,11 +76,6 @@ end
 ## Test Tasks
 ########################
 
-desc "Update missing tests"
-task :buildtests do |t|
-	Dir.glob("{lib}/**/*.rb").each {|x| sh "./build_unit_test #{x}"}
-end
-
 desc "Run specifications"
 Spec::Rake::SpecTask.new("spec") do |t|
 	t.spec_files = FileList['spec/**/*.rb']
