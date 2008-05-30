@@ -148,7 +148,8 @@ class EncodingItem
 
 class << self
 	def extract_subpath(source_root, file)
-		file.gsub(File.join(source_root, ''), '')
+		return file unless file.index(source_root) == 0 and not source_root.empty?
+		file.sub(File.join(source_root, ''), '')
 	end
 
 	def build_target_path(target_root, subpath, target_ext = "mp4")
