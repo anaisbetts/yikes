@@ -5,7 +5,8 @@ Gem.path.unshift(Merb.root / "gems")
 # Make the app's "lib" directory a place where ruby files get "require"d from
 $LOAD_PATH.unshift(Merb.root / "lib")
 
-#Merb.logger = logger
+# FIXME: Why doesn't this work
+#Merb.logger = Yikes.instance.logger
 
 Merb::Config.use do |c|
   
@@ -51,6 +52,8 @@ end
 # dependency "RedCloth", "> 3.0"
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
+
+require 'merb-builder'
 
 Merb::BootLoader.after_app_loads do
   ### Add dependencies here that must load after the application loads:

@@ -1,4 +1,5 @@
 class Welcome < Application
+	provides :html, :xml
 
 	def index
 		render

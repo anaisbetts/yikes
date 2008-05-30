@@ -28,6 +28,6 @@ Merb::Router.prepare do |r|
 
 	# Change this for your home page to be available at /
 	# r.match('/').to(:controller => 'whatever', :action =>'index')
-	r.match('/:action').to(:controller => 'welcome')
+	r.match('/:action.:format').to(:controller => 'welcome')
 	r.match('/').to(:controller => 'welcome', :action =>'index')
 end

@@ -7,3 +7,7 @@ require File.join(TestDir, '..', 'lib', 'config') unless defined? $CONFIG_INCLUD
 path_add TestDir
 path_add File.join(TestDir, '..')
 path_add File.join(TestDir, '..', 'lib')
+
+Spec::Runner.configure do |config|
+	config.mock_with :flexmock
+end

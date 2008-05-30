@@ -32,6 +32,7 @@ require 'yaml'
 # Yikes
 require 'platform'
 require 'utility'
+require 'state'
 
 include GetText
 
@@ -55,8 +56,8 @@ class Engine
 
 	def create_path_and_convert(item)
 		dest_file = Pathname.new(item.target_path)
-		FileUtils.mkdir_p(dest_file.dirname)
-		transcode(item.source_path, dest_file)
+		FileUtils.mkdir_p(dest_file.dirname.to_s)
+		transcode(item.source_path, dest_file.to_s)
 	end
 
 	def transcode(input, output)
@@ -76,11 +77,13 @@ module ExternalTranscoder
 		#puts "Running #{cmd}"
 		
 		# FIXME: Dumb hack code!
-		pid = fork do
+		pid = nil
+		unless (pid = fork)
 			STDOUT.reopen '/dev/null'
 			STDERR.reopen '/dev/null'
 			logger.debug "Executing: #{cmd}"
 			system(cmd)
+			Kernel.exit!
 		end
 		e = Process.wait pid
 		exitcode = ($?) ? ($?.exitstatus) : -1
