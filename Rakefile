@@ -78,7 +78,7 @@ end
 
 desc "Run specifications"
 Spec::Rake::SpecTask.new("spec") do |t|
-	t.spec_files = FileList['spec/**/*.rb']
+	t.spec_files = FileList['spec/**/spec_*.rb']
 end
 
 desc "Run Heckle on tests"
