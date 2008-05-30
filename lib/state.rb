@@ -28,6 +28,7 @@ require 'gettext'
 require 'pathname'
 require 'fileutils'
 require 'thread'
+require 'yaml'
 
 include GetText
 
@@ -40,7 +41,14 @@ module ApplicationState
 	attr_accessor :state
 
 	def load_state(path, library)
-		real_lib = Pathname.new(library).realpath.to_s
+		# If they give us a bum path, we can't get the real path
+		real_lib = nil
+		begin
+			real_lib = Pathname.new(library).realpath.to_s
+		rescue
+			real_lib = library
+		end
+
 		begin 
 			# We hold a different State class for every library path
 			@full_state = YAML::load(File.read(path))
