@@ -78,7 +78,7 @@ end
 
 desc "Run specifications"
 Spec::Rake::SpecTask.new("spec") do |t|
-	t.spec_files = FileList['spec/**/spec_*.rb']
+	t.spec_files = FileList['spec/**/*_spec.rb']
 end
 
 desc "Run Heckle on tests"
@@ -100,9 +100,11 @@ task :heckle do |t|
 #	sh "echo cat " + Dir.glob("lib/**/*.rb").join(' ') + " | grep '^class ' | grep -v 'class <<' | sed -e 's/\\1/g' | xargs -I {} heckle -f"
 end
 
-desc "Run code coverage"
-task :coverage do |t|
-	sh "rcov -xrefs " + Dir.glob("test/**/*.rb").join(' ') + " 2>&1 >/dev/null"
+desc "Run all examples with RCov"
+Spec::Rake::SpecTask.new('coverage') do |t|
+	t.spec_files = FileList['spec/**/*_spec.rb']
+	t.rcov = true
+	t.rcov_opts = ['--exclude', '.*gems.*']
 end
 
 desc "Flog code"
@@ -111,7 +113,7 @@ task :flog do |t|
 end 
 
 task :alltest => [
-	:test,
+	:spec,
 	:coverage,
 	:heckle
 ]

@@ -82,7 +82,9 @@ module ExternalTranscoder
 			STDOUT.reopen '/dev/null'
 			STDERR.reopen '/dev/null'
 			logger.debug "Executing: #{cmd}"
+			before_transcode() if self.respond_to? :before_transcode
 			system(cmd)
+			after_transcode() if self.respond_to? :before_transcode
 			Kernel.exit!
 		end
 		e = Process.wait pid
