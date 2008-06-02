@@ -16,9 +16,14 @@ unless defined? $CONFIG_INCLUDED and $CONFIG_INCLUDED
 	# will sometimes cause us to end up with duplicates (i.e. 'test/../lib' and 
 	# 'lib'), and this confuses 'require' and gives us weird errors
 	def path_add(path)
-		real_path = Pathname.new(path).realpath
-		$:.unshift real_path.to_s unless $:.include? real_path
+		real_path = Pathname.new(path).realpath.to_s
+		$:.unshift real_path unless $:.include? real_path
 		path_filter
+	end
+
+	def path_remove(path)
+		real_path = Pathname.new(path).realpath.to_s
+		$:.delete_if {|x| Pathname.new(x).realpath.to_s == real_path}
 	end
 
 	def path_filter

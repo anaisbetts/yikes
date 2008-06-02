@@ -5,7 +5,7 @@ require 'autotest/timestamp'
 #require 'autotest/autoupdate'
 #require 'autotest/emacs'
 #require 'autotest/fixtures'
-#require 'autotest/growl'
+require 'autotest/growl'
 require 'autotest/heckle'
 #require 'autotest/html_report'
 #require 'autotest/kdenotify'
@@ -13,7 +13,7 @@ require 'autotest/heckle'
 #require 'autotest/migrate'
 #require 'autotest/notify'
 #require 'autotest/pretty'
-require 'autotest/screen'
+#require 'autotest/screen'
 #require 'autotest/shame'
 #require 'autotest/snarl'
 
@@ -27,8 +27,8 @@ Autotest::Heckle.flags << '-t test/**/*.rb'
 require 'yaml'
 
 Autotest.add_hook :initialize do |at|
-	at.add_mapping(/^lib\/.*\.rb$/) {
-		at.files_matching(/^stories.*_story.rb$/)
-	}
+#         at.add_mapping(/lib.*/) {
+#                 at.files_matching(/spec.*\.rb/)
+#         }
 	%w{libexec ext .git}.each { |x| at.add_exception(x) }
 end

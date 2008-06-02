@@ -32,6 +32,7 @@ require 'yaml'
 # Yikes
 require 'platform'
 require 'utility'
+require 'state'
 
 include GetText
 
@@ -39,21 +40,27 @@ $logging_level ||= Logger::ERROR
 
 class Engine 
 	def initialize(transcoder = FFMpegTranscoder)
-		#super(self.class.to_s)
-		#self.level = $logging_level
 		@transcoder = transcoder.new
 	end
 
 	# Main function for converting a video file and writing it to a folder
-	# /some/root/Folder/file.avi => /target/Folder/file.mp4
-	def convert_file_and_save(source_root, file_path, target_root)
-		dest_file = Pathname.new(Engine.build_target_path(Engine.extract_subpath(source_root, file_path), target_root))
-		FileUtils.mkdir_p(dest_file.dirname)
-		#puts "create dir #{dest_file.dirname}"
-		transcode_if_exists(file_path, dest_file)
+	def convert_file(item, state)
+		if create_path_and_convert(item)
+			logger.debug "Convert succeeded"
+			state.encode_succeeded!(item)
+		else
+			logger.debug "Convert failed"
+			state.encode_failed!(item)
+		end
 	end
 
-	def transcode_if_exists(input, output)
+	def create_path_and_convert(item)
+		dest_file = Pathname.new(item.target_path)
+		FileUtils.mkdir_p(dest_file.dirname.to_s)
+		transcode(item.source_path, dest_file.to_s)
+	end
+
+	def transcode(input, output)
 		p = Pathname.new(output)
 		if p.exist?
 			logger.info "#{p.basename.to_s} already exists, skipping"
@@ -62,17 +69,6 @@ class Engine
 		logger.info "#{p.basename.to_s} doesn't exist, starting transcode..."
 		@transcoder.transcode(input, output)
 	end
-
-class << self
-	def extract_subpath(source_root, file)
-		file.gsub(File.join(source_root, ''), '')
-	end
-
-	def build_target_path(subpath, target_root, target_ext = "mp4")
-		File.join(target_root, subpath.gsub(/\.[^\.\/\\]*$/, ".#{target_ext}"))
-	end
-end
-
 end
 
 module ExternalTranscoder
@@ -81,16 +77,20 @@ module ExternalTranscoder
 		#puts "Running #{cmd}"
 		
 		# FIXME: Dumb hack code!
-		pid = fork do
+		pid = nil
+		unless (pid = fork)
 			STDOUT.reopen '/dev/null'
 			STDERR.reopen '/dev/null'
 			logger.debug "Executing: #{cmd}"
+			before_transcode() if self.respond_to? :before_transcode
 			system(cmd)
+			after_transcode() if self.respond_to? :before_transcode
+			Kernel.exit!
 		end
-		Process.wait pid
+		e = Process.wait pid
 		exitcode = ($?) ? ($?.exitstatus) : -1
-		logger.info "Failed during encode, process returned #{exitcode}" unless exitcode == 0
-		return
+		logger.info "Process returned #{exitcode}"
+		return exitcode == 0
 
 #                 IO.popen cmd do |i,o,e|
 #                         break

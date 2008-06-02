@@ -29,6 +29,7 @@ require 'optparse'
 require 'optparse/time'
 require 'singleton'
 require 'yaml'
+require 'merb-core'
 
 # Yikes
 require 'platform'
@@ -36,13 +37,17 @@ require 'config'
 require 'utility'
 require 'engine'
 require 'daemonize'
+require 'state'
 
 include GetText
 
 $logging_level = ($DEBUG ? Logger::DEBUG : Logger::ERROR)
 
+AllowedFiletypes = ['.avi', '.mov', '.mp4', '.wmv']
+
 class Yikes < Logger::Application
 	include Singleton
+	include ApplicationState
 
 	def initialize
 		super(self.class.to_s) 
@@ -127,13 +132,23 @@ class Yikes < Logger::Application
 		# Reset our logging level because option parsing changed it
 		self.level = $logging_level
 
+		load_state(File.join(Platform.settings_dir, 'state.yaml'), results[:library])
+		state.target = results[:target]
+
 		# Actually do stuff
 		unless results[:background]
 			# Just a single run
 			do_encode(results[:library], results[:target])
 		else
+			#run_merb_server
 			puts _("Yikes started in the background. Go to http://#{Platform.hostname}.local:4000 !")
-			return unless daemonize
+			if should_daemonize?
+				return unless daemonize 
+			end
+
+			Thread.new do
+				run_merb_server
+			end
 
 			begin 
 				poll_directory_and_encode(results[:library], results[:target], results[:rate])
@@ -143,20 +158,40 @@ class Yikes < Logger::Application
 			end
 		end
 
+		save_state(File.join(Platform.settings_dir, 'state.yaml'))
+
 		logger.debug 'Exiting application'
+	end
+
+	def enqueue_files_to_encode(library, target)
+		fl = get_file_list(library).delete_if{|x| not AllowedFiletypes.include?(Pathname.new(x).extname.downcase)}
+		state.add_to_queue(fl.collect {|x| EncodingItem.new(library, x, target)})
 	end
 
 	def do_encode(library, target)
 		engine = Engine.new
+
+		logger.info "Collecting files.."
+		enqueue_files_to_encode(library, target)
+
 		logger.info "Starting encoding run.."
-		get_file_list(library).each {|x| engine.convert_file_and_save(library, x, target)}
+	 	state.dequeue_items(state.items_count).each do |item|
+			unless should_encode?(item)
+				logger.debug "Already exists: #{item.source_path}"
+				next
+			end
+
+			logger.debug "Trying '#{item.source_path}'"
+			engine.convert_file(item, state)
+		end
+
 		logger.info "Finished"
 	end
 
 	def poll_directory_and_encode(library, target, rate)
 		logger.info "We're daemonized!"
 
-		@log = Logger.new('/tmp/yikes.log')
+		@log = Logger.new('/tmp/yikes.log') if should_daemonize?
 
 		until $do_quit
 			do_encode(library,target)
@@ -169,13 +204,21 @@ class Yikes < Logger::Application
 	# Auxillary methods
 	#
 
-	def get_file_list(library)
-		Dir.glob(File.join(library, '**', '*')).delete_if {|x| not filelike?(x)}
+	def should_encode?(item)
+		p = Pathname.new(item.target_path)
+		return true unless p.exist?
+		return p.size <= 256
 	end
 
-	def get_logger
-		@log
+	def should_daemonize?
+		(not $logging_level == DEBUG)
 	end
+
+	def run_merb_server
+		Merb.start(%w[-a mongrel -m] + [AppConfig::RootDir])
+	end
+
+	def get_logger; @log; end
 end
 
 def logger

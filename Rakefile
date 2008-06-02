@@ -1,13 +1,17 @@
 $:.unshift File.dirname(__FILE__)
+Gem.path.unshift(File.join(File.dirname(__FILE__), "web", "gems"))
 
-require 'rubygems'                                                                                                                             
-require 'rake/gempackagetask'                                                                                                                  
-require 'rake/contrib/rubyforgepublisher'                                                                                                      
+require 'rubygems'
 require 'rake/clean'
-require 'rake/rdoctask'                                                                                                                        
 require 'rake/testtask'
+require 'spec/rake/spectask'
 require 'pallet'
-#require 'spec'
+
+# Merb Includes
+require 'fileutils'
+require 'rubigen'
+include FileUtils
+
 
 # Load other build files
 Dir.glob("build/*.rake").each {|x| load x}
@@ -72,16 +76,9 @@ end
 ## Test Tasks
 ########################
 
-desc "Update missing tests"
-task :buildtests do |t|
-	Dir.glob("{lib}/**/*.rb").each {|x| sh "./build_unit_test #{x}"}
-end
-
-desc "Run unit tests"
-Rake::TestTask.new("test") do |t|
-	t.pattern = '{test}/*.rb'
-	t.verbose = true
-	t.warning = true
+desc "Run specifications"
+Spec::Rake::SpecTask.new("spec") do |t|
+	t.spec_files = FileList['spec/**/*_spec.rb']
 end
 
 desc "Run Heckle on tests"
@@ -103,9 +100,11 @@ task :heckle do |t|
 #	sh "echo cat " + Dir.glob("lib/**/*.rb").join(' ') + " | grep '^class ' | grep -v 'class <<' | sed -e 's/\\1/g' | xargs -I {} heckle -f"
 end
 
-desc "Run code coverage"
-task :coverage do |t|
-	sh "rcov -xrefs " + Dir.glob("test/**/*.rb").join(' ') + " 2>&1 >/dev/null"
+desc "Run all examples with RCov"
+Spec::Rake::SpecTask.new('coverage') do |t|
+	t.spec_files = FileList['spec/**/*_spec.rb']
+	t.rcov = true
+	t.rcov_opts = ['--exclude', '.*gems.*']
 end
 
 desc "Flog code"
@@ -114,7 +113,7 @@ task :flog do |t|
 end 
 
 task :alltest => [
-	:test,
+	:spec,
 	:coverage,
 	:heckle
 ]
@@ -167,7 +166,7 @@ end
 desc "Update pot/po files to match new version." 
 task :updatepo do
 	GetText.update_pofiles(PKG_NAME,
-			       Dir.glob("{app,lib}/**/*.{rb,rhtml}"),
+			       Dir.glob("{app,lib}/**/*.{rb,html.erb}"),
 			       "#{PKG_NAME} #{PKG_VERSION}")
 end
 
@@ -184,6 +183,18 @@ task :postbuild => [:expandify] do
 	sh "chmod +x #{RootDir}/bin/yikes"
 end
 
+desc "Run Yikes from the source directory"
+task :run do
+	sh "mkdir -p #{RootDir}/output"
+	sh "ruby #{RootDir}/lib/main.rb --debug -r 10 -l #{RootDir}/spec -t #{RootDir}/output"
+end
+
+desc "Run Yikes from the source directory using JRuby"
+task :jrun do
+	sh "mkdir -p #{RootDir}/output"
+	sh "jruby #{RootDir}/lib/main.rb --debug -r 10 -l #{RootDir}/spec -t #{RootDir}/output"
+end
+
 # Default Actions
 task :default => [
 	:updatepo,
@@ -191,3 +202,5 @@ task :default => [
 	:expandify,
 	:postbuild,
 ]
+
+

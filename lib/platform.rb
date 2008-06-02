@@ -69,6 +69,13 @@ class << self
  		return "DONTKNOW" if os == :windows
  		return '/var/run'
  	end
+
+	def settings_dir
+		return "DONTKNOW" if os == :windows
+		p = File.join(home_dir, ".yikes")
+		`mkdir -p #{p}`
+		return p
+	end
  
  	def hostname
  		return "DONTKNOW" if os == :windows

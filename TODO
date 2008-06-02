@@ -4,6 +4,7 @@ Done:
 	* Fix exec script
 	* FFmpeg/libfaac/whatever from source, statically compiled
 	* Daemon mode (frontend/backend separation)
+	* Simple queue of files to encode
 
 Pre 0.1:
 	(All done!)
@@ -13,12 +14,10 @@ Pre 0.1:
 
 0.2:
 	* Investigate what other encoders (Handbrake et al.) are doing
-	* Rails daemon running video podcasts to local machine, advertise using Zeroconf
+	* Merb daemon running video podcasts to local machine
+	* Advertise using Zeroconf
 	* OSX disk image
-	* Use Taglib to write tag information
-
-0.5:
-	* Qt4 GUI
+	* Use Taglib to read/write tag information, and present in podcast entries
 
 0.8:
 	* Works in Win32
@@ -26,7 +25,6 @@ Pre 0.1:
 	* Windows installer
 
 Future:
-	* Simple queue of files to encode
 	* Monitoring FFmpeg output (without confusing rb!)
 	* Daemon control interface, script to kick off encoder run
 	* Dir change notifications on Linux, OSX
