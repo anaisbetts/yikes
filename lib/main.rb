@@ -27,7 +27,6 @@ require 'logger'
 require 'gettext'
 require 'optparse'
 require 'optparse/time'
-require 'highline'
 require 'singleton'
 require 'yaml'
 require 'merb-core'
@@ -43,6 +42,8 @@ require 'state'
 include GetText
 
 $logging_level = ($DEBUG ? Logger::DEBUG : Logger::ERROR)
+
+AllowedFiletypes = ['.avi', '.mov', '.mp4', '.wmv']
 
 class Yikes < Logger::Application
 	include Singleton
@@ -132,6 +133,7 @@ class Yikes < Logger::Application
 		self.level = $logging_level
 
 		load_state(File.join(Platform.settings_dir, 'state.yaml'), results[:library])
+		state.target = results[:target]
 
 		# Actually do stuff
 		unless results[:background]
@@ -162,7 +164,8 @@ class Yikes < Logger::Application
 	end
 
 	def enqueue_files_to_encode(library, target)
-		state.add_to_queue get_file_list(library).collect {|x| EncodingItem.new(library, x, target)}
+		fl = get_file_list(library).delete_if{|x| not AllowedFiletypes.include?(Pathname.new(x).extname.downcase)}
+		state.add_to_queue(fl.collect {|x| EncodingItem.new(library, x, target)})
 	end
 
 	def do_encode(library, target)

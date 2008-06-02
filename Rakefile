@@ -189,6 +189,12 @@ task :run do
 	sh "ruby #{RootDir}/lib/main.rb --debug -r 10 -l #{RootDir}/spec -t #{RootDir}/output"
 end
 
+desc "Run Yikes from the source directory using JRuby"
+task :jrun do
+	sh "mkdir -p #{RootDir}/output"
+	sh "jruby #{RootDir}/lib/main.rb --debug -r 10 -l #{RootDir}/spec -t #{RootDir}/output"
+end
+
 # Default Actions
 task :default => [
 	:updatepo,

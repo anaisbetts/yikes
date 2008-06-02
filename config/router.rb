@@ -29,5 +29,6 @@ Merb::Router.prepare do |r|
 	# Change this for your home page to be available at /
 	# r.match('/').to(:controller => 'whatever', :action =>'index')
 	r.match('/:action.:format').to(:controller => 'welcome')
+	r.match(/\/files\/(.*)/).to(:controller => "podcast", :action => "send_file", :path => "[1]")
 	r.match('/').to(:controller => 'welcome', :action =>'index')
 end

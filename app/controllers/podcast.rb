@@ -2,8 +2,21 @@ require 'builder'
 require 'builder/xmlmarkup'
 
 class Podcast < Application
-	def index; 
+	def index
 		render podcast_xml, :layout => false
+	end
+
+	def send_file
+		target = Yikes.instance.state.target
+		p = Pathname.new(File.join(target, params["path"]))
+		return p.to_s
+		begin
+			return nil unless p.realpath.to_s.index(target) == 0
+		rescue
+			return nil
+		end
+		p.to_s
+		#send_file(File.open(p.to_s, 'r'))
 	end
 
 private

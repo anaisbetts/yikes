@@ -67,6 +67,7 @@ module ApplicationState
 		attr_accessor :encoded_queue
 		attr_accessor :to_encode_queue
 		attr_accessor :library
+		attr_accessor :target 
 
 		def initialize(library)
 			@encoded_queue = []
