@@ -1,16 +1,10 @@
 $:.unshift File.dirname(__FILE__)
-Gem.path.unshift(File.join(File.dirname(__FILE__), "web", "gems"))
 
 require 'rubygems'
 require 'rake/clean'
 require 'rake/testtask'
 require 'spec/rake/spectask'
 require 'pallet'
-
-# Merb Includes
-require 'fileutils'
-require 'rubigen'
-include FileUtils
 
 
 # Load other build files
