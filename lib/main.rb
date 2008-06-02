@@ -29,7 +29,7 @@ require 'optparse'
 require 'optparse/time'
 require 'singleton'
 require 'yaml'
-require 'merb-core'
+require 'ramaze'
 
 # Yikes
 require 'platform'
@@ -38,6 +38,7 @@ require 'utility'
 require 'engine'
 require 'daemonize'
 require 'state'
+require 'controllers'
 
 include GetText
 
@@ -140,14 +141,13 @@ class Yikes < Logger::Application
 			# Just a single run
 			do_encode(results[:library], results[:target])
 		else
-			#run_merb_server
 			puts _("Yikes started in the background. Go to http://#{Platform.hostname}.local:4000 !")
 			if should_daemonize?
 				return unless daemonize 
 			end
 
 			Thread.new do
-				run_merb_server
+				Ramaze.start :adaptor => :mongrel, :port => 4000
 			end
 
 			begin 
@@ -212,10 +212,6 @@ class Yikes < Logger::Application
 
 	def should_daemonize?
 		(not $logging_level == DEBUG)
-	end
-
-	def run_merb_server
-		Merb.start(%w[-a mongrel -m] + [AppConfig::RootDir])
 	end
 
 	def get_logger; @log; end
