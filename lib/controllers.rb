@@ -97,20 +97,19 @@ class FilesController < Ramaze::Controller
 	map '/files'
 
 	def index(*paths)
-		File.join(paths)
+		do_send_file File.join(paths)
 	end
 
 private
-	def send_file
+	def do_send_file(subpath)
 		target = Yikes.instance.state.target
-		p = Pathname.new(File.join(target, params["path"]))
-		return p.to_s
+		p = Pathname.new(File.join(target, subpath))
 		begin
 			return nil unless p.realpath.to_s.index(target) == 0
 		rescue
 			return nil
 		end
-		p.to_s
-		#send_file(File.open(p.to_s, 'r'))
+		logger.debug p.to_s
+		send_file(p.to_s, 'video/mp4')
 	end
 end
