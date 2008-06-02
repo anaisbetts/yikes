@@ -32,11 +32,13 @@ require 'builder/xmlmarkup'
 
 # Yikes
 require 'config'
-require 'main'
 require 'platform'
 require 'utility'
+require 'state'
 
 include GetText
+
+Ramaze::Global.public_root = File.join AppConfig::RootDir, 'public'
 
 class MainController < Ramaze::Controller
 	def index
