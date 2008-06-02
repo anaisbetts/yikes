@@ -77,8 +77,8 @@ private
 					next unless x.succeeded
 					xml.title x.subpath
 					xml.tag! "itunes:subtitle", x.source_path
-					xml.enclosure(:url => "#{url_base}/files/#{x.subpath}", :length => "100000", :type => "video/mp4")
-					xml.guid "#{url_base}/#{Platform.hostname}.local/files/#{x.subpath}"
+					xml.enclosure(:url => "#{url_base}/files/#{x.subpath_target}", :length => "100000", :type => "video/mp4")
+					xml.guid "#{url_base}/files/#{x.subpath_target}"
 					xml.pubDate x.finished_at.to_s
 					xml.tag! "itunes:duration", "3:00"
 				end 
@@ -89,7 +89,8 @@ private
 	end
 
 	def url_base
-		"http://#{Platform.hostname}.local:4000"
+		#"http://#{Platform.hostname}.local:4000"
+		"http://localhost:4000"
 	end
 end
 

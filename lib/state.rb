@@ -155,6 +155,10 @@ class EncodingItem
 		EncodingItem.build_target_path(@target, @subpath)
 	end
 
+	def subpath_target
+		EncodingItem.subpath_as_target_ext(@subpath)
+	end
+
 class << self
 	def extract_subpath(source_root, file)
 		return file unless file.index(source_root) == 0 and not source_root.empty?
@@ -162,7 +166,11 @@ class << self
 	end
 
 	def build_target_path(target_root, subpath, target_ext = "mp4")
-		File.join(target_root, subpath.gsub(/\.[^\.\/\\]*$/, ".#{target_ext}"))
+		File.join(target_root, subpath_as_target_ext(subpath, target_ext))
+	end
+
+	def subpath_as_target_ext(subpath, target_ext = "mp4")
+		subpath.gsub(/\.[^\.\/\\]*$/, ".#{target_ext}")
 	end
 end
 end
