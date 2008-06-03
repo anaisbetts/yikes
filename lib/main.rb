@@ -114,14 +114,14 @@ class Yikes < Logger::Application
 		results
 	end
 
-	def run
+	def run(args)
 		# Initialize Gettext (root, domain, locale dir, encoding) and set up logging
     		bindtextdomain(AppConfig::Package, nil, nil, "UTF-8")
 		self.level = Logger::DEBUG
 		
 		# Parse arguments
 		begin
-			results = parse(ARGV)
+			results = parse(args)
 		rescue OptionParser::MissingArgument
 			puts _('Missing parameter; see --help for more info')
 			exit
@@ -223,5 +223,5 @@ end
 
 if __FILE__ == $0
 	$the_app = Yikes.instance
-	$the_app.run
+	$the_app.run(ARGV)
 end
