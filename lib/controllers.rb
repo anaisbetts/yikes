@@ -41,6 +41,35 @@ include GetText
 
 Ramaze::Global.public_root = File.join AppConfig::RootDir, 'public'
 
+
+### Helper Mixins
+
+module StaticFileMixin
+	def index(*paths)
+		do_send_file File.join(paths)
+	end
+
+protected
+
+	def do_send_file(subpath)
+		target = get_file_path
+		mimetype = get_mime_type
+		p = Pathname.new(File.join(target, subpath))
+		begin
+			return nil unless p.realpath.to_s.index(target) == 0
+		rescue
+			return nil
+		end
+		logger.debug p.to_s
+		send_file(p.to_s, mimetype)
+	end
+
+	def get_mime_type; 'video/mp4'; end
+end
+
+
+### Controllers
+
 class MainController < Ramaze::Controller
 	def index
 		'Hello, world!'
@@ -116,29 +145,4 @@ protected
 
 	def get_mime_type; 'image/jpeg'; end
 end
-
-
-module StaticFileMixin
-	def index(*paths)
-		do_send_file File.join(paths)
-	end
-
-protected
-
-	def do_send_file(subpath)
-		target = get_file_path
-		mimetype = get_mime_type
-		p = Pathname.new(File.join(target, subpath))
-		begin
-			return nil unless p.realpath.to_s.index(target) == 0
-		rescue
-			return nil
-		end
-		logger.debug p.to_s
-		send_file(p.to_s, mimetype)
-	end
-
-	def get_mime_type; 'video/mp4'; end
-end
-
 
