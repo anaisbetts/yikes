@@ -72,9 +72,15 @@ class << self
 
 	def settings_dir
 		return "DONTKNOW" if os == :windows
-		p = File.join(home_dir, ".yikes")
-		`mkdir -p #{p}`
-		return p
+		path = File.join(home_dir, ".yikes")
+		FileUtils.mkdir_p path
+		return path
+	end
+
+	def screenshot_dir
+		path = File.join(Platform.settings_dir, 'preview')
+		FileUtils.mkdir_p path
+		return path
 	end
  
  	def hostname

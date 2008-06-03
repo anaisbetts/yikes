@@ -57,7 +57,9 @@ class Engine
 	def create_path_and_convert(item)
 		dest_file = Pathname.new(item.target_path)
 		FileUtils.mkdir_p(dest_file.dirname.to_s)
+
 		transcode(item.source_path, dest_file.to_s)
+		get_screenshot(item.source_path, item.screenshot_path)
 	end
 
 	def transcode(input, output)
@@ -69,13 +71,28 @@ class Engine
 		logger.info "#{p.basename.to_s} doesn't exist, starting transcode..."
 		@transcoder.transcode(input, output)
 	end
+
+	def get_screenshot(input, output)
+		logger.debug "Saving screenshot to #{output}"
+		@transcoder.get_screenshot(input, output)
+	end
 end
 
 module ExternalTranscoder
 	def transcode(input, output)
-		cmd = get_command(input, output)
-		#puts "Running #{cmd}"
-		
+		cmd = get_transcode_command(input, output)
+		run_external_command(cmd)
+	end
+
+	def get_screenshot(input, output)
+		cmd = get_screenshot_command(input, output)
+		run_external_command(cmd)
+	end
+
+private
+	def run_external_command(cmd)
+		logger.debug "Running #{cmd}"
+
 		# FIXME: Dumb hack code!
 		pid = nil
 		unless (pid = fork)
@@ -110,8 +127,8 @@ module ExternalTranscoder
 #			Kernel.exec 
 #			after_transcode() if self.respond_to? :before_transcode
 #		end
-
 	end
+
 end
 
 class FFMpegTranscoder
@@ -167,8 +184,14 @@ class FFMpegTranscoder
 	AudioParams = %w( -acodec libfaac -ac 2 -ar 44100 -ab 0 -aq 120 -alang ENG )
 
 	FFMpegPath = File.join(AppConfig::RootDir, 'libexec', 'bin', 'ffmpeg')
-	def get_command(input, output)
+	def get_transcode_command(input, output)
 		ret = ["#{FFMpegPath} -i \"#{input}\""] + MiscParams + VideoParams + AudioParams + ["\"#{output}\""]
+		ret.join ' '
+	end
+
+	ScreenshotParams = %w( -f mjpeg -s 244x164 -vframes 1 -ss 2 )
+	def get_screenshot_command(input, output)
+		ret = ["#{FFMpegPath} -i \"#{input}\""] + ScreenshotParams + ["\"#{output}\""]
 		ret.join ' '
 	end
 

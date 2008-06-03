@@ -29,6 +29,7 @@ require 'pathname'
 require 'fileutils'
 require 'thread'
 require 'yaml'
+require 'digest/md5'
 
 include GetText
 
@@ -157,6 +158,11 @@ class EncodingItem
 
 	def subpath_target
 		EncodingItem.subpath_as_target_ext(@subpath)
+	end
+
+	def screenshot_path
+		md = Digest::MD5.new << @subpath
+		File.join Platform.screenshot_dir, md.to_s + ".jpg"
 	end
 
 class << self

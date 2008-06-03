@@ -29,6 +29,7 @@ require 'yaml'
 require 'ramaze'
 require 'builder'
 require 'builder/xmlmarkup'
+require 'fileutils'
 
 # Yikes
 require 'config'
@@ -94,16 +95,15 @@ private
 	end
 end
 
-class FilesController < Ramaze::Controller
-	map '/files'
-
+module StaticFileMixin
 	def index(*paths)
 		do_send_file File.join(paths)
 	end
 
-private
+protected
+
 	def do_send_file(subpath)
-		target = Yikes.instance.state.target
+		target = get_file_path
 		p = Pathname.new(File.join(target, subpath))
 		begin
 			return nil unless p.realpath.to_s.index(target) == 0
@@ -112,5 +112,25 @@ private
 		end
 		logger.debug p.to_s
 		send_file(p.to_s, 'video/mp4')
+	end
+end
+
+class FilesController < Ramaze::Controller
+	include StaticFileMixin
+	map '/files'
+
+protected
+	def get_file_path
+		Yikes.instance.state.target
+	end
+end
+
+class PreviewController < Ramaze::Controller
+	include StaticFileMixin
+	map '/preview'
+
+protected
+	def get_file_path
+		Platform.screenshot_dir
 	end
 end
