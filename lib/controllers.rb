@@ -42,9 +42,10 @@ include GetText
 Ramaze::Global.public_root = File.join AppConfig::RootDir, 'public'
 
 
-### Helper Mixins
+### Helper Classes
 
-module StaticFileMixin
+# FIXME: This creates a broken mapping to /static_file
+class StaticFileControllerBase < Ramaze::Controller 
 	def index(*paths)
 		do_send_file File.join(paths)
 	end
@@ -124,8 +125,7 @@ private
 	end
 end
 
-class FilesController < Ramaze::Controller
-	include StaticFileMixin
+class FilesController < StaticFileControllerBase
 	map '/files'
 
 protected
@@ -134,8 +134,7 @@ protected
 	end
 end
 
-class PreviewController < Ramaze::Controller
-	include StaticFileMixin
+class PreviewController < StaticFileControllerBase
 	map '/preview'
 
 protected
