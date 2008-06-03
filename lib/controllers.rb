@@ -95,26 +95,6 @@ private
 	end
 end
 
-module StaticFileMixin
-	def index(*paths)
-		do_send_file File.join(paths)
-	end
-
-protected
-
-	def do_send_file(subpath)
-		target = get_file_path
-		p = Pathname.new(File.join(target, subpath))
-		begin
-			return nil unless p.realpath.to_s.index(target) == 0
-		rescue
-			return nil
-		end
-		logger.debug p.to_s
-		send_file(p.to_s, 'video/mp4')
-	end
-end
-
 class FilesController < Ramaze::Controller
 	include StaticFileMixin
 	map '/files'
@@ -133,4 +113,32 @@ protected
 	def get_file_path
 		Platform.screenshot_dir
 	end
+
+	def get_mime_type; 'image/jpeg'; end
 end
+
+
+module StaticFileMixin
+	def index(*paths)
+		do_send_file File.join(paths)
+	end
+
+protected
+
+	def do_send_file(subpath)
+		target = get_file_path
+		mimetype = get_mime_type
+		p = Pathname.new(File.join(target, subpath))
+		begin
+			return nil unless p.realpath.to_s.index(target) == 0
+		rescue
+			return nil
+		end
+		logger.debug p.to_s
+		send_file(p.to_s, mimetype)
+	end
+
+	def get_mime_type; 'video/mp4'; end
+end
+
+
