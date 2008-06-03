@@ -3,16 +3,17 @@ What is Yikes?
 
 Yikes is a program that takes a source library and recreates the same library in
 iPod Video format (iPod Video / iPod Touch / iPhone). It skips videos that are
-already there, so you can set it up to run on a periodic basis.
+already there, so you can set it up to run on a periodic basis.  
 
-Future versions will run in the background, and automatically convert files when
-the computer is idle, as well as publish an RSS feed that you can subscribe to
-in iTunes.
+However, the much more clever use is to run in the background, and Yikes will
+automatically convert files at a specified interval,  as well as publish an RSS
+feed that you can subscribe to in iTunes.
 
 So when this is all finished, you'll set Yikes to run on startup, point it at
-your videos, and add computername.local:8080 as a podcast. If you have set up a
-"Season Pass"-type automatic Bittorrent download of shows, this means that every
-day your videos automatically get sync'ed to your iPod!
+your videos, and add http://computername.local:4000/podcast as a podcast. If you
+have set up a "Season Pass"-type automatic Bittorrent download of shows, this
+means that every day {The Daily Show, 30 Rock, whatever..} automatically gets
+sync'ed to your {iPod, Zune, whatever}!
 
 
 To build:

@@ -5,6 +5,7 @@ Done:
 	* FFmpeg/libfaac/whatever from source, statically compiled
 	* Daemon mode (frontend/backend separation)
 	* Simple queue of files to encode
+	* Ramaze daemon running video podcasts to local machine
 
 Pre 0.1:
 	(All done!)
@@ -14,9 +15,9 @@ Pre 0.1:
 
 0.2:
 	* Investigate what other encoders (Handbrake et al.) are doing
-	* Merb daemon running video podcasts to local machine
+	* Fancy web front-end 
 	* Advertise using Zeroconf
-	* OSX disk image
+	* OSX disk image, perhaps using JRuby
 	* Use Taglib to read/write tag information, and present in podcast entries
 
 0.8:
