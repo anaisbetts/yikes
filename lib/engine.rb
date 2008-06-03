@@ -58,8 +58,9 @@ class Engine
 		dest_file = Pathname.new(item.target_path)
 		FileUtils.mkdir_p(dest_file.dirname.to_s)
 
-		transcode(item.source_path, dest_file.to_s)
-		get_screenshot(item.source_path, item.screenshot_path)
+		ret = transcode(item.source_path, dest_file.to_s)
+		get_screenshot(item.source_path, item.screenshot_path) unless ret
+		ret
 	end
 
 	def transcode(input, output)

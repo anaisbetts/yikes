@@ -17,14 +17,16 @@ describe Engine do
 	it "Should convert a file and mark it succeeded or failed" do
 		source = "/path/to/source.avi"
 		target = "/the/target/source.mp4"
+		preview = "#{ENV["HOME"]}/.yikes/preview/01e9f4b2924dbcda2296d773017e14d1.jpg"
 
 		# Set up our mocks
 		pass_mock = flexmock("state_pass") {|f| f.should_receive(:encode_succeeded!) }
 		fail_mock = flexmock("state_fail") {|f| f.should_receive(:encode_failed!) }
-		flexmock(FileUtils) {|f| f.should_receive(:mkdir_p).with("/the/target")}
+		flexmock(FileUtils) {|f| f.should_receive(:mkdir_p).and_return "" }
 
 		transcoder_mock = flexmock("transcoder")
 		transcoder_mock.should_receive(:transcode).with(source, target).and_return(true, false)
+		transcoder_mock.should_receive(:get_screenshot).with(source, preview).times(1).and_return(true)
 		tc_class = flexmock("transcoder_class")
 		tc_class.should_receive(:new).and_return(transcoder_mock)
 
@@ -54,7 +56,7 @@ describe FFMpegTranscoder do
 
 	it "should build an FFMpeg command line" do
 		input = "foo"; output = 'bar'
-		ret = @fft.get_command(input, output)
+		ret = @fft.get_transcode_command(input, output)
 
 		# FIXME: This test sucks
 		ret.include?(input).should == true
