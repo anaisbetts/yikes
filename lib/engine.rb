@@ -59,7 +59,7 @@ class Engine
 		FileUtils.mkdir_p(dest_file.dirname.to_s)
 
 		ret = transcode(item.source_path, dest_file.to_s)
-		get_screenshot(item.source_path, item.screenshot_path) unless ret
+		get_screenshot(item.source_path, item.screenshot_path) if ret
 		ret
 	end
 
@@ -108,6 +108,11 @@ private
 		e = Process.wait pid
 		exitcode = ($?) ? ($?.exitstatus) : -1
 		logger.info "Process returned #{exitcode}"
+
+		# FIXME: Since we haven't got FFmpeg to actually return us not crap values,
+		# just return true here
+		true
+		
 		return exitcode == 0
 
 #                 IO.popen cmd do |i,o,e|
