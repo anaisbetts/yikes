@@ -40,7 +40,7 @@ require 'state'
 include GetText
 
 Ramaze::Global.public_root = File.join AppConfig::RootDir, 'public'
-
+Ramaze::Global.template_root = File.join AppConfig::RootDir, 'views'
 
 ### Helper Classes
 
@@ -68,12 +68,23 @@ protected
 	def get_mime_type; 'video/mp4'; end
 end
 
+class EncodingItem
+	def source_url
+		"#{Yikes.url_base}/files/#{subpath_target}"
+	end
+
+	def screenshot_url
+		"#{Yikes.url_base}/preview/#{screenshot_subpath}"
+	end
+end
 
 ### Controllers
 
 class MainController < Ramaze::Controller
+	engine :Erubis
+
 	def index
-		'Hello, world!'
+		@items = Yikes.instance.state.get_finished_items
 	end
 end
 
@@ -95,12 +106,12 @@ private
 
 		xml.channel do
 			xml.title "Yikes video feed of #{Pathname.new(app.library).basename.to_s}"
-			xml.link url_base
+			xml.link Yikes.url_base
 			xml.language "en-us"
 			xml.copyright "Copyright 2008 Paul Betts"
 			xml.tag! "itunes:summary", "Converted videos, from #{app.library}"
 			xml.description "Converted videos, from #{app.library}"
-			xml.tag! "itunes:image", "#{url_base}/FILLMEIN.png"
+			xml.tag! "itunes:image", "#{Yikes.url_base}/FILLMEIN.png"
 			xml.tag! "itunes:category", "Videos"
 
 			app.get_finished_items.each do |x|
@@ -108,8 +119,8 @@ private
 					next unless x.succeeded
 					xml.title x.subpath
 					xml.tag! "itunes:subtitle", x.source_path
-					xml.enclosure(:url => "#{url_base}/files/#{x.subpath_target}", :length => "100000", :type => "video/mp4")
-					xml.guid "#{url_base}/files/#{x.subpath_target}"
+					xml.enclosure(:url => x.source_url, :length => "100000", :type => "video/mp4")
+					xml.guid x.source_url
 					xml.pubDate x.finished_at.to_s
 					xml.tag! "itunes:duration", "3:00"
 				end 
@@ -117,11 +128,6 @@ private
 		end ; end
 
 		xml.target!
-	end
-
-	def url_base
-		#"http://#{Platform.hostname}.local:4000"
-		"http://localhost:4000"
 	end
 end
 

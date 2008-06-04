@@ -161,8 +161,12 @@ class EncodingItem
 	end
 
 	def screenshot_path
+		File.join Platform.screenshot_dir, screenshot_subpath
+	end
+
+	def screenshot_subpath
 		md = Digest::MD5.new << @subpath
-		File.join Platform.screenshot_dir, md.to_s + ".jpg"
+		md.to_s + ".jpg"
 	end
 
 class << self

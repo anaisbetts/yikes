@@ -1,34 +1,23 @@
 body { 
-	font-family: "Trebuchet MS", "Arial";
-	color: #333;
+	background: #fff url(../images/topbluefade.gif) repeat-x;
 }
 
 p {
 	margin: 15px;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+h1 {
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+h3 {
+	margin: 0px;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 
 hr {
 	margin: 40px;
-}
-
-#logo {
-	float: left;
-	width: 273px;
-	height: 273px;
-}
-
-#header {
-	margin-right: 50px;
-	text-align: right;
-}
-
-.content {
-	position: absolute;
-	width: 70%;
-	left: 15%;
-	background-color: #f8faff;
-        padding: 10px;
-	border: 1px solid #e5e5e5;
 }
 
 /* Janked from scaffold.css */

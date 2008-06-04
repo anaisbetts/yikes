@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=iso-8859-1" />
+    <title>Yikes! It's your videos on your iPod!</title>
+    <link rel="Stylesheet" href="<%=Yikes.url_base%>/stylesheets/default.css" type="text/css" media="screen" />
+    <link rel="Stylesheet" href="<%=Yikes.url_base%>/stylesheets/tablekit.css" type="text/css" media="screen" />
+    <script src="<%=Yikes.url_base%>/javascripts/fastinit.js" type="text/javascript"></script>
+    <script src="<%=Yikes.url_base%>/javascripts/tablekit.js" type="text/javascript"></script>
+    <script src="<%=Yikes.url_base%>/javascripts/prototype.js" type="text/javascript"></script>
+    <script src="<%=Yikes.url_base%>/javascripts/scriptaculus.js" type="text/javascript"></script>
+</head>
+
+<body>
+	<div>
+		<h1>Yikes!</h1>
+		<h3>From your computer to your iPod in a snap</h3>
+	</div>
+
+	<div>
+		<h2>Videos recently converted:</h2>
+		<table id="data" class="sortable resizable">
+			<tr>
+				<th></th> <!-- Succeeded icon -->
+				<th>Screenshot</th> <!-- Image -->
+				<th>Filename</th>
+				<th>Date</th>
+			</tr>
+
+			<% for item in @items %>
+			<tr>
+				<td></td>
+				<td><img align="center" width="50%" height="50%" src="<%= item.screenshot_url %>" /></td>
+				<td><a href="<%== item.source_url %>"><%== item.subpath %></a></td>
+				<td><%= item.created_at %></td>
+			</tr>
+			<% end %>
+		</table>
+
+	</div>
+
+	<script language="javascript"> TableKit.Sortable.init("data"); </script>
+
+	<p>
+		<a href="<%=Yikes.url_base.sub("http", "itpc")%>/podcast"> <img src="<%=Yikes.url_base%>/images/itunes_subscribe.png" /> </a>
+	</p>
+</body>
+
+</html>

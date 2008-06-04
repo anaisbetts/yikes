@@ -215,6 +215,14 @@ class Yikes < Logger::Application
 	end
 
 	def get_logger; @log; end
+
+class << self
+	def url_base
+		#"http://#{Platform.hostname}.local:4000"
+		"http://localhost:4000"
+	end
+end
+
 end
 
 def logger
