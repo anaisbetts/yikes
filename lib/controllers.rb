@@ -30,6 +30,7 @@ require 'ramaze'
 require 'builder'
 require 'builder/xmlmarkup'
 require 'fileutils'
+require 'uri'
 
 # Yikes
 require 'config'
@@ -70,11 +71,11 @@ end
 
 class EncodingItem
 	def source_url
-		"#{Yikes.url_base}/files/#{subpath_target}"
+		URI.escape("#{Yikes.url_base}/files/#{subpath_target}")
 	end
 
 	def screenshot_url
-		"#{Yikes.url_base}/preview/#{screenshot_subpath}"
+		URI.escape("#{Yikes.url_base}/preview/#{screenshot_subpath}")
 	end
 end
 
