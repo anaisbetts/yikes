@@ -70,10 +70,12 @@ class Engine
 			return true
 		end
 		logger.info "#{p.basename.to_s} doesn't exist, starting transcode..."
+
 		@transcoder.transcode(input, output)
 	end
 
 	def get_screenshot(input, output)
+		@transcoder.before_transcode
 		logger.debug "Saving screenshot to #{output}"
 		@transcoder.get_screenshot(input, output)
 	end
@@ -81,11 +83,13 @@ end
 
 module ExternalTranscoder
 	def transcode(input, output)
+		before_transcode
 		cmd = get_transcode_command(input, output)
 		Platform.run_external_command(cmd)
 	end
 
 	def get_screenshot(input, output)
+		before_transcode
 		cmd = get_screenshot_command(input, output)
 		Platform.run_external_command(cmd)
 	end
@@ -146,7 +150,7 @@ class FFMpegTranscoder
 
 	AudioParams = %w( -acodec libfaac -ac 2 -ar 44100 -ab 0 -aq 120 -alang ENG )
 
-	FFMpegPath = File.join(AppConfig::RootDir, 'libexec', 'bin', 'ffmpeg')
+	FFMpegPath = File.join(AppConfig::LibDir, 'libexec', 'bin', 'ffmpeg')
 	def get_transcode_command(input, output)
 		ret = ["#{FFMpegPath} -i \"#{input}\""] + MiscParams + VideoParams + AudioParams + ["\"#{output}\""]
 		ret.join ' '
@@ -159,6 +163,10 @@ class FFMpegTranscoder
 	end
 
 	def before_transcode
-		ENV["LD_LIBRARY_PATH"] = File.join(AppConfig::RootDir, 'libexec', 'lib')
+		libpath = File.join(AppConfig::LibDir, 'libexec', 'lib')
+
+		logger.debug "Setting LD_LIBRARY_PATH to '#{libpath}'..."
+		ENV["LD_LIBRARY_PATH"] = libpath
+		ENV["DYLD_LIBRARY_PATH"] = libpath
 	end
 end

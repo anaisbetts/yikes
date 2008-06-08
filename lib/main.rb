@@ -21,6 +21,10 @@
 require File.join(File.dirname(__FILE__), 'config')
 path_add File.join(File.dirname(__FILE__))
 
+# FIXME: We probably need this because of the path_filter code not preserving the order
+# This is to stop us from including the local version of RubyGems
+$:.unshift File.dirname(__FILE__)
+
 # Standard library
 require 'rubygems'
 require 'logger'
@@ -33,7 +37,6 @@ require 'ramaze'
 
 # Yikes
 require 'platform'
-require 'config'
 require 'utility'
 require 'engine'
 require 'daemonize'

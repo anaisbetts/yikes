@@ -1,3 +1,5 @@
 #!/bin/sh
 
+export RUBYLIB=<%= File.join(InstallPrefix, 'lib', 'yikes') %>
+export GEM_HOME=<%= File.join(InstallPrefix, 'lib', 'yikes', 'local.gems') %>
 <%=ruby_exec_path || throw("Can't find Ruby!") %>  <%= File.join(InstallPrefix, "bin", "main.rb") %> $@

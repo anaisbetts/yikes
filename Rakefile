@@ -33,8 +33,8 @@ autoconf_task("gpac", [], GPacConfigureFlags, ["make lib", "make install-lib"], 
 # libx264
 X264ConfigureFlags = [ 
 	'--enable-mp4-output', '--enable-pthread',
-	"--extra-cflags=\"-I#{File.join(RootDir, 'libexec', 'include')}\"",
-	"--extra-ldflags=\"-L#{File.join(RootDir, 'libexec', 'lib')}\""
+	"--extra-cflags=\"-I#{File.join(RootDir, 'lib', 'libexec', 'include')}\"",
+	"--extra-ldflags=\"-L#{File.join(RootDir, 'lib', 'libexec', 'lib')}\""
 ]
 autoconf_task("x264", ["gpac"], X264ConfigureFlags)
 
@@ -47,14 +47,14 @@ autoconf_task("faac", ["mp4v2"], FaacConfigureFlags)
 
 # ffmpeg
 FFMpegConfigureFlags = [
-	"--prefix=#{RootDir}/libexec",
+	"--prefix=#{RootDir}/lib/libexec",
 	'--enable-gpl', '--enable-pp', '--enable-swscaler',
 	'--enable-libx264', '--enable-libfaac', '--enable-pthreads', 
 
 	# FIXME: I get weird compile errors on OS X unless I disable MMX
 	'--disable-ffserver', '--disable-ffplay', '--disable-strip', "--disable-mmx", 
-	"--extra-cflags=\"-I#{File.join(RootDir, 'libexec', 'include')}\"",
-	"--extra-ldflags=\"-L#{File.join(RootDir, 'libexec', 'lib')} -lpthread\""
+	"--extra-cflags=\"-I#{File.join(RootDir, 'lib', 'libexec', 'include')}\"",
+	"--extra-ldflags=\"-L#{File.join(RootDir, 'lib', 'libexec', 'lib')} -lpthread\""
 ]
 autoconf_task("ffmpeg", ["x264", "faac"], FFMpegConfigureFlags)
 
@@ -145,9 +145,6 @@ task :bundle do
 	sh "#{RootDir}/findlibs/main.rb #{RootDir}/lib/main.rb"
 	sh "cp -R #{RootDir}/bin #{RootDir}/bundle/"
 	sh "cp -R #{RootDir}/lib/* #{RootDir}/bundle/lib/yikes"
-	sh "mkdir -p #{RootDir}/bundle/lib/yikes/libexec"
-	sh "cp -R #{RootDir}/libexec/bin #{RootDir}/bundle/lib/yikes/libexec"
-	sh "cp -R #{RootDir}/libexec/lib #{RootDir}/bundle/lib/yikes/libexec"
 end
 
 

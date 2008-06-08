@@ -27,6 +27,7 @@ describe Engine do
 		transcoder_mock = flexmock("transcoder")
 		transcoder_mock.should_receive(:transcode).with(source, target).and_return(true, false)
 		transcoder_mock.should_receive(:get_screenshot).with(source, preview).times(1).and_return(true)
+		transcoder_mock.should_receive(:before_transcode)
 		tc_class = flexmock("transcoder_class")
 		tc_class.should_receive(:new).and_return(transcoder_mock)
 

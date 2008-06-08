@@ -29,6 +29,9 @@ require 'pathname'
 require 'fileutils'
 require 'rbconfig'
 
+# Yikes
+require 'utility'
+
 include GetText
 
 module Platform
@@ -84,8 +87,10 @@ class << self
 	end
 
  	def hostname
+		# NOTE: Apparently hostname -s doesn't do what the man page says it does;
+		# on some machines it returns 'localhost'
  		return "DONTKNOW" if os == :windows
- 		return super_chomp(`hostname -s`)
+		return super_chomp(`hostname`.gsub(/^[\.]*\..*$/, '\1'))
  	end
 
 

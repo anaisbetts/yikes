@@ -9,7 +9,7 @@ def autoconf_task(name, deps = [], config_flags = [], build_commands = ["make", 
 			sh "cd #{library_dir} && ./bootstrap"
 		end
 
-		prefix_flag = "--prefix=#{File.join(RootDir, 'libexec')}"
+		prefix_flag = "--prefix=#{File.join(RootDir, 'lib', 'libexec')}"
 		sh "cd #{library_dir} && ./configure #{prefix_flag} #{config_flags.join(' ')}"
 		build_commands.each {|x| sh "cd #{library_dir} && #{x}"}
 	end
