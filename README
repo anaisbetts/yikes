@@ -15,6 +15,16 @@ have set up a "Season Pass"-type automatic Bittorrent download of shows, this
 means that every day {The Daily Show, 30 Rock, whatever..} automatically gets
 sync'ed to your {iPod, Zune, whatever}!
 
+Gems you'll need:
+  * builder
+  * gettext
+  * ramaze
+
+Misc. gems you might need (building, etc):
+  * RSpec
+  * Rake
+  * RCov
+  * Pallet
 
 To build:
 	rake && rake ffmpeg 	# Takes forever, only works on Mac/Linux

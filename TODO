@@ -30,3 +30,4 @@ Future:
 	* Daemon control interface, script to kick off encoder run
 	* Dir change notifications on Linux, OSX
 	* Running daemon instant on-demand
+	* Add Amazon ads to page

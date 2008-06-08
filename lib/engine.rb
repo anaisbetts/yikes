@@ -82,58 +82,15 @@ end
 module ExternalTranscoder
 	def transcode(input, output)
 		cmd = get_transcode_command(input, output)
-		run_external_command(cmd)
+		Platform.run_external_command(cmd)
 	end
 
 	def get_screenshot(input, output)
 		cmd = get_screenshot_command(input, output)
-		run_external_command(cmd)
+		Platform.run_external_command(cmd)
 	end
 
 private
-	def run_external_command(cmd)
-		logger.debug "Running #{cmd}"
-
-		# FIXME: Dumb hack code!
-		pid = nil
-		unless (pid = fork)
-			STDOUT.reopen '/dev/null'
-			STDERR.reopen '/dev/null'
-			logger.debug "Executing: #{cmd}"
-			before_transcode() if self.respond_to? :before_transcode
-			system(cmd)
-			after_transcode() if self.respond_to? :before_transcode
-			Kernel.exit!
-		end
-		e = Process.wait pid
-		exitcode = ($?) ? ($?.exitstatus) : -1
-		logger.info "Process returned #{exitcode}"
-
-		# FIXME: Since we haven't got FFmpeg to actually return us not crap values,
-		# just return true here
-		true
-		
-		return exitcode == 0
-
-#                 IO.popen cmd do |i,o,e|
-#                         break
-#                         o.readlines.each do |line|
-#                                 p line
-#                         end
-#                 end
-
-#		if Platform.os == :windows
-#			# TODO: Implement me
-#			return
-#		end
-#
-#		# Platform is Posix so we have fork
-#		Kernel.fork do
-#			before_transcode() if self.respond_to? :before_transcode
-#			Kernel.exec 
-#			after_transcode() if self.respond_to? :before_transcode
-#		end
-	end
 
 end
 

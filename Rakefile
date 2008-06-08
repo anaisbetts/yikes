@@ -141,8 +141,13 @@ end
 
 desc "Create a bundle folder that has all dependencies included"
 task :bundle do
-	ENV["REQUIRE2LIB_LIBDIR"] = "#{RootDir}/bundle"
+	ENV["REQUIRE2LIB_LIBDIR"] = "#{RootDir}/bundle/lib/yikes"
 	sh "#{RootDir}/findlibs/main.rb #{RootDir}/lib/main.rb"
+	sh "cp -R #{RootDir}/bin #{RootDir}/bundle/"
+	sh "cp -R #{RootDir}/lib/* #{RootDir}/bundle/lib/yikes"
+	sh "mkdir -p #{RootDir}/bundle/lib/yikes/libexec"
+	sh "cp -R #{RootDir}/libexec/bin #{RootDir}/bundle/lib/yikes/libexec"
+	sh "cp -R #{RootDir}/libexec/lib #{RootDir}/bundle/lib/yikes/libexec"
 end
 
 
