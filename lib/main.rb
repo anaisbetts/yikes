@@ -96,7 +96,7 @@ class Yikes < Logger::Application
 
 			opts.on_tail("-?", "--help", _("Show this message") ) do
 				puts opts
-				exit
+				return nil
 			end
 
 			opts.on('-d', "--debug", _("Run in debug mode (Extra messages)")) do |x|
@@ -109,7 +109,7 @@ class Yikes < Logger::Application
 
 			opts.on_tail("--version", _("Show version") ) do
 				puts OptionParser::Version.join('.')
-				exit
+				return nil	
 			end
 		end
 
@@ -127,11 +127,13 @@ class Yikes < Logger::Application
 			results = parse(args)
 		rescue OptionParser::MissingArgument
 			puts _('Missing parameter; see --help for more info')
-			exit
+			return -1	
 		rescue OptionParser::InvalidOption
 			puts _('Invalid option; see --help for more info')
-			exit
+			return -1	
 		end
+
+		return -1 unless results
 
 		# Reset our logging level because option parsing changed it
 		self.level = $logging_level
@@ -234,5 +236,5 @@ end
 
 if __FILE__ == $0
 	$the_app = Yikes.instance
-	$the_app.run(ARGV)
+	exit ($the_app.run(ARGV))
 end
