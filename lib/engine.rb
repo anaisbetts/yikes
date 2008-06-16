@@ -38,6 +38,9 @@ include GetText
 
 $logging_level ||= Logger::ERROR
 
+class EngineManager
+end
+
 class Engine 
 	include ApplicationState
 

@@ -13,6 +13,34 @@ target: /the/target
 
 EOF
 
+describe EngineManager do
+	it "should be able to add engines given a source and target" do
+		em = EngineManager.new
+		source = "/path/to/source.avi"
+		target = "/the/target/source.mp4"
+		em.add(source, target)
+	end
+
+	it "should be able to remove engines" do
+		em = EngineManager.new
+		source = "/path/to/source.avi"
+		target = "/the/target/source.mp4"
+		em.add(source, target)
+		em.remove(source, target)
+	end
+
+	it "should be able to enumerate through engines" do
+		em = EngineManager.new
+		source = "/path/to/source.avi"
+		target = "/the/target/source.mp4"
+		em.add(source, target)
+		
+		i = 0
+		em.each {|x| i=i+1}
+		i.should = 1
+	end
+end
+
 describe Engine do
 	it "Should convert a file and mark it succeeded or failed" do
 		source = "/path/to/source.avi"
