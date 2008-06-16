@@ -40,8 +40,8 @@ require 'state'
 
 include GetText
 
-Ramaze::Global.public_root = File.join AppConfig::RootDir, 'public'
-Ramaze::Global.template_root = File.join AppConfig::RootDir, 'views'
+Ramaze::Global.public_root = File.join File.dirname(__FILE__), 'public'
+Ramaze::Global.template_root = File.join File.dirname(__FILE__), 'views'
 
 ### Helper Classes
 
