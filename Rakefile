@@ -147,6 +147,13 @@ task :bundle do
 	sh "cp -R #{RootDir}/lib/* #{RootDir}/bundle/lib/yikes"
 end
 
+desc "Create a bundle folder that has all dependencies included for JRuby"
+task :jbundle do
+	ENV["REQUIRE2LIB_LIBDIR"] = "#{RootDir}/bundle/lib/yikes"
+	sh "jruby #{RootDir}/findlibs/main.rb #{RootDir}/lib/main.rb"
+	sh "cp -R #{RootDir}/bin #{RootDir}/bundle/"
+	sh "cp -R #{RootDir}/lib/* #{RootDir}/bundle/lib/yikes"
+end
 
 #######################
 ## Gettext section

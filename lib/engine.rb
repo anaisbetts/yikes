@@ -39,9 +39,47 @@ include GetText
 $logging_level ||= Logger::ERROR
 
 class Engine 
+	include ApplicationState
+
 	def initialize(transcoder = FFMpegTranscoder)
 		@transcoder = transcoder.new
 	end
+
+	def enqueue_files_to_encode(library, target)
+		fl = get_file_list(library).delete_if{|x| not AllowedFiletypes.include?(Pathname.new(x).extname.downcase)}
+		state.add_to_queue(fl.collect {|x| EncodingItem.new(library, x, target)})
+	end
+
+	def do_encode(library, target)
+		engine = Engine.new
+
+		logger.info "Collecting files.."
+		enqueue_files_to_encode(library, target)
+
+		logger.info "Starting encoding run.."
+	 	state.dequeue_items(state.items_count).each do |item|
+			unless should_encode?(item)
+				logger.debug "Already exists: #{item.source_path}"
+				next
+			end
+
+			logger.debug "Trying '#{item.source_path}'"
+			engine.convert_file(item, state)
+		end
+
+		logger.info "Finished"
+	end
+
+	def poll_directory_and_encode(library, target, rate)
+		logger.info "We're daemonized!"
+
+
+		until $do_quit
+			do_encode(library,target)
+			Kernel.sleep(rate || 60*30)
+		end
+	end
+
 
 	# Main function for converting a video file and writing it to a folder
 	def convert_file(item, state)
@@ -78,6 +116,12 @@ class Engine
 		@transcoder.before_transcode
 		logger.debug "Saving screenshot to #{output}"
 		@transcoder.get_screenshot(input, output)
+	end
+
+	def should_encode?(item)
+		p = Pathname.new(item.target_path)
+		return true unless p.exist?
+		return p.size <= 256
 	end
 end
 

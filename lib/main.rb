@@ -51,13 +51,12 @@ AllowedFiletypes = ['.avi', '.mov', '.mp4', '.wmv']
 
 class Yikes < Logger::Application
 	include Singleton
-	include ApplicationState
+	attr_accessor :engine
 
 	def initialize
 		super(self.class.to_s) 
 		self.level = $logging_level
 	end
-
 
 	#
 	# Main Methods
@@ -120,7 +119,7 @@ class Yikes < Logger::Application
 	def run(args)
 		# Initialize Gettext (root, domain, locale dir, encoding) and set up logging
     		bindtextdomain(AppConfig::Package, nil, nil, "UTF-8")
-		self.level = Logger::DEBUG
+		@log.level = Logger::DEBUG
 		
 		# Parse arguments
 		begin
@@ -136,84 +135,43 @@ class Yikes < Logger::Application
 		return -1 unless results
 
 		# Reset our logging level because option parsing changed it
-		self.level = $logging_level
+		@log.level = $logging_level
 
-		load_state(File.join(Platform.settings_dir, 'state.yaml'), results[:library])
-		state.target = results[:target]
+		@engine = Engine.new
+		@engine.load_state(File.join(Platform.settings_dir, 'state.yaml'), results[:library])
+		@engine.state.target = results[:target]
 
 		# Actually do stuff
 		unless results[:background]
 			# Just a single run
-			do_encode(results[:library], results[:target])
+			@engine.do_encode(results[:library], results[:target])
 		else
 			puts _("Yikes started in the background. Go to http://#{Platform.hostname}.local:4000 !")
 			if should_daemonize?
 				return unless daemonize 
+				@log = Logger.new('/tmp/yikes.log')
 			end
 
-			Thread.new do
-				Ramaze.start :adaptor => :mongrel, :port => 4000
-			end
+			start_web_service_async
 
 			begin 
-				poll_directory_and_encode(results[:library], results[:target], results[:rate])
+				@engine.poll_directory_and_encode(results[:library], results[:target], results[:rate])
 			rescue Exception => e
 				logger.fatal e.message
 				logger.fatal e.backtrace.join("\n")
 			end
 		end
 
-		save_state(File.join(Platform.settings_dir, 'state.yaml'))
+		@engine.save_state(File.join(Platform.settings_dir, 'state.yaml'))
 
 		logger.debug 'Exiting application'
 	end
 
-	def enqueue_files_to_encode(library, target)
-		fl = get_file_list(library).delete_if{|x| not AllowedFiletypes.include?(Pathname.new(x).extname.downcase)}
-		state.add_to_queue(fl.collect {|x| EncodingItem.new(library, x, target)})
-	end
-
-	def do_encode(library, target)
-		engine = Engine.new
-
-		logger.info "Collecting files.."
-		enqueue_files_to_encode(library, target)
-
-		logger.info "Starting encoding run.."
-	 	state.dequeue_items(state.items_count).each do |item|
-			unless should_encode?(item)
-				logger.debug "Already exists: #{item.source_path}"
-				next
-			end
-
-			logger.debug "Trying '#{item.source_path}'"
-			engine.convert_file(item, state)
-		end
-
-		logger.info "Finished"
-	end
-
-	def poll_directory_and_encode(library, target, rate)
-		logger.info "We're daemonized!"
-
-		@log = Logger.new('/tmp/yikes.log') if should_daemonize?
-
-		until $do_quit
-			do_encode(library,target)
-			Kernel.sleep(rate || 60*30)
-		end
-	end
 
 
 	#
 	# Auxillary methods
 	#
-
-	def should_encode?(item)
-		p = Pathname.new(item.target_path)
-		return true unless p.exist?
-		return p.size <= 256
-	end
 
 	def should_daemonize?
 		(not $logging_level == DEBUG)
@@ -221,13 +179,16 @@ class Yikes < Logger::Application
 
 	def get_logger; @log; end
 
-class << self
-	def url_base
+	def start_web_service_async
+		Thread.new do
+			Ramaze.start :adaptor => :webrick, :port => 4000
+		end
+	end
+
+	def self.url_base
 		#"http://#{Platform.hostname}.local:4000"
 		"http://localhost:4000"
 	end
-end
-
 end
 
 def logger

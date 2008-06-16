@@ -85,7 +85,7 @@ class MainController < Ramaze::Controller
 	engine :Erubis
 
 	def index
-		@items = Yikes.instance.state.get_finished_items
+		@items = Yikes.instance.engine.state.get_finished_items
 	end
 end
 
@@ -98,7 +98,7 @@ class PodcastController < Ramaze::Controller
 
 private
 	def podcast_xml
-		app = Yikes.instance.state
+		app = Yikes.instance.engine.state
 		
 		xml = Builder::XmlMarkup.new
 		xml.instruct!
