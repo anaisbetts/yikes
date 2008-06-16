@@ -51,8 +51,6 @@ class Engine
 	end
 
 	def do_encode(library, target)
-		engine = Engine.new
-
 		logger.info "Collecting files.."
 		enqueue_files_to_encode(library, target)
 
@@ -64,7 +62,7 @@ class Engine
 			end
 
 			logger.debug "Trying '#{item.source_path}'"
-			engine.convert_file(item, state)
+			convert_file(item, state)
 		end
 
 		logger.info "Finished"
@@ -72,7 +70,6 @@ class Engine
 
 	def poll_directory_and_encode(library, target, rate)
 		logger.info "We're daemonized!"
-
 
 		until $do_quit
 			do_encode(library,target)
