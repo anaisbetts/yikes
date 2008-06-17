@@ -18,12 +18,20 @@
 #   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             #
 ###########################################################################
 
+
+def ruby_runtime
+	# FIXME: Rubinius? IronRuby?
+	return :jruby if RUBY_PLATFORM =~ /java/
+	return :mri
+end
+
 def os
-	return :linux if RUBY_PLATFORM =~ /linux/
-	return :osx if RUBY_PLATFORM =~ /darwin/
-	return :solaris if RUBY_PLATFORM =~ /solaris/
-	return :bsd if RUBY_PLATFORM =~ /bsd/
-	return :windows if RUBY_PLATFORM =~ /win/
+	host_os = Config::CONFIG['host_os']
+	return :linux if host_os =~ /linux/
+	return :osx if host_os =~ /darwin/
+	return :solaris if host_os =~ /solaris/
+	return :bsd if host_os =~ /bsd/
+	return :windows if host_os =~ /win/
 end
 
 def get_install_prefix

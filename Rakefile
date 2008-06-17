@@ -10,6 +10,8 @@ require 'pallet'
 # Load other build files
 Dir.glob("build/*.rake").each {|x| load x}
 
+# Include JRuby packaging, but doesn't work on MRI
+require 'rawr' if ruby_runtime == :jruby
 
 ### Constants
 
