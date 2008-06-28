@@ -38,14 +38,12 @@ include GetText
 
 $logging_level ||= Logger::ERROR
 
-class EngineManager
-end
-
 class Engine 
 	include ApplicationState
 
-	def initialize(transcoder = FFMpegTranscoder)
+	def initialize(transcoder = FFMpegTranscoder, library = nil)
 		@transcoder = transcoder.new
+		new_state library if library
 	end
 
 	def enqueue_files_to_encode(library, target)
@@ -70,16 +68,6 @@ class Engine
 
 		logger.info "Finished"
 	end
-
-	def poll_directory_and_encode(library, target, rate)
-		logger.info "We're daemonized!"
-
-		until $do_quit
-			do_encode(library,target)
-			Kernel.sleep(rate || 60*30)
-		end
-	end
-
 
 	# Main function for converting a video file and writing it to a folder
 	def convert_file(item, state)
@@ -122,6 +110,86 @@ class Engine
 		p = Pathname.new(item.target_path)
 		return true unless p.exist?
 		return p.size <= 256
+	end
+end
+
+module EngineManager
+	def add_engine(library, target, transcoder = FFMpegTranscoder)
+		initialize_if_needed
+
+		e = nil
+		@engines_lock.synchronize do
+			e = (@engines[engine_key(library, target)] ||= Engine.new(transcoder, library))
+		end
+		e
+	end
+
+	def active_engines
+		initialize_if_needed
+
+		ret = nil
+		@engines_lock.synchronize do
+			ret = @engines.values
+		end
+		ret
+	end
+
+	def remove_engine(library, target)
+		initialize_if_needed
+
+		@engines_lock.synchronize do
+			@engines.delete engine_key(library, target)
+		end
+	end
+
+	def load_state(path)
+		initialize_if_needed
+
+		begin 
+			# We hold a different State class for every library path
+			@engines = YAML::load(File.read(path))
+		rescue
+			@engines = {}
+		end
+	end
+
+	def save_state(path)
+		initialize_if_needed
+
+		@engines_lock.synchronize do
+			File.open(path, 'w') {|f| f.write(YAML::dump(@engines)) }
+		end
+	end
+
+	def poll_directory_and_encode(rate)
+		until $do_quit
+			# FIXME: This is unsynchronized, but if we use the lock, we'll block everyone 
+			# else forever
+			@engines.each_pair do |key,engine|
+				break if $do_quit
+				library, target = *key
+
+				logger.info "Starting encode for '#{library}' => '#{target}'"
+				engine.do_encode(library,target)
+				Kernel.sleep(rate || 60*30)
+			end
+
+			while @engines.length == 0 
+				break if $do_quit
+				logger.info _("Nothing to do! Taking a nap...")
+				Kernel.sleep(rate || 60*30)
+			end
+		end
+	end
+
+private
+	def initialize_if_needed
+		@engines ||= {}
+		@engines_lock ||= Mutex.new
+	end
+
+	def engine_key(library, target)
+		[library, target]
 	end
 end
 

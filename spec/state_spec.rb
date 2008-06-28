@@ -27,29 +27,6 @@ describe ApplicationState::State do
 		s.get_finished_items.length.should == 1
 		s.get_finished_items[0].source_path.should == "/path/to/library/bob/foo_2.avi"
 	end
-
-	it "should save and load state properly" do
-		ms = MockState.new
-		s = ms.load_state("/doesnt/___exist", Library)
-		items = [1,2,3,4,5].collect {|x| EncodingItem.new(Library, "bob/foo_#{x}.avi", Target) }
-		
-		s.add_to_queue(items)
-		two_items = s.dequeue_items(2)
-		s.encode_failed! two_items[0]
-		s.encode_succeeded! two_items[1]
-
-		p = Pathname.new(File.join(TestDir, "state.yaml"))
-		p.delete if p.exist?
-		ms.save_state(p.to_s)
-
-		ms = MockState.new
-		s = ms.load_state(p.to_s, Library)
-		s.items_count.should == 3
-		s.get_finished_items.length.should == 2
-		s.get_finished_items[1].source_path.should == "/path/to/library/bob/foo_2.avi"
-		
-		p.delete
-	end
 end
 
 describe EncodingItem do

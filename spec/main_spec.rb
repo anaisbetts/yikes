@@ -40,6 +40,10 @@ describe Yikes do
 		output.index("Usage:").should == 0
 	end
 
+	it "should include the engine manager" do
+		Yikes.instance.respond_to?(:load_state).should == true
+	end
+
 	it "should display help options" do
 		i,o,e = hook_stdio do
 			Yikes.instance.run(%w{--help})

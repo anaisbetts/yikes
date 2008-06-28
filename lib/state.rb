@@ -41,29 +41,6 @@ ItemsInFinishedList = 30
 module ApplicationState
 	attr_accessor :state
 
-	def load_state(path, library)
-		# If they give us a bum path, we can't get the real path
-		real_lib = nil
-		begin
-			real_lib = Pathname.new(library).realpath.to_s
-		rescue
-			real_lib = library
-		end
-
-		begin 
-			# We hold a different State class for every library path
-			@full_state = YAML::load(File.read(path))
-			@state = @full_state[real_lib] || (@full_state[real_lib] = State.new(library))
-		rescue
-			@full_state = { real_lib => State.new(library) }
-			@state = @full_state[real_lib]
-		end
-	end
-
-	def save_state(path)
-		File.open(path, 'w') {|f| f.write(YAML::dump(@full_state)) }
-	end
-
 	class State
 		attr_accessor :encoded_queue
 		attr_accessor :to_encode_queue
@@ -133,6 +110,10 @@ module ApplicationState
 
 			ret
 		end
+	end
+
+	def new_state(library)
+		@state = State.new(library)
 	end
 end
 

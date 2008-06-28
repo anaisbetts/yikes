@@ -49,14 +49,17 @@ $logging_level = ($DEBUG ? Logger::DEBUG : Logger::ERROR)
 
 AllowedFiletypes = ['.avi', '.mov', '.mp4', '.wmv']
 
+Thread.abort_on_exception = true
+
 class Yikes < Logger::Application
 	include Singleton
-	attr_accessor :engine
+	include EngineManager
 
 	def initialize
 		super(self.class.to_s) 
 		self.level = $logging_level
 	end
+
 
 	#
 	# Main Methods
@@ -137,16 +140,16 @@ class Yikes < Logger::Application
 		# Reset our logging level because option parsing changed it
 		@log.level = $logging_level
 
-		@engine = Engine.new
-		@engine.load_state(File.join(Platform.settings_dir, 'state.yaml'), results[:library])
-		@engine.state.target = results[:target]
-
 		# Actually do stuff
 		unless results[:background]
-			# Just a single run
-			@engine.do_encode(results[:library], results[:target])
+			engine = Engine.new(results[:library])
+			engine.do_encode results[:library], results[:target]
 		else
 			puts _("Yikes started in the background. Go to http://#{Platform.hostname}.local:4000 !")
+			load_state File.join(Platform.settings_dir, 'state.yaml')
+
+			add_engine results[:library], results[:target]
+
 			if should_daemonize?
 				return unless daemonize 
 				@log = Logger.new('/tmp/yikes.log')
@@ -155,18 +158,19 @@ class Yikes < Logger::Application
 			start_web_service_async
 
 			begin 
-				@engine.poll_directory_and_encode(results[:library], results[:target], results[:rate])
+				logger.info "We're daemonized!"
+				poll_directory_and_encode results[:rate]
 			rescue Exception => e
 				logger.fatal e.message
 				logger.fatal e.backtrace.join("\n")
 			end
+
+			save_state File.join(Platform.settings_dir, 'state.yaml')
 		end
 
-		@engine.save_state(File.join(Platform.settings_dir, 'state.yaml'))
 
 		logger.debug 'Exiting application'
 	end
-
 
 
 	#

@@ -85,7 +85,14 @@ class MainController < Ramaze::Controller
 	engine :Erubis
 
 	def index
-		@items = Yikes.instance.engine.state.get_finished_items
+		@items = []
+		Yikes.instance.active_engines.each do |e|
+			@items = @items + e.state.get_finished_items
+		end
+		logger.debug @items.to_yaml
+
+		# FIXME: Figure out when we have internet why this fails
+		#@items.sort! {|x| x.finished_at}
 	end
 end
 

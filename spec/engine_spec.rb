@@ -13,34 +13,6 @@ target: /the/target
 
 EOF
 
-describe EngineManager do
-	it "should be able to add engines given a source and target" do
-		em = EngineManager.new
-		source = "/path/to/source.avi"
-		target = "/the/target/source.mp4"
-		em.add(source, target)
-	end
-
-	it "should be able to remove engines" do
-		em = EngineManager.new
-		source = "/path/to/source.avi"
-		target = "/the/target/source.mp4"
-		em.add(source, target)
-		em.remove(source, target)
-	end
-
-	it "should be able to enumerate through engines" do
-		em = EngineManager.new
-		source = "/path/to/source.avi"
-		target = "/the/target/source.mp4"
-		em.add(source, target)
-		
-		i = 0
-		em.each {|x| i=i+1}
-		i.should = 1
-	end
-end
-
 describe Engine do
 	it "Should convert a file and mark it succeeded or failed" do
 		source = "/path/to/source.avi"
@@ -65,6 +37,62 @@ describe Engine do
 		eng.convert_file(YAML::load(EncodingItemFixture), fail_mock)
 	end
 
+end
+
+class MockEngineManager
+	include EngineManager
+end
+
+describe EngineManager do
+	it "should be able to add engines given a source and target" do
+		em = MockEngineManager.new
+		source = "/path/to/source.avi"
+		target = "/the/target/source.mp4"
+		em.add_engine(source, target)
+		em.active_engines.length.should == 1
+	end
+
+	it "should be able to remove engines" do
+		em = MockEngineManager.new
+		source = "/path/to/source.avi"
+		target = "/the/target/source.mp4"
+
+		em.add_engine(source, target)
+		em.active_engines.length.should == 1
+
+		em.remove_engine(source, target)
+		em.active_engines.length.should == 0
+	end
+
+	it "should save and load state properly" do
+		em = MockEngineManager.new
+		s = em.load_state("/doesnt/___exist")
+		items = [1,2,3,4,5].collect {|x| EncodingItem.new(Library, "bob/foo_#{x}.avi", Target) }
+
+		source = "/path/to/source.avi"
+		target = "/the/target/source.mp4"
+		s = em.add_engine(source, target).state
+		
+		s.add_to_queue(items)
+		two_items = s.dequeue_items(2)
+		s.encode_failed! two_items[0]
+		s.encode_succeeded! two_items[1]
+
+		p = Pathname.new(File.join(TestDir, "state.yaml"))
+		p.delete if p.exist?
+		em.save_state(p.to_s)
+
+		em = MockEngineManager.new
+		em.load_state(p.to_s)
+		em.active_engines.length.should == 1
+		s = em.active_engines[0].state
+
+		s.items_count.should == 3
+		s.get_finished_items.length.should == 2
+		s.get_finished_items[1].source_path.should == "/path/to/library/bob/foo_2.avi"
+		
+		p.delete
+	end
 end
 
 describe FFMpegTranscoder do
