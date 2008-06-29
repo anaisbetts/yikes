@@ -194,14 +194,14 @@ class Yikes < Logger::Application
 			# we're in a spec file, we shouldn't actually start the web server
 			Ramaze.start :adaptor => :webrick, :port => port, :force => true
 		end
-		@port = port
+		@@port = port
 	end
 
 	def self.url_base
 		# FIXME: Something weird is going wrong with Bonjour DNS resolution
 		# when "hostname.local" == localhost
 		#"http://#{Platform.hostname}.local:#{port}"
-		"http://localhost:#{@port}"
+		"http://localhost:#{@@port}"
 	end
 end
 

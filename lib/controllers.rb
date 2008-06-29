@@ -31,6 +31,7 @@ require 'builder'
 require 'builder/xmlmarkup'
 require 'fileutils'
 require 'uri'
+require 'activesupport'
 
 # Yikes
 require 'config'
@@ -79,6 +80,7 @@ class EncodingItem
 	end
 end
 
+
 ### Controllers
 
 class MainController < Ramaze::Controller
@@ -93,6 +95,15 @@ class MainController < Ramaze::Controller
 
 		# FIXME: Figure out when we have internet why this fails
 		#@items.sort! {|x| x.finished_at}
+	end
+
+	def debug
+		Yikes.instance.active_engines.to_json
+	end
+
+	def quit
+		$do_quit = true
+		_("Thanks for using Yikes!")
 	end
 end
 

@@ -41,6 +41,7 @@ class << self
 		# FIXME: Dumb hack code!
 		pid = nil
 		unless (pid = fork)
+			STDIN.reopen '/dev/null'
 			STDOUT.reopen '/dev/null'
 			STDERR.reopen '/dev/null'
 			logger.debug "Executing: #{cmd}"
