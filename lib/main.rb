@@ -50,6 +50,7 @@ $logging_level = ($DEBUG ? Logger::DEBUG : Logger::ERROR)
 AllowedFiletypes = ['.avi', '.mov', '.mp4', '.wmv']
 
 Thread.abort_on_exception = true
+trap("USR1") { dump_stacks }
 
 class Yikes < Logger::Application
 	include Singleton
@@ -91,6 +92,10 @@ class Yikes < Logger::Application
 			opts.on('-r', '--rate seconds', _("How long to wait between runs; implies -b")) do |x|
 				results[:background] = true
 				results[:rate] = x.to_s.to_f
+			end
+
+			opts.on('-p', '--port number', _("Port to start the web server on; default is 4000")) do |x|
+				results[:port] = x.to_i
 			end
 
 			opts.separator ""
@@ -155,7 +160,7 @@ class Yikes < Logger::Application
 				@log = Logger.new('/tmp/yikes.log')
 			end
 
-			start_web_service_async
+			start_web_service_async results[:port] || 4000
 
 			begin 
 				logger.info "We're daemonized!"
@@ -183,15 +188,20 @@ class Yikes < Logger::Application
 
 	def get_logger; @log; end
 
-	def start_web_service_async
+	def start_web_service_async(port = 4000)
 		Thread.new do
-			Ramaze.start :adaptor => :webrick, :port => 4000
+			# The :force is there because otherwise, Ramaze cleverly decides that if 
+			# we're in a spec file, we shouldn't actually start the web server
+			Ramaze.start :adaptor => :webrick, :port => port, :force => true
 		end
+		@port = port
 	end
 
 	def self.url_base
-		#"http://#{Platform.hostname}.local:4000"
-		"http://localhost:4000"
+		# FIXME: Something weird is going wrong with Bonjour DNS resolution
+		# when "hostname.local" == localhost
+		#"http://#{Platform.hostname}.local:#{port}"
+		"http://localhost:#{@port}"
 	end
 end
 

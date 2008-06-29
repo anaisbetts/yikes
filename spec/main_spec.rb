@@ -2,8 +2,9 @@ $:.unshift File.dirname(__FILE__)
 
 require 'helper'
 require 'lib/main'
+require 'lib/controllers'
 require 'stringio'
-
+require 'net/http'
 
 def hook_stdio(in_str = "")
 	# Hook stdio for the call
@@ -52,5 +53,16 @@ describe Yikes do
 		o.string.index("options:").should >= 0
 		o.string.index("library").should >= 0
 		o.string.index("target").should >= 0
+	end
+
+	it "should be able to spin up the Ramaze server" do
+		Yikes.instance.start_web_service_async 4503
+		Kernel.sleep 2
+
+		# This test isn't very thorough, it's more of a smoke test to make sure
+		# /public and /views aren't hosed
+		response = Net::HTTP.get URI.parse('http://localhost:4503')
+		response.include?('Yikes!').should == true
+		response.include?(Yikes.url_base).should == true
 	end
 end
