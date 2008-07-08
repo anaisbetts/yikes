@@ -6,6 +6,9 @@ require 'lib/controllers'
 require 'stringio'
 require 'net/http'
 
+# NOTE: Uncomment this to make Ramaze noisy
+Ramaze::Log.loggers = []
+
 def hook_stdio(in_str = "")
 	# Hook stdio for the call
 	in_p, out_p, err_p = [$stdin, $stdout, $stderr]

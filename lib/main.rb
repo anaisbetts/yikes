@@ -192,7 +192,7 @@ class Yikes < Logger::Application
 		Thread.new do
 			# The :force is there because otherwise, Ramaze cleverly decides that if 
 			# we're in a spec file, we shouldn't actually start the web server
-			Ramaze.start :adaptor => :webrick, :port => port, :force => true
+			Ramaze.start :port => port, :force => true
 		end
 		@@port = port
 	end

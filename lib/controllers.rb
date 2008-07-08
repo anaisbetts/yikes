@@ -31,7 +31,7 @@ require 'builder'
 require 'builder/xmlmarkup'
 require 'fileutils'
 require 'uri'
-require 'activesupport'
+#require 'activesupport'
 
 # Yikes
 require 'config'
@@ -42,7 +42,7 @@ require 'state'
 include GetText
 
 Ramaze::Global.public_root = File.join File.dirname(__FILE__), 'public'
-Ramaze::Global.template_root = File.join File.dirname(__FILE__), 'views'
+Ramaze::Global.view_root = File.join File.dirname(__FILE__), 'views'
 
 ### Helper Classes
 
