@@ -1,19 +1,14 @@
 body { 
 	background: #fff url(../images/topbluefade.gif) repeat-x;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 
 p {
 	margin: 15px;
-	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
-}
-
-h1 {
-	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 
 h3 {
 	margin: 0px;
-	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 
 hr {

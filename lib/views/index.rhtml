@@ -18,7 +18,7 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-	$("#data").tablesorter();
+	$("#data").tablesorter({widgets: ['zebra']});
 });
 
 </script>
@@ -31,7 +31,7 @@ $(document).ready(function() {
 
 	<div id="videos">
 		<h2>Videos recently converted:</h2>
-		<table id="data" class="sortable resizable">
+		<table id="data" class="tablesorter">
 		<thead>
 			<tr>
 				<th></th> <!-- Succeeded icon -->
