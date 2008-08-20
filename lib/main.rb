@@ -147,7 +147,7 @@ class Yikes < Logger::Application
 
 		# Actually do stuff
 		unless results[:background]
-			engine = Engine.new(results[:library])
+			engine = Engine.new(FFMpegTranscoder, results[:library])
 			engine.do_encode results[:library], results[:target]
 		else
 			puts _("Yikes started in the background. Go to http://#{Platform.hostname}.local:4000 !")

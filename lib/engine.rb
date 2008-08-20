@@ -260,7 +260,7 @@ class FFMpegTranscoder
 	-trellis 2 -refs 1 -coder 0 -me_range 16 -bf 0 -sc_threshold 40 -keyint_min 25 -s 488x328
 	-croptop 4 -cropbottom 4 -cropleft 4 -cropright 4 -aspect 4:3 )
 
-	AudioParams = %w( -acodec libfaac -ac 2 -ar 44100 -ab 0 -aq 120 -alang ENG )
+	AudioParams = %w( -acodec libfaac -ac 2 -ar 44100 -ab 128000 -aq 120 -alang ENG )
 
 	FFMpegPath = File.join(AppConfig::LibDir, 'libexec', 'bin', 'ffmpeg')
 	def get_transcode_command(input, output)
